@@ -1,5 +1,5 @@
-import { Tool2 } from "@/components/features/Tool2"
+import { Tool3 } from "@/components/features/Tool3"
 
 export default function Tool3Page() {
-  return <Tool2 />
+  return <Tool3 />
 }
