@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from 'next/link';
+
 
 export default function Home() {
   return (
@@ -9,22 +11,28 @@ export default function Home() {
         {/* Hero Section */}
         <div className="flex flex-col items-center text-center space-y-8 py-12">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-            Welcome to UN0 Tools
+            ( un0.ai )
           </h1>
           <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-            Your one-stop solution for powerful developer tools and utilities.
-          </p>
+            build tools & iterate fast
+          </p> 
           <div className="space-x-4">
+          <Link href="/dashboard">
             <Button size="lg">
-              Get Started
+              Dashboard
             </Button>
+            </Link>
+            <Link href="/dashboard">
             <Button variant="outline" size="lg">
-              Learn More
+              Documentation
             </Button>
+            </Link>
           </div>
         </div>
 
         {/* Features Section */}
+
+        {/* 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-12">
           {[
             {
@@ -33,7 +41,7 @@ export default function Home() {
             },
             {
               title: "Developer Friendly",
-              description: "Intuitive interfaces designed for developers by developers"
+              description: "Intuitive interfaces designed for easiness of use"
             },
             {
               title: "Extensible",
@@ -50,6 +58,7 @@ export default function Home() {
             </Card>
           ))}
         </div>
+        */}
       </main>
     </div>
   );

@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
+import { Tool1 } from "@/components/features/Tool1"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -24,6 +25,12 @@ export default function Page() {
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
+            <div>
+              un0.ai - web tools
+            </div>
+            {/* 
+            Breadcrumb on top of page
+            
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
@@ -37,6 +44,7 @@ export default function Page() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+            */}
           </div>
           <div className="flex items-center gap-2 px-4 ml-auto"><ModeToggle /></div>
         </header>
@@ -44,9 +52,11 @@ export default function Page() {
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
             <div className="aspect-video rounded-xl bg-muted/50" />
             <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" ></div>
           </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+          <Tool1 />
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
