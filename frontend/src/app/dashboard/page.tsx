@@ -7,6 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { ModeToggle } from "@/components/ui/mode-toggle"
 import { Separator } from "@/components/ui/separator"
 import {
   SidebarInset,
@@ -37,6 +38,7 @@ export default function Page() {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
+          <div className="flex items-center gap-2 px-4 ml-auto"><ModeToggle /></div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
