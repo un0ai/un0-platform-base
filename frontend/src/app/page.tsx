@@ -32,7 +32,6 @@ export default function Home() {
 
         {/* Features Section */}
 
-        {/* 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-12">
           {[
             {
@@ -58,7 +57,6 @@ export default function Home() {
             </Card>
           ))}
         </div>
-        */}
       </main>
     </div>
   );

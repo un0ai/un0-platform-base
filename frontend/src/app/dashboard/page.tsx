@@ -1,5 +1,4 @@
 import { AppSidebar } from "@/components/app-sidebar"
-import { Tool1 } from "@/components/features/Tool1"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -55,7 +54,7 @@ export default function Page() {
             <div className="aspect-video rounded-xl bg-muted/50" ></div>
           </div>
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-          <Tool1 />
+
           </div>
         </div>
       </SidebarInset>
