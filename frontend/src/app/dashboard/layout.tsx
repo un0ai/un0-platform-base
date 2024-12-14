@@ -1,13 +1,29 @@
+"use client"
+
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import { Separator } from "@/components/ui/separator"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { usePathname } from "next/navigation"
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
+  const currentPage = pathname === "/dashboard" 
+    ? "Overview"
+    : pathname.split("/").pop()?.replace(/^\w/, c => c.toUpperCase()) || "Overview"
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -16,9 +32,19 @@ export default function DashboardLayout({
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <div>
-              un0.ai - web tools
-            </div>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="/dashboard">
+                    Dashboard
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{currentPage}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
           <div className="flex items-center gap-2 px-4 ml-auto">
             <ModeToggle />
