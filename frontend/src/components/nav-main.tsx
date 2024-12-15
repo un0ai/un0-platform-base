@@ -41,31 +41,39 @@ export function NavMain({
   const pathname = usePathname()
   const router = useRouter()
   const { state } = useSidebar()
-  const [expandedItems, setExpandedItems] = usePersistedState<string[]>("nav-main:expanded-items", [])
+  const [expandedItems, setExpandedItems] = usePersistedState<string[]>(
+    "nav-main:expanded-items",
+    []
+  )
 
-  const isItemExpanded = useCallback((title: string) => {
-    return expandedItems.includes(title)
-  }, [expandedItems])
+  const isItemExpanded = useCallback(
+    (title: string) => {
+      return expandedItems.includes(title)
+    },
+    [expandedItems]
+  )
 
-  const toggleItem = useCallback((title: string) => {
-    setExpandedItems(current => 
-      current.includes(title)
-        ? current.filter(t => t !== title)
-        : [...current, title]
-    )
-  }, [setExpandedItems])
+  const toggleItem = useCallback(
+    (title: string) => {
+      setExpandedItems((current) =>
+        current.includes(title)
+          ? current.filter((t) => t !== title)
+          : [...current, title]
+      )
+    },
+    [setExpandedItems]
+  )
 
-  const handleItemClick = useCallback((item: typeof items[0], e: React.MouseEvent) => {
-    if (state === "collapsed") {
-      e.preventDefault()
-      e.stopPropagation()
-      router.push(item.url)
-    } else if (item.items) {
-      e.preventDefault()
-      e.stopPropagation()
-      toggleItem(item.title)
-    }
-  }, [state, router, toggleItem])
+  const handleItemClick = useCallback(
+    (e: React.MouseEvent, item: typeof items[0]) => {
+      if (state === "collapsed") {
+        e.preventDefault()
+        e.stopPropagation()
+        router.push(item.url)
+      }
+    },
+    [router, state]
+  )
 
   return (
     <SidebarGroup>
@@ -73,13 +81,19 @@ export function NavMain({
       <SidebarMenu>
         {items.map((item) => {
           const isActive = pathname === item.url
-          const hasActiveChild = item.items?.some(subItem => pathname === subItem.url)
+          const hasActiveChild = item.items?.some(
+            (subItem) => pathname === subItem.url
+          )
 
-          // Render non-collapsible item (Dashboard, Sales, etc)
+          // Render non-collapsible item (Dashboard, etc)
           if (!item.items) {
             return (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton tooltip={item.title} asChild isActive={isActive}>
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  asChild
+                  isActive={isActive}
+                >
                   <Link href={item.url} className="flex w-full items-center">
                     {item.icon && <item.icon className="h-5 w-5" />}
                     <span className={cn("ml-2", state === "collapsed" && "hidden")}>
@@ -100,25 +114,38 @@ export function NavMain({
               className="group/collapsible"
             >
               <SidebarMenuItem>
-                <div 
-                  onClick={(e) => handleItemClick(item, e)}
-                  className={cn(
-                    "flex w-full items-center p-2 cursor-pointer select-none",
-                    "hover:bg-transparent hover:text-current",
-                    hasActiveChild && "text-sidebar-accent-foreground font-medium"
-                  )}
-                >
-                  {item.icon && <item.icon className="h-5 w-5" />}
-                  <span className={cn("ml-2", state === "collapsed" && "hidden")}>
-                    {item.title}
-                  </span>
+                <div className="flex items-center">
+                  <Link
+                    href={item.url}
+                    onClick={(e) => handleItemClick(e, item)}
+                    className={cn(
+                      "flex items-center p-2 cursor-pointer select-none grow",
+                      "hover:bg-transparent hover:text-current",
+                      hasActiveChild && "text-sidebar-accent-foreground font-medium"
+                    )}
+                  >
+                    {item.icon && <item.icon className="h-5 w-5" />}
+                    <span className={cn("ml-2", state === "collapsed" && "hidden")}>
+                      {item.title}
+                    </span>
+                  </Link>
                   {!state.includes("collapsed") && (
-                    <ChevronRight 
-                      className={cn(
-                        "ml-auto h-5 w-5 transition-transform duration-200",
-                        "group-data-[state=open]/collapsible:rotate-90"
-                      )} 
-                    />
+                    <CollapsibleTrigger asChild>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          toggleItem(item.title)
+                        }}
+                        className="p-2"
+                      >
+                        <ChevronRight
+                          className={cn(
+                            "h-5 w-5 transition-transform duration-200",
+                            "group-data-[state=open]/collapsible:rotate-90"
+                          )}
+                        />
+                      </button>
+                    </CollapsibleTrigger>
                   )}
                 </div>
                 {state !== "collapsed" && (
@@ -126,10 +153,11 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
-                            <Link href={subItem.url}>
-                              {subItem.title}
-                            </Link>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={pathname === subItem.url}
+                          >
+                            <Link href={subItem.url}>{subItem.title}</Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}

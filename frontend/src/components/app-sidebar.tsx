@@ -60,7 +60,7 @@ const data = {
     },
     {
       title: "Playground",
-      url: "#",
+      url: "/dashboard/playground",
       icon: PlayCircle,
       items: [
         {
@@ -79,7 +79,7 @@ const data = {
     },
     {
       title: "Models",
-      url: "#",
+      url: "/dashboard/models",
       icon: Bot,
       items: [
         {
@@ -98,7 +98,7 @@ const data = {
     },
     {
       title: "Documentation",
-      url: "#",
+      url: "/dashboard/docs",
       icon: BookOpen,
       items: [
         {
@@ -121,7 +121,7 @@ const data = {
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: Settings2,
       items: [
         {
