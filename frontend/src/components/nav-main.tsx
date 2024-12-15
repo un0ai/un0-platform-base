@@ -43,7 +43,7 @@ export function NavMain({
   const { state } = useSidebar()
   const [expandedItems, setExpandedItems] = usePersistedState<string[]>(
     "nav-main:expanded-items",
-    []
+    []  // Initialize with an empty array to have all categories collapsed by default
   )
 
   // Memoize the parent item lookup
