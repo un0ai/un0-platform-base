@@ -1,27 +1,36 @@
 "use client"
 
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Folder } from "lucide-react"
+import { Frame, Map, MoreHorizontal, PieChart } from "lucide-react"
 
-const projects = [
+const projectCategories = [
   {
-    name: "Project Alpha",
-    description: "AI-powered data analysis platform",
+    name: "Sales & Marketing",
+    description: "Projects focused on market analysis, customer engagement, and sales optimization",
+    icon: PieChart,
+    url: "/dashboard/projects/sales-marketing",
     lastUpdated: "2 days ago",
   },
   {
-    name: "Project Beta",
-    description: "Machine learning model training interface",
+    name: "Research & Development",
+    description: "Innovation projects exploring new technologies and methodologies",
+    icon: Map,
+    url: "/dashboard/projects/research-development",
     lastUpdated: "5 days ago",
   },
   {
-    name: "Project Gamma",
-    description: "Natural language processing toolkit",
+    name: "Design Engineering",
+    description: "Projects focused on UI/UX and technical design solutions",
+    icon: Frame,
+    url: "/dashboard/projects/design-engineering",
     lastUpdated: "1 week ago",
   },
   {
-    name: "Project Delta",
-    description: "Computer vision application suite",
+    name: "More Projects",
+    description: "Additional project categories and initiatives",
+    icon: MoreHorizontal,
+    url: "/dashboard/projects/more",
     lastUpdated: "2 weeks ago",
   },
 ]
@@ -30,29 +39,31 @@ export default function ProjectsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">All Projects</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Project Categories</h1>
         <p className="text-muted-foreground">
-          Browse and manage all your projects in one place.
+          Browse and manage projects by category
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
-          <Card key={project.name}>
-            <CardHeader className="flex flex-row items-center gap-4">
-              <div className="rounded-lg bg-primary/10 p-2">
-                <Folder className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <CardTitle className="text-xl">{project.name}</CardTitle>
-                <CardDescription>Last updated: {project.lastUpdated}</CardDescription>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                {project.description}
-              </p>
-            </CardContent>
-          </Card>
+        {projectCategories.map((category) => (
+          <Link key={category.name} href={category.url}>
+            <Card className="hover:bg-muted/50 transition-colors">
+              <CardHeader className="flex flex-row items-center gap-4">
+                <div className="rounded-lg bg-primary/10 p-2">
+                  <category.icon className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">{category.name}</CardTitle>
+                  <CardDescription>Last updated: {category.lastUpdated}</CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  {category.description}
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
