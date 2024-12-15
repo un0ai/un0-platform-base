@@ -66,13 +66,18 @@ export function NavMain({
 
   const handleItemClick = useCallback(
     (e: React.MouseEvent, item: typeof items[0]) => {
+      e.preventDefault()
+      e.stopPropagation()
+      
       if (state === "collapsed") {
-        e.preventDefault()
-        e.stopPropagation()
+        router.push(item.url)
+      } else if (item.items) {
+        toggleItem(item.title)
+      } else {
         router.push(item.url)
       }
     },
-    [router, state]
+    [router, state, toggleItem]
   )
 
   return (
@@ -115,8 +120,7 @@ export function NavMain({
             >
               <SidebarMenuItem>
                 <div className="flex items-center">
-                  <Link
-                    href={item.url}
+                  <button
                     onClick={(e) => handleItemClick(e, item)}
                     className={cn(
                       "flex items-center p-2 cursor-pointer select-none grow",
@@ -131,7 +135,7 @@ export function NavMain({
                     <span className={cn("ml-2", state === "collapsed" && "hidden")}>
                       {item.title}
                     </span>
-                  </Link>
+                  </button>
                   {!state.includes("collapsed") && (
                     <CollapsibleTrigger asChild>
                       <button
