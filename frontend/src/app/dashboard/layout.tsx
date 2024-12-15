@@ -80,12 +80,21 @@ export default function DashboardLayout({
     }
     // Handle projects section
     else if (section === "projects") {
+      parentSection = "Projects"
+      parentPath = "/dashboard/projects"
+      
       if (subSection) {
-        parentSection = "Projects"
-        currentPage = subSection.charAt(0).toUpperCase() + subSection.slice(1)
-        parentPath = "/dashboard/projects"
+        if (subSection === "more") {
+          currentPage = "More"
+          showSeparator = true
+        } else {
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+          showSeparator = true
+        }
       } else {
-        parentSection = "Projects"
         showSeparator = false
       }
     }
