@@ -121,7 +121,10 @@ export function NavMain({
                     className={cn(
                       "flex items-center p-2 cursor-pointer select-none grow",
                       "hover:bg-transparent hover:text-current",
-                      hasActiveChild && "text-sidebar-accent-foreground font-medium"
+                      // Apply highlight styles based on sidebar state
+                      state === "collapsed" && "hover:bg-accent hover:text-accent-foreground",
+                      state === "collapsed" && (isActive || hasActiveChild) && "bg-accent text-accent-foreground",
+                      state !== "collapsed" && hasActiveChild && "text-sidebar-accent-foreground font-medium",
                     )}
                   >
                     {item.icon && <item.icon className="h-5 w-5" />}
