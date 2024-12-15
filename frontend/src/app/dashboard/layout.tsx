@@ -106,13 +106,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         }
       }
       // Handle sections with predefined items
-      else if (section in navigationMap) {
-        const navSection = navigationMap[section]
+      else if (typeof section === 'string' && section in navigationMap) {
+        const navSection = navigationMap[section as keyof typeof navigationMap]
         parentSection = navSection.parent
         parentPath = navSection.path
 
-        if (subSection && navSection.items && subSection in navSection.items) {
-          currentPage = navSection.items[subSection]
+        if ('items' in navSection && subSection && typeof subSection === 'string' && 
+            'items' in navSection && subSection in navSection.items) {
+          currentPage = navSection.items[subSection as keyof typeof navSection.items]
           showSeparator = true
         } else {
           showSeparator = false
