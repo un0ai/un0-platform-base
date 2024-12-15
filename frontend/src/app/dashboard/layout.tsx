@@ -73,8 +73,13 @@ export default function DashboardLayout({
     const section = pathParts[1]
     const subSection = pathParts[2]
 
+    // Handle about page with empty breadcrumb
+    if (section === "about") {
+      showSeparator = false
+      parentSection = ""
+    }
     // Handle projects section
-    if (section === "projects") {
+    else if (section === "projects") {
       if (subSection) {
         parentSection = "Projects"
         currentPage = subSection.charAt(0).toUpperCase() + subSection.slice(1)

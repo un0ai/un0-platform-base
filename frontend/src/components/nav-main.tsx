@@ -46,15 +46,17 @@ export function NavMain({
     []
   )
 
-  // Auto-expand parent when navigating directly to a child
+  // Auto-expand parent when navigating directly to a child or when switching from collapsed to expanded
   useEffect(() => {
     const parentItem = items.find(item => 
-      item.items?.some(subItem => pathname === subItem.url)
+      item.url === pathname || // Current category page
+      item.items?.some(subItem => pathname === subItem.url) // Or has active child
     )
-    if (parentItem && !expandedItems.includes(parentItem.title)) {
+    
+    if (parentItem && !expandedItems.includes(parentItem.title) && state !== "collapsed") {
       setExpandedItems(current => [...current, parentItem.title])
     }
-  }, [pathname, items, expandedItems, setExpandedItems])
+  }, [pathname, items, expandedItems, setExpandedItems, state])
 
   const isItemExpanded = useCallback(
     (title: string) => {
