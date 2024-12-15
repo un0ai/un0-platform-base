@@ -113,11 +113,11 @@ export function NavMain({
                   isActive={pathname === item.url}
                   size="lg"
                   className={cn(
-                    "flex w-full items-center",
-                    state === "collapsed" && "justify-center"
+                    "flex w-full items-center [&>svg]:!size-5",
+                    state === "collapsed" && "justify-center [&>svg]:!size-5"
                   )}
                 >
-                  {item.icon && <item.icon className="h-5 w-5" />}
+                  {item.icon && <item.icon />}
                   <div className={cn("grid flex-1 text-left leading-tight", state === "collapsed" && "hidden")}>
                     <span className="truncate font-semibold text-base">
                       {item.title}
