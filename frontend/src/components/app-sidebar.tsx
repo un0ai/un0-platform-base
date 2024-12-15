@@ -78,15 +78,15 @@ const data = {
       items: [
         {
           title: "Genesis",
-          url: "#",
+          url: "/dashboard/models/genesis",
         },
         {
           title: "Explorer",
-          url: "#",
+          url: "/dashboard/models/explorer",
         },
         {
           title: "Quantum",
-          url: "#",
+          url: "/dashboard/models/quantum",
         },
       ],
     },
@@ -97,19 +97,19 @@ const data = {
       items: [
         {
           title: "Introduction",
-          url: "#",
+          url: "/dashboard/docs/introduction",
         },
         {
           title: "Get Started",
-          url: "#",
+          url: "/dashboard/docs/get-started",
         },
         {
           title: "Tutorials",
-          url: "#",
+          url: "/dashboard/docs/tutorials",
         },
         {
           title: "Changelog",
-          url: "#",
+          url: "/dashboard/docs/changelog",
         },
       ],
     },
@@ -120,19 +120,19 @@ const data = {
       items: [
         {
           title: "General",
-          url: "#",
+          url: "/dashboard/settings/general",
         },
         {
           title: "Team",
-          url: "#",
+          url: "/dashboard/settings/team",
         },
         {
           title: "Billing",
-          url: "#",
+          url: "/dashboard/settings/billing",
         },
         {
           title: "Limits",
-          url: "#",
+          url: "/dashboard/settings/limits",
         },
       ],
     },
@@ -140,17 +140,17 @@ const data = {
   projects: [
     {
       name: "Design Engineering",
-      url: "#",
+      url: "/dashboard/projects/design-engineering",
       icon: Frame,
     },
     {
       name: "Sales & Marketing",
-      url: "#",
+      url: "/dashboard/projects/sales-marketing",
       icon: PieChart,
     },
     {
-      name: "Travel",
-      url: "#",
+      name: "Research & Development",
+      url: "/dashboard/projects/research-development",
       icon: Map,
     },
   ],
