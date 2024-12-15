@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { ChevronRight, type LucideIcon } from "lucide-react"
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 
 import {
   Collapsible,
@@ -45,6 +45,16 @@ export function NavMain({
     "nav-main:expanded-items",
     []
   )
+
+  // Auto-expand parent when navigating directly to a child
+  useEffect(() => {
+    const parentItem = items.find(item => 
+      item.items?.some(subItem => pathname === subItem.url)
+    )
+    if (parentItem && !expandedItems.includes(parentItem.title)) {
+      setExpandedItems(current => [...current, parentItem.title])
+    }
+  }, [pathname, items, expandedItems, setExpandedItems])
 
   const isItemExpanded = useCallback(
     (title: string) => {
@@ -115,7 +125,7 @@ export function NavMain({
             <Collapsible
               key={item.title}
               asChild
-              open={state !== "collapsed" && (isItemExpanded(item.title) || hasActiveChild)}
+              open={state !== "collapsed" && isItemExpanded(item.title)}
               className="group/collapsible"
             >
               <SidebarMenuItem>
