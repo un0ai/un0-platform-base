@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { AudioWaveform } from "lucide-react"
 
 import {
@@ -11,10 +12,13 @@ import {
 } from "@/components/ui/sidebar"
 
 export function TeamSwitcher() {
+  const pathname = usePathname()
+  const isActive = pathname === "/dashboard/about"
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton size="lg" asChild>
+        <SidebarMenuButton size="lg" asChild isActive={isActive}>
           <Link href="/dashboard/about" className="flex w-full items-center">
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
               <AudioWaveform className="size-4" />
