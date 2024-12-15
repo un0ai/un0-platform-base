@@ -8,6 +8,7 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
+  MessageCircle,
   Sparkles,
 } from "lucide-react"
 
@@ -85,40 +86,18 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings/billing/upgrade" className="flex w-full items-center gap-2">
-                  <Sparkles className="size-4" />
-                  Upgrade to Pro
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings/general" className="flex w-full items-center gap-2">
-                  <BadgeCheck className="size-4" />
-                  Account
+                <Link href="#" className="flex w-full items-center gap-2">
+                  <MessageCircle className="size-4" />
+                  Chat with un0
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings/billing" className="flex w-full items-center gap-2">
+                <Link href="#" className="flex w-full items-center gap-2">
                   <CreditCard className="size-4" />
-                  Billing
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings/notifications" className="flex w-full items-center gap-2">
-                  <Bell className="size-4" />
-                  Notifications
+                  Email support
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/signout" className="flex w-full items-center gap-2">
-                <LogOut className="size-4" />
-                Sign out
-              </Link>
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
