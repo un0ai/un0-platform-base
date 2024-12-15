@@ -19,8 +19,10 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import { usePersistedState } from "@/hooks/use-persisted-state"
+import { cn } from "@/lib/utils"
 
 export function NavMain({
   items,
@@ -37,6 +39,7 @@ export function NavMain({
   }[]
 }) {
   const pathname = usePathname()
+  const { state } = useSidebar()
   const [expandedItems, setExpandedItems] = usePersistedState<string[]>("nav-main:expanded-items", [])
 
   const isItemExpanded = useCallback((title: string) => {
@@ -59,55 +62,66 @@ export function NavMain({
           const isActive = pathname === item.url
           const hasActiveChild = item.items?.some(subItem => pathname === subItem.url)
 
-          // Render non-collapsible item
+          // Render non-collapsible item (Dashboard, Sales, etc)
           if (!item.items) {
             return (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton tooltip={item.title} asChild>
-                  <Link 
-                    href={item.url} 
-                    className="flex w-full items-center"
-                  >
-                    {item.icon && <item.icon />}
-                    <span>{item.title}</span>
+                <SidebarMenuButton tooltip={item.title} asChild isActive={isActive}>
+                  <Link href={item.url} className="flex w-full items-center">
+                    {item.icon && <item.icon className="h-5 w-5" />}
+                    <span className={cn("ml-2", state === "collapsed" && "hidden")}>
+                      {item.title}
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )
           }
 
-          // Render collapsible item
+          // Render collapsible item (Models, Playground, etc)
           return (
             <Collapsible
               key={item.title}
               asChild
-              open={isItemExpanded(item.title) || hasActiveChild}
+              open={state !== "collapsed" && (isItemExpanded(item.title) || hasActiveChild)}
               onOpenChange={() => toggleItem(item.title)}
               className="group/collapsible"
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title} asChild>
-                    <Link href={item.url} className="flex w-full items-center">
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                    </Link>
-                  </SidebarMenuButton>
+                  <div className={cn(
+                    "flex w-full items-center p-2 cursor-pointer select-none",
+                    "hover:bg-transparent hover:text-current",
+                    hasActiveChild && "text-sidebar-accent-foreground font-medium"
+                  )}>
+                    {item.icon && <item.icon className="h-5 w-5" />}
+                    <span className={cn("ml-2", state === "collapsed" && "hidden")}>
+                      {item.title}
+                    </span>
+                    <ChevronRight 
+                      className={cn(
+                        "ml-auto h-5 w-5 transition-transform duration-200",
+                        "group-data-[state=open]/collapsible:rotate-90",
+                        state === "collapsed" && "hidden"
+                      )} 
+                    />
+                  </div>
                 </CollapsibleTrigger>
-                <CollapsibleContent asChild>
-                  <SidebarMenuSub>
-                    {item.items.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
-                          <Link href={subItem.url}>
-                            {subItem.title}
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                </CollapsibleContent>
+                {state !== "collapsed" && (
+                  <CollapsibleContent asChild>
+                    <SidebarMenuSub>
+                      {item.items.map((subItem) => (
+                        <SidebarMenuSubItem key={subItem.title}>
+                          <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
+                            <Link href={subItem.url}>
+                              {subItem.title}
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                )}
               </SidebarMenuItem>
             </Collapsible>
           )

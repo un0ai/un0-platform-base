@@ -18,7 +18,6 @@ import { usePathname } from "next/navigation"
 const navigationMap = {
   playground: {
     parent: "Playground",
-    title: "Overview",
     path: "/dashboard/playground",
     items: [
       { title: "Tool1", url: "/dashboard/playground/tool1" },
@@ -28,7 +27,6 @@ const navigationMap = {
   },
   models: {
     parent: "Models",
-    title: "Overview",
     path: "/dashboard/models",
     items: [
       { title: "Genesis", url: "/dashboard/models/genesis" },
@@ -38,17 +36,15 @@ const navigationMap = {
   },
   docs: {
     parent: "Documentation",
-    title: "Overview",
     path: "/dashboard/docs",
     items: [
-      { title: "Introduction", url: "/dashboard/docs/introduction" },
+      { title: "Tutorials", url: "/dashboard/docs/tutorials" },
       { title: "Get Started", url: "/dashboard/docs/get-started" },
       { title: "Changelog", url: "/dashboard/docs/changelog" },
     ],
   },
   settings: {
     parent: "Settings",
-    title: "Overview",
     path: "/dashboard/settings",
     items: [
       { title: "General", url: "/dashboard/settings/general" },
@@ -68,15 +64,28 @@ export default function DashboardLayout({
   const pathParts = pathname.split("/").filter(Boolean)
   
   // Get breadcrumb info
+  let showSeparator = true
   let parentSection = "Dashboard"
-  let currentPage = "Overview"
+  let currentPage = null
   let parentPath = "/dashboard"
   
   if (pathParts.length > 1) {
     const section = pathParts[1]
     const subSection = pathParts[2]
-    
-    if (section in navigationMap) {
+
+    // Handle projects section
+    if (section === "projects") {
+      if (subSection) {
+        parentSection = "Projects"
+        currentPage = subSection.charAt(0).toUpperCase() + subSection.slice(1)
+        parentPath = "/dashboard/projects"
+      } else {
+        parentSection = "Projects"
+        showSeparator = false
+      }
+    }
+    // Handle other sections
+    else if (section in navigationMap) {
       parentSection = navigationMap[section].parent
       parentPath = navigationMap[section].path
       if (subSection) {
@@ -84,10 +93,11 @@ export default function DashboardLayout({
         if (subItem) {
           currentPage = subItem.title
         }
-      } else {
-        currentPage = navigationMap[section].title
       }
     }
+  } else {
+    // We're on the dashboard page
+    showSeparator = false
   }
 
   return (
@@ -105,10 +115,14 @@ export default function DashboardLayout({
                     {parentSection}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>{currentPage}</BreadcrumbPage>
-                </BreadcrumbItem>
+                {showSeparator && currentPage && (
+                  <>
+                    <BreadcrumbSeparator className="hidden md:block" />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>{currentPage}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </>
+                )}
               </BreadcrumbList>
             </Breadcrumb>
           </div>

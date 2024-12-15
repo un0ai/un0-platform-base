@@ -45,7 +45,7 @@ export function NavProjects({
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild isActive={pathname === item.url}>
               <Link href={item.url} className="flex w-full items-center gap-2">
                 <item.icon className="size-4" />
                 <span>{item.name}</span>
@@ -87,7 +87,7 @@ export function NavProjects({
           </SidebarMenuItem>
         ))}
         <SidebarMenuItem>
-          <SidebarMenuButton asChild className="text-sidebar-foreground/70">
+          <SidebarMenuButton asChild isActive={pathname === "/dashboard/projects"} className="text-sidebar-foreground/70">
             <Link href="/dashboard/projects" className="flex w-full items-center gap-2">
               <MoreHorizontal className="size-4 text-sidebar-foreground/70" />
               <span>More</span>
