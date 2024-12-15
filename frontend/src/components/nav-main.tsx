@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { ChevronRight, type LucideIcon } from "lucide-react"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import {
   Collapsible,
@@ -41,10 +41,7 @@ export function NavMain({
   const pathname = usePathname()
   const router = useRouter()
   const { state } = useSidebar()
-  const [expandedItems, setExpandedItems] = usePersistedState<string[]>(
-    "nav-main:expanded-items",
-    []  // Initialize with an empty array to have all categories collapsed by default
-  )
+  const [expandedItems, setExpandedItems] = useState<string[]>([])
 
   // Memoize the parent item lookup
   const getParentItem = useCallback((pathname: string) => {
@@ -59,7 +56,7 @@ export function NavMain({
     const parentItem = getParentItem(pathname)
     
     if (parentItem && !expandedItems.includes(parentItem.title) && state !== "collapsed") {
-      setExpandedItems(current => [...current, parentItem.title])
+      setExpandedItems((current: string[]) => [...current, parentItem.title])
     }
   }, [pathname, getParentItem, expandedItems, setExpandedItems, state])
 
@@ -70,7 +67,7 @@ export function NavMain({
 
   const toggleItem = useCallback(
     (title: string) => {
-      setExpandedItems((current) =>
+      setExpandedItems((current: string[]) =>
         current.includes(title)
           ? current.filter((t) => t !== title)
           : [...current, title]
@@ -112,16 +109,20 @@ export function NavMain({
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton
-                  tooltip={item.title}
-                  asChild
-                  isActive={isActive}
+                  onClick={(e) => handleItemClick(e, item)}
+                  isActive={pathname === item.url}
+                  size="lg"
+                  className={cn(
+                    "flex w-full items-center",
+                    state === "collapsed" && "justify-center"
+                  )}
                 >
-                  <Link href={item.url} className="flex w-full items-center">
-                    {item.icon && <item.icon className="h-5 w-5" />}
-                    <span className={cn("ml-2", state === "collapsed" && "hidden")}>
+                  {item.icon && <item.icon className="h-5 w-5" />}
+                  <div className={cn("grid flex-1 text-left leading-tight", state === "collapsed" && "hidden")}>
+                    <span className="truncate font-semibold text-base">
                       {item.title}
                     </span>
-                  </Link>
+                  </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )
@@ -180,6 +181,7 @@ export function NavMain({
                           <SidebarMenuSubButton
                             asChild
                             isActive={pathname === subItem.url}
+                            size="md"
                           >
                             <Link href={subItem.url}>{subItem.title}</Link>
                           </SidebarMenuSubButton>
