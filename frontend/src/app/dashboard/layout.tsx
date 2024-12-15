@@ -1,5 +1,8 @@
 "use client"
 
+import * as React from "react"
+import { usePathname } from "next/navigation"
+
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/components/ui/mode-toggle"
@@ -12,107 +15,71 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { usePathname } from "next/navigation"
 
-// Navigation structure mapping
-const navigationMap = {
-  playground: {
-    parent: "Playground",
-    path: "/dashboard/playground",
-    items: [
-      { title: "Tool1", url: "/dashboard/playground/tool1" },
-      { title: "Tool2", url: "/dashboard/playground/tool2" },
-      { title: "Tool3", url: "/dashboard/playground/tool3" },
-    ],
-  },
-  models: {
-    parent: "Models",
-    path: "/dashboard/models",
-    items: [
-      { title: "Genesis", url: "/dashboard/models/genesis" },
-      { title: "Explorer", url: "/dashboard/models/explorer" },
-      { title: "Quantum", url: "/dashboard/models/quantum" },
-    ],
-  },
-  docs: {
-    parent: "Documentation",
-    path: "/dashboard/docs",
-    items: [
-      { title: "Tutorials", url: "/dashboard/docs/tutorials" },
-      { title: "Get Started", url: "/dashboard/docs/get-started" },
-      { title: "Changelog", url: "/dashboard/docs/changelog" },
-    ],
-  },
-  settings: {
-    parent: "Settings",
-    path: "/dashboard/settings",
-    items: [
-      { title: "General", url: "/dashboard/settings/general" },
-      { title: "Team", url: "/dashboard/settings/team" },
-      { title: "Limits", url: "/dashboard/settings/limits" },
-      { title: "Billing", url: "/dashboard/settings/billing" },
-    ],
-  },
+interface DashboardLayoutProps {
+  children: React.ReactNode
 }
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname()
-  const pathParts = pathname.split("/").filter(Boolean)
-  
-  // Get breadcrumb info
-  let showSeparator = true
-  let parentSection = "Dashboard"
-  let currentPage = null
-  let parentPath = "/dashboard"
-  
-  if (pathParts.length > 1) {
-    const section = pathParts[1]
-    const subSection = pathParts[2]
 
-    // Handle about page with empty breadcrumb
-    if (section === "about") {
-      showSeparator = false
-      parentSection = ""
-    }
-    // Handle projects section
-    else if (section === "projects") {
-      parentSection = "Projects"
-      parentPath = "/dashboard/projects"
-      
-      if (subSection) {
-        if (subSection === "more") {
-          currentPage = "More"
-          showSeparator = true
-        } else {
-          currentPage = subSection
-            .split("-")
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ")
-          showSeparator = true
-        }
-      } else {
+  // Memoize breadcrumb info calculation
+  const breadcrumbInfo = React.useMemo(() => {
+    let showSeparator = true
+    let parentSection = "Dashboard"
+    let currentPage = null
+    let parentPath = "/dashboard"
+
+    const pathParts = pathname.split("/").filter(Boolean)
+    if (pathParts.length > 1) {
+      const section = pathParts[1]
+      const subSection = pathParts[2]
+
+      // Handle about page with empty breadcrumb
+      if (section === "about") {
         showSeparator = false
+        parentSection = ""
       }
-    }
-    // Handle other sections
-    else if (section in navigationMap) {
-      parentSection = navigationMap[section].parent
-      parentPath = navigationMap[section].path
-      if (subSection) {
-        const subItem = navigationMap[section].items.find(item => item.url.endsWith(subSection))
-        if (subItem) {
-          currentPage = subItem.title
+      // Handle projects section
+      else if (section === "projects") {
+        parentSection = "Projects"
+        parentPath = "/dashboard/projects"
+
+        if (subSection) {
+          if (subSection === "more") {
+            currentPage = "More"
+            showSeparator = true
+          } else {
+            currentPage = subSection
+              .split("-")
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")
+            showSeparator = true
+          }
+        } else {
+          showSeparator = false
         }
       }
+      // Handle other sections
+      else if (section === "settings" && pathParts.length > 2) {
+        parentSection = "Settings"
+        currentPage = pathParts[2].charAt(0).toUpperCase() + pathParts[2].slice(1)
+      } else if (section === "projects" && pathParts.length > 2) {
+        parentSection = "Projects"
+        currentPage = pathParts[2]
+          .split("-")
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+      } else {
+        parentSection = section.charAt(0).toUpperCase() + section.slice(1)
+      }
+    } else {
+      // We're on the dashboard page
+      showSeparator = false
     }
-  } else {
-    // We're on the dashboard page
-    showSeparator = false
-  }
+
+    return { showSeparator, parentSection, currentPage, parentPath }
+  }, [pathname])
 
   return (
     <SidebarProvider>
@@ -125,15 +92,15 @@ export default function DashboardLayout({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href={parentPath}>
-                    {parentSection}
+                  <BreadcrumbLink href={breadcrumbInfo.parentPath}>
+                    {breadcrumbInfo.parentSection}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                {showSeparator && currentPage && (
+                {breadcrumbInfo.showSeparator && breadcrumbInfo.currentPage && (
                   <>
                     <BreadcrumbSeparator className="hidden md:block" />
                     <BreadcrumbItem>
-                      <BreadcrumbPage>{currentPage}</BreadcrumbPage>
+                      <BreadcrumbPage>{breadcrumbInfo.currentPage}</BreadcrumbPage>
                     </BreadcrumbItem>
                   </>
                 )}

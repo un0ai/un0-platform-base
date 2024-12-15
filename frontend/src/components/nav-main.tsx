@@ -46,22 +46,25 @@ export function NavMain({
     []
   )
 
-  // Auto-expand parent when navigating directly to a child or when switching from collapsed to expanded
-  useEffect(() => {
-    const parentItem = items.find(item => 
+  // Memoize the parent item lookup
+  const getParentItem = useCallback((pathname: string) => {
+    return items.find(item => 
       item.url === pathname || // Current category page
       item.items?.some(subItem => pathname === subItem.url) // Or has active child
     )
+  }, [items])
+
+  // Auto-expand parent when navigating directly to a child or when switching from collapsed to expanded
+  useEffect(() => {
+    const parentItem = getParentItem(pathname)
     
     if (parentItem && !expandedItems.includes(parentItem.title) && state !== "collapsed") {
       setExpandedItems(current => [...current, parentItem.title])
     }
-  }, [pathname, items, expandedItems, setExpandedItems, state])
+  }, [pathname, getParentItem, expandedItems, setExpandedItems, state])
 
   const isItemExpanded = useCallback(
-    (title: string) => {
-      return expandedItems.includes(title)
-    },
+    (title: string) => expandedItems.includes(title),
     [expandedItems]
   )
 
@@ -82,10 +85,12 @@ export function NavMain({
       e.stopPropagation()
       
       if (state === "collapsed") {
+        router.prefetch(item.url)
         router.push(item.url)
       } else if (item.items) {
         toggleItem(item.title)
       } else {
+        router.prefetch(item.url)
         router.push(item.url)
       }
     },

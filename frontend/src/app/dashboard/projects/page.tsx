@@ -1,8 +1,10 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Frame, Map, MoreHorizontal, PieChart } from "lucide-react"
+import { useEffect } from "react"
 
 const projectCategories = [
   {
@@ -36,6 +38,15 @@ const projectCategories = [
 ]
 
 export default function ProjectsPage() {
+  const router = useRouter()
+
+  // Prefetch all project category routes
+  useEffect(() => {
+    projectCategories.forEach(category => {
+      router.prefetch(category.url)
+    })
+  }, [router])
+
   return (
     <div className="space-y-6">
       <div>
@@ -46,7 +57,11 @@ export default function ProjectsPage() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {projectCategories.map((category) => (
-          <Link key={category.name} href={category.url}>
+          <Link 
+            key={category.name} 
+            href={category.url}
+            prefetch={true}
+          >
             <Card className="hover:bg-muted/50 transition-colors">
               <CardHeader className="flex flex-row items-center gap-4">
                 <div className="rounded-lg bg-primary/10 p-2">

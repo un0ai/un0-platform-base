@@ -28,8 +28,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
-const data = {
+// Static navigation data
+const navigationData = {
   user: {
     name: "shadcn",
     email: "m@example.com",
@@ -162,20 +162,21 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+// Memoize AppSidebar component
+export const AppSidebar = React.memo(function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.navProjects} />
+        <NavMain items={navigationData.navMain} />
+        <NavProjects projects={navigationData.navProjects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={navigationData.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
-}
+})
