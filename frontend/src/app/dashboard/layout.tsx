@@ -16,6 +16,52 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
+// Navigation structure mapping
+const navigationMap = {
+  models: {
+    parent: "Models",
+    path: "/dashboard/models",
+    items: {
+      genesis: "Genesis",
+      explorer: "Explorer",
+      quantum: "Quantum",
+    },
+  },
+  playground: {
+    parent: "Playground",
+    path: "/dashboard/playground",
+    items: {
+      tool1: "Tool1",
+      tool2: "Tool2",
+      tool3: "Tool3",
+    },
+  },
+  docs: {
+    parent: "Documentation",
+    path: "/dashboard/docs",
+    items: {
+      introduction: "Introduction",
+      "get-started": "Get Started",
+      tutorials: "Tutorials",
+      changelog: "Changelog",
+    },
+  },
+  settings: {
+    parent: "Settings",
+    path: "/dashboard/settings",
+    items: {
+      general: "General",
+      team: "Team",
+      billing: "Billing",
+      limits: "Limits",
+    },
+  },
+  projects: {
+    parent: "Projects",
+    path: "/dashboard/projects",
+  },
+}
+
 interface DashboardLayoutProps {
   children: React.ReactNode
 }
@@ -48,30 +94,34 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         if (subSection) {
           if (subSection === "more") {
             currentPage = "More"
-            showSeparator = true
           } else {
             currentPage = subSection
               .split("-")
               .map(word => word.charAt(0).toUpperCase() + word.slice(1))
               .join(" ")
-            showSeparator = true
           }
+          showSeparator = true
+        } else {
+          showSeparator = false
+        }
+      }
+      // Handle sections with predefined items
+      else if (section in navigationMap) {
+        const navSection = navigationMap[section]
+        parentSection = navSection.parent
+        parentPath = navSection.path
+
+        if (subSection && navSection.items && subSection in navSection.items) {
+          currentPage = navSection.items[subSection]
+          showSeparator = true
         } else {
           showSeparator = false
         }
       }
       // Handle other sections
-      else if (section === "settings" && pathParts.length > 2) {
-        parentSection = "Settings"
-        currentPage = pathParts[2].charAt(0).toUpperCase() + pathParts[2].slice(1)
-      } else if (section === "projects" && pathParts.length > 2) {
-        parentSection = "Projects"
-        currentPage = pathParts[2]
-          .split("-")
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ")
-      } else {
+      else {
         parentSection = section.charAt(0).toUpperCase() + section.slice(1)
+        showSeparator = false
       }
     } else {
       // We're on the dashboard page
