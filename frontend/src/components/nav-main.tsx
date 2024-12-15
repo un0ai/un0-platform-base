@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { ChevronRight, type LucideIcon } from "lucide-react"
 import { useCallback } from "react"
 
@@ -39,6 +39,7 @@ export function NavMain({
   }[]
 }) {
   const pathname = usePathname()
+  const router = useRouter()
   const { state } = useSidebar()
   const [expandedItems, setExpandedItems] = usePersistedState<string[]>("nav-main:expanded-items", [])
 
@@ -53,6 +54,18 @@ export function NavMain({
         : [...current, title]
     )
   }, [setExpandedItems])
+
+  const handleItemClick = useCallback((item: typeof items[0], e: React.MouseEvent) => {
+    if (state === "collapsed") {
+      e.preventDefault()
+      e.stopPropagation()
+      router.push(item.url)
+    } else if (item.items) {
+      e.preventDefault()
+      e.stopPropagation()
+      toggleItem(item.title)
+    }
+  }, [state, router, toggleItem])
 
   return (
     <SidebarGroup>
@@ -84,29 +97,30 @@ export function NavMain({
               key={item.title}
               asChild
               open={state !== "collapsed" && (isItemExpanded(item.title) || hasActiveChild)}
-              onOpenChange={() => toggleItem(item.title)}
               className="group/collapsible"
             >
               <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                  <div className={cn(
+                <div 
+                  onClick={(e) => handleItemClick(item, e)}
+                  className={cn(
                     "flex w-full items-center p-2 cursor-pointer select-none",
                     "hover:bg-transparent hover:text-current",
                     hasActiveChild && "text-sidebar-accent-foreground font-medium"
-                  )}>
-                    {item.icon && <item.icon className="h-5 w-5" />}
-                    <span className={cn("ml-2", state === "collapsed" && "hidden")}>
-                      {item.title}
-                    </span>
+                  )}
+                >
+                  {item.icon && <item.icon className="h-5 w-5" />}
+                  <span className={cn("ml-2", state === "collapsed" && "hidden")}>
+                    {item.title}
+                  </span>
+                  {!state.includes("collapsed") && (
                     <ChevronRight 
                       className={cn(
                         "ml-auto h-5 w-5 transition-transform duration-200",
-                        "group-data-[state=open]/collapsible:rotate-90",
-                        state === "collapsed" && "hidden"
+                        "group-data-[state=open]/collapsible:rotate-90"
                       )} 
                     />
-                  </div>
-                </CollapsibleTrigger>
+                  )}
+                </div>
                 {state !== "collapsed" && (
                   <CollapsibleContent asChild>
                     <SidebarMenuSub>
