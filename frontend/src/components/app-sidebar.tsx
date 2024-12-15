@@ -143,7 +143,7 @@ const data = {
       ],
     },
   ],
-  projects: [
+  navProjects: [
     {
       name: "Design Engineering",
       url: "/dashboard/projects/design-engineering",
@@ -166,11 +166,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={data.navProjects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
