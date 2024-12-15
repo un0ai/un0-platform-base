@@ -1,5 +1,7 @@
-import { Tool1 } from "@/components/features/Tool1"
+"use client"
 
 export default function Tool1Page() {
-  return <Tool1 />
+  return (
+    <div>Tool1 Content</div>
+  )
 }

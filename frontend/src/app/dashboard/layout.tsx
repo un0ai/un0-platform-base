@@ -14,15 +14,81 @@ import {
 } from "@/components/ui/breadcrumb"
 import { usePathname } from "next/navigation"
 
+// Navigation structure mapping
+const navigationMap = {
+  playground: {
+    parent: "Playground",
+    title: "Overview",
+    path: "/dashboard/playground",
+    items: [
+      { title: "Tool1", url: "/dashboard/playground/tool1" },
+      { title: "Tool2", url: "/dashboard/playground/tool2" },
+      { title: "Tool3", url: "/dashboard/playground/tool3" },
+    ],
+  },
+  models: {
+    parent: "Models",
+    title: "Overview",
+    path: "/dashboard/models",
+    items: [
+      { title: "Genesis", url: "/dashboard/models/genesis" },
+      { title: "Explorer", url: "/dashboard/models/explorer" },
+      { title: "Quantum", url: "/dashboard/models/quantum" },
+    ],
+  },
+  docs: {
+    parent: "Documentation",
+    title: "Overview",
+    path: "/dashboard/docs",
+    items: [
+      { title: "Introduction", url: "/dashboard/docs/introduction" },
+      { title: "Get Started", url: "/dashboard/docs/get-started" },
+      { title: "Changelog", url: "/dashboard/docs/changelog" },
+    ],
+  },
+  settings: {
+    parent: "Settings",
+    title: "Overview",
+    path: "/dashboard/settings",
+    items: [
+      { title: "General", url: "/dashboard/settings/general" },
+      { title: "Team", url: "/dashboard/settings/team" },
+      { title: "Limits", url: "/dashboard/settings/limits" },
+      { title: "Billing", url: "/dashboard/settings/billing" },
+    ],
+  },
+}
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const currentPage = pathname === "/dashboard" 
-    ? "Overview"
-    : pathname.split("/").pop()?.replace(/^\w/, c => c.toUpperCase()) || "Overview"
+  const pathParts = pathname.split("/").filter(Boolean)
+  
+  // Get breadcrumb info
+  let parentSection = "Dashboard"
+  let currentPage = "Overview"
+  let parentPath = "/dashboard"
+  
+  if (pathParts.length > 1) {
+    const section = pathParts[1]
+    const subSection = pathParts[2]
+    
+    if (section in navigationMap) {
+      parentSection = navigationMap[section].parent
+      parentPath = navigationMap[section].path
+      if (subSection) {
+        const subItem = navigationMap[section].items.find(item => item.url.endsWith(subSection))
+        if (subItem) {
+          currentPage = subItem.title
+        }
+      } else {
+        currentPage = navigationMap[section].title
+      }
+    }
+  }
 
   return (
     <SidebarProvider>
@@ -35,8 +101,8 @@ export default function DashboardLayout({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/dashboard">
-                    Dashboard
+                  <BreadcrumbLink href={parentPath}>
+                    {parentSection}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />

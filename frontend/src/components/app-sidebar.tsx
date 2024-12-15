@@ -8,8 +8,10 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboard,
   Map,
   PieChart,
+  PlayCircle,
   Settings2,
   SquareTerminal,
 } from "lucide-react"
@@ -52,22 +54,26 @@ const data = {
   ],
   navMain: [
     {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
       title: "Playground",
       url: "#",
-      icon: SquareTerminal,
-      isActive: true,
+      icon: PlayCircle,
       items: [
         {
           title: "Tool1",
-          url: "/dashboard/tool1",
+          url: "/dashboard/playground/tool1",
         },
         {
           title: "Tool2",
-          url: "/dashboard/tool2",
+          url: "/dashboard/playground/tool2",
         },
         {
           title: "Tool3",
-          url: "/dashboard/tool3",
+          url: "/dashboard/playground/tool3",
         },
       ],
     },
