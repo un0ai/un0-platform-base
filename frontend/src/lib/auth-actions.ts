@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 export async function login(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -26,7 +26,7 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -54,18 +54,19 @@ export async function signup(formData: FormData) {
 }
 
 export async function signout() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
+
   if (error) {
-    console.log(error);
     redirect("/error");
   }
 
-  redirect("/logout");
+  revalidatePath("/", "layout");
+  redirect("/");
 }
 
 export async function signInWithGoogle() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
@@ -74,11 +75,17 @@ export async function signInWithGoogle() {
         access_type: "offline",
         prompt: "consent",
       },
+      scopes: "email profile",
     },
   });
 
   if (error) {
     console.error("Google sign-in error:", error);
+    redirect("/error");
+  }
+
+  if (!data?.url) {
+    console.error("No redirect URL received from Google auth");
     redirect("/error");
   }
 
