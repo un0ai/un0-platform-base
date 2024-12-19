@@ -10,23 +10,19 @@ export async function GET(request: Request) {
 
     if (code) {
       const supabase = await createClient()
-      
-      // Exchange the code for a session
       const { error } = await supabase.auth.exchangeCodeForSession(code)
 
       if (error) {
         console.error('Error exchanging code for session:', error)
-        return NextResponse.redirect(new URL('/error', request.url))
+        return NextResponse.redirect(new URL('/auth/error', requestUrl.origin))
       }
 
-      // Redirect to the dashboard on success
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      return NextResponse.redirect(new URL('/dashboard', requestUrl.origin))
     }
 
-    // If no code, redirect to home page
-    return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL('/', requestUrl.origin))
   } catch (error) {
     console.error('Error in callback route:', error)
-    return NextResponse.redirect(new URL('/error', request.url))
+    return NextResponse.redirect(new URL('/auth/error', new URL(request.url).origin))
   }
 }
