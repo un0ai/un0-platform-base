@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/components/ui/mode-toggle"
-import { AuthButtons } from "@/components/ui/auth-buttons"
 import { Separator } from "@/components/ui/separator"
 import {
   Breadcrumb,
@@ -160,7 +159,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </Breadcrumb>
           </div>
           <div className="flex items-center gap-2 px-4 ml-auto">
-            <AuthButtons />
             <ModeToggle />
           </div>
         </header>
