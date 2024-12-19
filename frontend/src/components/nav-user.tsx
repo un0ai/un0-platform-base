@@ -60,7 +60,8 @@ export function NavUser() {
   const router = useRouter()
   const supabase = createClient()
   const [userData, setUserData] = useState<UserData | null>(null)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [newName, setNewName] = useState("")
 
   useEffect(() => {
@@ -108,7 +109,7 @@ export function NavUser() {
 
       if (!error) {
         setUserData(prev => prev ? { ...prev, name: newName } : null)
-        setIsOpen(false)
+        setIsSheetOpen(false)
       }
     }
   }
@@ -131,131 +132,137 @@ export function NavUser() {
   }
 
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={avatarSrc} alt={displayName} />
-                <AvatarFallback className="rounded-lg">
-                  {userData ? userData.name?.[0].toUpperCase() : 'G'}
-                </AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{displayName}</span>
-                <span className="truncate text-xs">{displayEmail}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
-            sideOffset={4}
-          >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={avatarSrc} alt={displayName} />
-                  <AvatarFallback className="rounded-lg">
-                    {userData ? userData.name?.[0].toUpperCase() : 'G'}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{displayName}</span>
-                  <span className="truncate text-xs">{displayEmail}</span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              {userData ? (
-                <>
-                  <DropdownMenuItem asChild>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start"
-                      onClick={handleSignOut}
-                    >
-                      <LogOut className="size-4 mr-2" />
-                      Sign out
-                    </Button>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                      <SheetTrigger asChild>
-                        <div className="flex w-full items-center gap-2 px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 cursor-pointer">
+    <>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                >
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={avatarSrc} alt={displayName} />
+                    <AvatarFallback className="rounded-lg">
+                      {userData ? userData.name?.[0].toUpperCase() : 'G'}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">{displayName}</span>
+                    <span className="truncate text-xs">{displayEmail}</span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                side={isMobile ? "bottom" : "right"}
+                align="end"
+                sideOffset={4}
+              >
+                <DropdownMenuLabel className="p-0 font-normal">
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src={avatarSrc} alt={displayName} />
+                      <AvatarFallback className="rounded-lg">
+                        {userData ? userData.name?.[0].toUpperCase() : 'G'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">{displayName}</span>
+                      <span className="truncate text-xs">{displayEmail}</span>
+                    </div>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  {userData ? (
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start"
+                          onClick={handleSignOut}
+                        >
+                          <LogOut className="size-4 mr-2" />
+                          Sign out
+                        </Button>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onSelect={(event) => {
+                          event.preventDefault()
+                          setIsSheetOpen(true)
+                          setIsDropdownOpen(false)
+                        }}
+                      >
+                        <div className="flex w-full items-center gap-2">
                           <Settings className="size-4" />
                           Profile Settings
                         </div>
-                      </SheetTrigger>
-                      <SheetContent>
-                        <SheetHeader>
-                          <SheetTitle>Profile Settings</SheetTitle>
-                          <SheetDescription>
-                            Update your profile information here.
-                          </SheetDescription>
-                        </SheetHeader>
-                        <div className="grid gap-4 py-4">
-                          <div className="grid gap-2">
-                            <Label htmlFor="name">Name</Label>
-                            <Input
-                              id="name"
-                              value={newName}
-                              onChange={(e) => setNewName(e.target.value)}
-                            />
-                          </div>
-                          <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                              id="email"
-                              value={userData?.email || ''}
-                              disabled
-                            />
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <Button onClick={handleUpdateProfile}>
-                            Save changes
-                          </Button>
-                        </div>
-                      </SheetContent>
-                    </Sheet>
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <DropdownMenuItem asChild>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start"
+                        onClick={() => router.push('/login')}
+                      >
+                        <LogIn className="size-4 mr-2" />
+                        Sign in
+                      </Button>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem asChild>
+                    <Link href="#" className="flex w-full items-center gap-2">
+                      <MessageCircle className="size-4" />
+                      Chat with un0
+                    </Link>
                   </DropdownMenuItem>
-                </>
-              ) : (
-                <DropdownMenuItem asChild>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() => router.push('/login')}
-                  >
-                    <LogIn className="size-4 mr-2" />
-                    Sign in
-                  </Button>
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem asChild>
-                <Link href="#" className="flex w-full items-center gap-2">
-                  <MessageCircle className="size-4" />
-                  Chat with un0
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="#" className="flex w-full items-center gap-2">
-                  <CreditCard className="size-4" />
-                  Email support
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
+                  <DropdownMenuItem asChild>
+                    <Link href="#" className="flex w-full items-center gap-2">
+                      <CreditCard className="size-4" />
+                      Email support
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <SheetContent className="z-[100]">
+          <SheetHeader>
+            <SheetTitle>Profile Settings</SheetTitle>
+            <SheetDescription>
+              Update your profile information here.
+            </SheetDescription>
+          </SheetHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                value={userData?.email || ''}
+                disabled
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            <Button onClick={handleUpdateProfile}>
+              Save changes
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
   )
 }
