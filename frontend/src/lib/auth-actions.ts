@@ -32,13 +32,17 @@ export async function signup(formData: FormData) {
   // in practice, you should validate your inputs
   const firstName = formData.get("first-name") as string;
   const lastName = formData.get("last-name") as string;
+  const email = formData.get("email") as string;
+  const fullName = `${firstName} ${lastName}`.trim();
+  
   const data = {
-    email: formData.get("email") as string,
+    email: email,
     password: formData.get("password") as string,
     options: {
       data: {
-        full_name: `${firstName + " " + lastName}`,
-        email: formData.get("email") as string,
+        full_name: fullName,
+        email: email,
+        avatar_url: null // Will be generated from initials in the UI
       },
     },
   };
@@ -46,6 +50,7 @@ export async function signup(formData: FormData) {
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
+    console.error('Signup error:', error);
     redirect("/error");
   }
 

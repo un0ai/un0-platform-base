@@ -18,7 +18,7 @@ import {
 
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
+import { UserNavWrapper } from "@/components/user-nav-wrapper"
 import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
@@ -30,11 +30,6 @@ import {
 
 // Static navigation data
 const navigationData = {
-  user: {
-    name: "[ guest user ]",
-    email: "→ log in to your dashboard",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "Acme Inc",
@@ -143,40 +138,40 @@ const navigationData = {
       ],
     },
   ],
-  navProjects: [
+  projects: [
     {
-      name: "Design Engineering",
-      url: "/dashboard/projects/design-engineering",
+      name: "Project Alpha",
+      url: "/dashboard/projects/alpha",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
-      url: "/dashboard/projects/sales-marketing",
-      icon: PieChart,
-    },
-    {
-      name: "Research & Development",
-      url: "/dashboard/projects/research-development",
+      name: "Project Beta",
+      url: "/dashboard/projects/beta",
       icon: Map,
     },
-  ],
+    {
+      name: "Project Gamma",
+      url: "/dashboard/projects/gamma",
+      icon: Bot,
+    }
+  ]
 }
 
 // Memoize AppSidebar component
 export const AppSidebar = React.memo(function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar {...props}>
+      <SidebarRail />
       <SidebarHeader>
-        <TeamSwitcher />
+        <TeamSwitcher teams={navigationData.teams} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navigationData.navMain} />
-        <NavProjects projects={navigationData.navProjects} />
+        <NavProjects projects={navigationData.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={navigationData.user} />
+        <UserNavWrapper />
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   )
 })
