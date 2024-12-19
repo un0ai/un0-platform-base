@@ -36,7 +36,7 @@ export default function GetStartedPage() {
           <section>
             <h3 className="text-lg font-semibold mb-2">Next Steps</h3>
             <p className="text-muted-foreground">
-              Once you've completed the initial setup, explore our tutorials section for detailed guides
+              Once you&apos;ve completed the initial setup, explore our tutorials section for detailed guides
               on specific tools and advanced features. Join our community forum to connect with other users
               and share experiences.
             </p>

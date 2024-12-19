@@ -13,7 +13,7 @@ export default function AboutPage() {
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold">About the Project</h2>
         <p className="leading-7">
-        un0.ai is a platform designed to automate and manage AI agents' lifecycle by leveraging a comprehensive MLOps approach. It integrates essential components such as data pipelines, model training, deployment, and observability into a unified system. <br/>The platform supports real-time monitoring and provides tools for orchestrating workflows, ensuring the efficient operation and scalability of ML systems and autonomous AI agents.
+        un0.ai is a platform designed to automate and manage AI agents&apos; lifecycle by leveraging a comprehensive MLOps approach. It integrates essential components such as data pipelines, model training, deployment, and observability into a unified system. <br/>The platform supports real-time monitoring and provides tools for orchestrating workflows, ensuring the efficient operation and scalability of ML systems and autonomous AI agents.
         </p>
         
         <div className="grid gap-4 md:grid-cols-2">

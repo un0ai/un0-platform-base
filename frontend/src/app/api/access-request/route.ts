@@ -1,4 +1,4 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
+import { createClient } from '@supabase/supabase-js'
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
@@ -7,7 +7,16 @@ export async function POST(request: Request) {
     const requestData = await request.json()
     const { fullName, email, reason } = requestData
 
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase environment variables')
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: { persistSession: false }
+    })
 
     const { error } = await supabase
       .from("access_requests")
@@ -20,14 +29,9 @@ export async function POST(request: Request) {
         },
       ])
 
-    if (error) {
-      throw error
-    }
+    if (error) throw error
 
-    return NextResponse.json(
-      { message: "Access request submitted successfully" },
-      { status: 201 }
-    )
+    return NextResponse.json({ message: "Access request submitted successfully" })
   } catch (error) {
     console.error("Error submitting access request:", error)
     return NextResponse.json(
