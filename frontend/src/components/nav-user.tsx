@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   BadgeCheck,
   Bell,
@@ -32,6 +32,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { signout } from "@/lib/auth-actions"
+import { Button } from "./ui/button"
 
 export function NavUser({
   user,
@@ -44,6 +46,8 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const pathname = usePathname()
+  const router = useRouter()
+  const isGuest = user.name === "[ guest user ]"
 
   return (
     <SidebarMenu>
@@ -56,7 +60,7 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{user.name.charAt(2)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -75,7 +79,7 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">{user.name.charAt(2)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
@@ -98,6 +102,34 @@ export function NavUser({
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            {isGuest ? (
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-2"
+                    onClick={() => router.push("/login")}
+                  >
+                    <LogOut className="size-4" />
+                    Login
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            ) : (
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-2 text-destructive"
+                    onClick={() => signout()}
+                  >
+                    <LogOut className="size-4" />
+                    Logout
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
