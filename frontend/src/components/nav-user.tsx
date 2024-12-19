@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   BadgeCheck,
   Bell,
@@ -11,6 +11,8 @@ import {
   MessageCircle,
   Sparkles,
 } from "lucide-react"
+import { useEffect, useState } from "react"
+import { createClient } from "@/utils/supabase/client"
 
 import {
   Avatar,
@@ -33,17 +35,63 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+interface UserData {
+  name?: string | null
+  email?: string | null
+  avatar?: string | null
+}
+
+export function NavUser() {
   const { isMobile } = useSidebar()
   const pathname = usePathname()
+  const router = useRouter()
+  const supabase = createClient()
+  const [userData, setUserData] = useState<UserData | null>(null)
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.user) {
+        setUserData({
+          name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'user',
+          email: session.user.email,
+          avatar: session.user.user_metadata?.avatar_url || '/avatars/shadcn.jpg'
+        })
+      } else {
+        setUserData(null)
+      }
+    }
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUserData({
+          name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'user',
+          email: session.user.email,
+          avatar: session.user.user_metadata?.avatar_url || '/avatars/shadcn.jpg'
+        })
+      } else {
+        setUserData(null)
+      }
+    })
+
+    checkUser()
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  const displayName = userData 
+    ? `[ ${userData.name} ]`
+    : '[ guest user ]'
+
+  const displayEmail = userData
+    ? userData.email
+    : '→ log in to your dashboard'
+
+  const avatarSrc = userData
+    ? userData.avatar
+    : '/avatars/nouser.jpg'
 
   return (
     <SidebarMenu>
@@ -55,12 +103,14 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarImage src={avatarSrc} alt={displayName} />
+                <AvatarFallback className="rounded-lg">
+                  {userData ? userData.name?.[0].toUpperCase() : 'G'}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">{displayName}</span>
+                <span className="truncate text-xs">{displayEmail}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -74,12 +124,14 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarImage src={avatarSrc} alt={displayName} />
+                  <AvatarFallback className="rounded-lg">
+                    {userData ? userData.name?.[0].toUpperCase() : 'G'}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">{displayName}</span>
+                  <span className="truncate text-xs">{displayEmail}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
