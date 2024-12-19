@@ -1,10 +1,9 @@
 do the following:
 - go through the whole codebase and understand it
-- consider the .env file exist but you dont see it
-- check the logs to know what's going on
+- consider the .env file exist but you dont see it (you can validate the .env file structure using .env.example)- check the logs to know what's going on
 - understand the current db schema in supabase. the query used to create the table is under the supabase directory. READ IT!
 - FIX THE requested ISSUE - this is mission critical! do whatever it takes to fix it!
-- neither the database schema should change, you need to find a solution without modifying supabase config or settings. THIS WAS WORKING BEFORE WITH THE CURRENT SCHEMA AND CONFIG. BUT YOU UPDATED SOMETHING AND BROKE IT!
+- neither the database schema should change, you need to find a solution without modifying supabase config or settings.
 
 issue:
 - the user is not able to register via user and password, but is able to do so via google auth. YOU NEED TO FIX THIS
