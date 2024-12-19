@@ -31,8 +31,8 @@ import {
 // Static navigation data
 const navigationData = {
   user: {
-    name: "un0.ai helper ",
-    email: "[ agent@un0.dev ]",
+    name: "[ guest user ]",
+    email: "→ log in to your dashboard",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
