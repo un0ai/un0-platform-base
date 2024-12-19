@@ -73,6 +73,12 @@ export async function signInWithGoogle() {
         access_type: "offline",
         prompt: "consent",
       },
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      data: {
+        full_name: undefined,  // This will be populated by Google OAuth data
+        avatar_url: undefined, // This will be populated by Google OAuth data
+        email: undefined,      // This will be populated by Google OAuth data
+      }
     },
   });
 
