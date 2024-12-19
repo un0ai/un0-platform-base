@@ -28,16 +28,20 @@ export async function signup(formData: FormData) {
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
+    options: {
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/confirm`,
+    },
   };
 
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
+    console.error('Signup error:', error);
     redirect("/error");
   }
 
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
+  // Redirect to a confirmation page instead of the dashboard
+  redirect("/auth/verify-email");
 }
 
 export async function signout() {
@@ -68,12 +72,11 @@ export async function signInWithGoogle() {
     });
 
     if (error) throw error;
-    if (!data.url) throw new Error('No OAuth URL returned');
+    if (!data.url) throw new Error("No OAuth URL returned");
 
-    // Instead of using Next.js redirect, use window.location for client-side redirect
     return data.url;
   } catch (error) {
-    console.error('Error signing in with Google:', error);
-    redirect('/error');
+    console.error("Error signing in with Google:", error);
+    redirect("/error");
   }
 }
