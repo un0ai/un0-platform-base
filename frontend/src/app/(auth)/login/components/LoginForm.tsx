@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -13,22 +13,18 @@ import { Label } from "@/components/ui/label"
 import { login } from "@/lib/auth-actions"
 import SignInWithGoogleButton from "./SignInWithGoogleButton"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export function LoginForm() {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <div className="flex flex-col gap-6">
+    <Card className="mx-auto max-w-sm">
+      <CardHeader>
+        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardDescription>
+          Enter your email below to login to your account
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form action="">
+            <div className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -42,34 +38,25 @@ export function LoginForm({
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
+                  <Link href="#" className="ml-auto inline-block text-sm underline">
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
                 <Input id="password" name="password" type="password" required />
               </div>
               <Button type="submit" formAction={login} className="w-full">
                 Login
               </Button>
-              <SignInWithGoogleButton/>
-              {/* 
-              <Button type="button" variant="outline" className="w-full">
-                Login with Google
-              </Button> 
-              */}
+             <SignInWithGoogleButton/> 
             </div>
-            <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <a href="/signup" className="underline underline-offset-4">
-                Sign up
-              </a>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+        </form>
+        <div className="mt-4 text-center text-sm">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="underline">
+            Sign up
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
   )
 }

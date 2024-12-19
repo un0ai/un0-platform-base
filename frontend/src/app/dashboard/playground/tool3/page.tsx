@@ -1,5 +1,3 @@
-// "use client"
-
 import LoginButton from "@/components/LoginLogoutButton";
 import UserGreetText from "@/components/UserGreetText";
 import Image from "next/image";
