@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/server";
 export async function login(formData: FormData) {
   const supabase = await createClient();
 
+  // Get form data
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
@@ -15,6 +16,7 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
+    console.error('Login error:', error);
     redirect("/error");
   }
 
@@ -40,19 +42,18 @@ export async function signup(formData: FormData) {
     redirect("/error");
   }
 
-  // Redirect to a confirmation page instead of the dashboard
   redirect("/auth/verify-email");
 }
 
 export async function signout() {
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    redirect("/error");
+  try {
+    const supabase = await createClient();
+    await supabase.auth.signOut();
+    revalidatePath("/", "layout");
+  } catch (error) {
+    console.error('Signout error:', error);
   }
-
-  revalidatePath("/", "layout");
+  
   redirect("/login");
 }
 
