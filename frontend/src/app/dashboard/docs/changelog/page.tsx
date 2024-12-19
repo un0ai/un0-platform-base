@@ -6,18 +6,18 @@ import { Badge } from "@/components/ui/badge"
 export default function ChangelogPage() {
   const changes = [
     {
-      version: "2.1.0",
-      date: "2024-12-14",
+      version: "0.1.3-beta",
+      date: "2024-12-19",
       type: "major",
       changes: [
-        "Added new quantum computing models",
-        "Improved API response times by 50%",
-        "Enhanced security features",
+        "Added new Integrations",
+        "Improved API response",
+        "Enhanced CI/CD automations",
       ],
     },
     {
-      version: "2.0.5",
-      date: "2024-12-01",
+      version: "0.1.2-beta",
+      date: "2024-12-09",
       type: "minor",
       changes: [
         "Fixed bug in data processing pipeline",
@@ -26,13 +26,23 @@ export default function ChangelogPage() {
       ],
     },
     {
-      version: "2.0.4",
-      date: "2024-11-15",
+      version: "0.1.1-beta",
+      date: "2024-12-05",
       type: "patch",
       changes: [
         "Security patches",
         "Minor UI improvements",
         "Bug fixes in reporting module",
+        "Performance improvements",
+      ],
+    },
+    {
+      version: "0.1.0-beta",
+      date: "2024-12-01",
+      type: "major",
+      changes: [
+        "Updated MLOps pipeline definitions",
+        "Updated documentation",
       ],
     },
   ]

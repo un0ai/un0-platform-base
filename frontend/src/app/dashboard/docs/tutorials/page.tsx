@@ -6,18 +6,18 @@ import { Badge } from "@/components/ui/badge"
 export default function TutorialsPage() {
   const tutorials = [
     {
-      title: "Getting Started with AI Models",
-      description: "Learn the basics of working with our AI models",
+      title: "Getting Started with AI pipelines",
+      description: "Learn the basics of working with our AI models using Lanflow",
       difficulty: "Beginner",
-      duration: "15 mins",
-      category: "AI",
+      duration: "20 mins",
+      category: "AI, MLOps",
     },
     {
-      title: "Advanced Data Processing",
-      description: "Deep dive into data processing techniques",
-      difficulty: "Advanced",
-      duration: "45 mins",
-      category: "Data",
+      title: "Integrating Services",
+      description: "Learn to integrate external services into our platform",
+      difficulty: "Beginner",
+      duration: "40 mins",
+      category: "Development",
     },
     {
       title: "API Integration Guide",
@@ -27,11 +27,19 @@ export default function TutorialsPage() {
       category: "Development",
     },
     {
+      title: "Advanced Data Processing",
+      description: "Deep dive into data processing techniques",
+      difficulty: "Advanced",
+      duration: "45 mins",
+      category: "Data Pipelines",
+    },
+
+    {
       title: "Custom Model Training",
-      description: "Train your own AI models using our platform",
+      description: "Train and/or fine-tune your AI models using leveraging advance techniques",
       difficulty: "Expert",
       duration: "60 mins",
-      category: "AI",
+      category: "AI, MLOps",
     },
   ]
 
