@@ -28,29 +28,68 @@ export async function login(formData: FormData) {
 export async function signup(formData: FormData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const firstName = formData.get("first-name") as string;
-  const lastName = formData.get("last-name") as string;
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-    options: {
-      data: {
-        full_name: `${firstName + " " + lastName}`,
-        email: formData.get("email") as string,
-      },
-    },
-  };
+  try {
+    const firstName = formData.get("first-name") as string;
+    const lastName = formData.get("last-name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
-  const { error } = await supabase.auth.signUp(data);
+    console.log('Starting signup process for:', email);
 
-  if (error) {
+    if (!firstName || !lastName || !email || !password) {
+      console.error("Missing required fields");
+      redirect("/error");
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+        data: {
+          full_name: `${firstName} ${lastName}`.trim(),
+          email: email,
+          avatar_url: null
+        }
+      }
+    });
+
+    console.log('Signup response:', { data, error });
+
+    if (error) {
+      console.error("Signup error:", error.message);
+      redirect("/error");
+    }
+
+    if (!data.user) {
+      console.error("No user returned from signup");
+      redirect("/error");
+    }
+
+    // Manually create the profile since the trigger might not work immediately
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert([
+        {
+          id: data.user.id,
+          full_name: `${firstName} ${lastName}`.trim(),
+          email: email,
+          avatar_url: null
+        }
+      ]);
+
+    if (profileError) {
+      console.error('Error creating profile:', profileError);
+      // Continue anyway - the trigger might handle it
+    }
+
+    console.log('Redirecting to verify-email page');
+    redirect("/auth/verify-email");
+
+  } catch (error) {
+    console.error("Unexpected error during signup:", error);
     redirect("/error");
   }
-
-  revalidatePath("/", "layout");
-  redirect("/");
 }
 
 export async function signout() {
