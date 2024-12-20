@@ -10,6 +10,8 @@ import {
   LogOut,
   MessageCircle,
   Sparkles,
+  LogIn,
+  UserPlus,
 } from "lucide-react"
 
 import {
@@ -34,6 +36,7 @@ import {
 } from "@/components/ui/sidebar"
 import { signout } from "@/lib/auth-actions"
 import { Button } from "./ui/button"
+import { cn } from "@/lib/utils"
 
 export function NavUser({
   user,
@@ -106,14 +109,22 @@ export function NavUser({
             {isGuest ? (
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start gap-2"
-                    onClick={() => router.push("/login")}
+                  <Link 
+                    href="/login"
+                    className="flex w-full items-center gap-2 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-600"
                   >
-                    <LogOut className="size-4" />
-                    Login
-                  </Button>
+                    <LogIn className="size-4" />
+                    Sign in
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/signup"
+                    className="flex w-full items-center gap-2 text-blue-600 hover:bg-blue-50 hover:text-blue-600"
+                  >
+                    <UserPlus className="size-4" />
+                    Sign up
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             ) : (
@@ -121,11 +132,11 @@ export function NavUser({
                 <DropdownMenuItem asChild>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start gap-2 text-destructive"
+                    className="w-full justify-start gap-2 text-destructive hover:bg-destructive/10"
                     onClick={() => signout()}
                   >
                     <LogOut className="size-4" />
-                    Logout
+                    Sign out
                   </Button>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
