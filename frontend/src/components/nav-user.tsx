@@ -96,7 +96,7 @@ export function NavUser({
               <DropdownMenuItem disabled className="opacity-100">
                 <div className="flex w-full items-center gap-2">
                   <MessageCircle className="size-4" />
-                  Chat with un0
+                  un0.ai chat
                   <Badge variant="secondary" className="ml-auto text-xs font-normal">
                     Coming Soon
                   </Badge>
@@ -105,7 +105,7 @@ export function NavUser({
               <DropdownMenuItem asChild>
                 <Link href="mailto:support@un0.dev" className="flex w-full items-center gap-2">
                   <CreditCard className="size-4" />
-                  Email support
+                  email support
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
