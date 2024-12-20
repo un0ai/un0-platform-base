@@ -37,6 +37,7 @@ import {
 import { signout } from "@/lib/auth-actions"
 import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
+import { Badge } from "./ui/badge"
 
 export function NavUser({
   user,
@@ -92,14 +93,17 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Link href="#" className="flex w-full items-center gap-2">
+              <DropdownMenuItem disabled className="opacity-100">
+                <div className="flex w-full items-center gap-2">
                   <MessageCircle className="size-4" />
                   Chat with un0
-                </Link>
+                  <Badge variant="secondary" className="ml-auto text-xs font-normal">
+                    Coming Soon
+                  </Badge>
+                </div>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="#" className="flex w-full items-center gap-2">
+                <Link href="mailto:support@un0.dev" className="flex w-full items-center gap-2">
                   <CreditCard className="size-4" />
                   Email support
                 </Link>
