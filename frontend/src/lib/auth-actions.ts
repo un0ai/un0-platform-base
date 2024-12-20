@@ -62,14 +62,20 @@ export async function signup(formData: FormData) {
 
 export async function signout() {
   const supabase = createClient();
+  
+  // First clear the session
   const { error } = await supabase.auth.signOut();
   if (error) {
     console.error('Signout error:', error);
     redirect("/auth/error?error=signout_failed");
   }
 
+  // Force revalidation of all pages
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  revalidatePath("/dashboard", "layout");
+  
+  // Add a timestamp to force a "new" URL even if it's the same path
+  redirect("/dashboard?t=" + Date.now());
 }
 
 export async function signInWithGoogle() {

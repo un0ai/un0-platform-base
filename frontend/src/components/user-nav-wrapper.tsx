@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client"
 import { NavUser } from "@/components/nav-user"
 
@@ -13,58 +14,66 @@ const defaultUser = {
 export function UserNavWrapper() {
   const [user, setUser] = useState(defaultUser)
   const [isLoading, setIsLoading] = useState(true)
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const supabase = createClient()
 
-  useEffect(() => {
-    async function getUser() {
-      try {
-        setIsLoading(true)
-        const { data: { user: authUser }, error } = await supabase.auth.getUser()
-        
-        if (error || !authUser) {
-          setUser(defaultUser)
-          return
-        }
-
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', authUser.id)
-          .single()
-
-        if (profile) {
-          setUser({
-            name: `[ ${profile.full_name} ]`,
-            email: profile.email,
-            avatar: profile.avatar_url || getInitialAvatar(profile.full_name),
-          })
-        }
-      } catch (error) {
-        console.error('Error fetching user:', error)
+  const getUser = async () => {
+    try {
+      setIsLoading(true)
+      const { data: { user: authUser }, error } = await supabase.auth.getUser()
+      
+      if (error || !authUser) {
         setUser(defaultUser)
-      } finally {
-        setIsLoading(false)
+        return
       }
-    }
 
-    // Initial fetch
-    getUser()
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', authUser.id)
+        .single()
 
-    // Subscribe to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_OUT') {
+      if (profile) {
+        setUser({
+          name: `[ ${profile.full_name} ]`,
+          email: profile.email,
+          avatar: profile.avatar_url || getInitialAvatar(profile.full_name),
+        })
+      } else {
         setUser(defaultUser)
+      }
+    } catch (error) {
+      console.error('Error fetching user:', error)
+      setUser(defaultUser)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Effect for auth state changes
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        setUser(defaultUser)
+        setIsLoading(false)
       } else {
         await getUser()
       }
     })
 
     return () => {
-      subscription?.unsubscribe()
+      subscription.unsubscribe()
     }
   }, [supabase])
 
-  // Show nothing while loading to prevent flash of guest user
+  // Effect for initial load and path/search changes
+  useEffect(() => {
+    getUser()
+  }, [pathname, searchParams])
+
   if (isLoading) {
     return null
   }
@@ -73,7 +82,6 @@ export function UserNavWrapper() {
 }
 
 function getInitialAvatar(name: string) {
-  // Get initials from the name
   const initials = name
     .split(' ')
     .map(part => part.charAt(0))
@@ -81,7 +89,6 @@ function getInitialAvatar(name: string) {
     .toUpperCase()
     .slice(0, 2)
 
-  // Create a simple avatar with initials
   const canvas = document.createElement('canvas')
   canvas.width = 100
   canvas.height = 100
@@ -89,11 +96,9 @@ function getInitialAvatar(name: string) {
   const context = canvas.getContext('2d')
   if (!context) return ''
 
-  // Draw background
-  context.fillStyle = '#4f46e5' // Indigo color
+  context.fillStyle = '#4f46e5'
   context.fillRect(0, 0, canvas.width, canvas.height)
 
-  // Draw text
   context.fillStyle = '#ffffff'
   context.font = 'bold 40px sans-serif'
   context.textAlign = 'center'
