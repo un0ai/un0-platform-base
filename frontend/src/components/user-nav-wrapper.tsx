@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client"
 import { NavUser } from "@/components/nav-user"
@@ -16,15 +16,20 @@ export function UserNavWrapper() {
   const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
 
-  const getUser = async () => {
+  const resetUser = useCallback(() => {
+    setUser(defaultUser)
+    setIsLoading(false)
+  }, [])
+
+  const getUser = useCallback(async () => {
     try {
       setIsLoading(true)
       const { data: { user: authUser }, error } = await supabase.auth.getUser()
       
       if (error || !authUser) {
-        setUser(defaultUser)
+        resetUser()
         return
       }
 
@@ -40,39 +45,57 @@ export function UserNavWrapper() {
           email: profile.email,
           avatar: profile.avatar_url || getInitialAvatar(profile.full_name),
         })
+        setIsLoading(false)
       } else {
-        setUser(defaultUser)
+        resetUser()
       }
     } catch (error) {
       console.error('Error fetching user:', error)
-      setUser(defaultUser)
-    } finally {
-      setIsLoading(false)
+      resetUser()
     }
-  }
+  }, [supabase, resetUser])
 
-  // Effect for auth state changes
+  // Effect for auth state changes and initial load
   useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_OUT' || !session) {
-        setUser(defaultUser)
-        setIsLoading(false)
-      } else {
+    let mounted = true
+
+    const handleAuthChange = async (event: string) => {
+      if (!mounted) return
+
+      if (event === 'SIGNED_OUT') {
+        resetUser()
+      } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         await getUser()
       }
-    })
+    }
+
+    // Initial fetch
+    getUser()
+
+    // Subscribe to auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(handleAuthChange)
 
     return () => {
+      mounted = false
       subscription.unsubscribe()
     }
-  }, [supabase])
+  }, [supabase, getUser, resetUser])
 
-  // Effect for initial load and path/search changes
+  // Only check session on timestamp param change (for logout) or initial load
   useEffect(() => {
-    getUser()
-  }, [pathname, searchParams])
+    const timestamp = searchParams.get('t')
+    if (timestamp) {
+      const verifySession = async () => {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!session) {
+          resetUser()
+        }
+      }
+      verifySession()
+    }
+  }, [searchParams, supabase, resetUser])
 
   if (isLoading) {
     return null
