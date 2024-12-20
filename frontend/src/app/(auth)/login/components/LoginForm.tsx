@@ -1,63 +1,65 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { login } from "@/lib/auth-actions"
-import SignInWithGoogleButton from "./SignInWithGoogleButton"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { login } from "@/lib/auth-actions";
+import SignInWithGoogleButton from "./SignInWithGoogleButton";
 
 export function LoginForm() {
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardTitle className="text-xl">Welcome back</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
+          Choose your preferred sign in method
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
-            <div className="grid gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                  autoComplete="email"
-                />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <Link href="#" className="ml-auto inline-block text-sm underline">
-                    Forgot your password?
-                  </Link>
-                </div>
-                <Input 
-                  id="password" 
-                  name="password" 
-                  type="password" 
-                  required 
-                  autoComplete="current-password"
-                  minLength={6}
-                />
-              </div>
-              <Button type="submit" formAction={login} className="w-full">
-                Login
-              </Button>
-             <SignInWithGoogleButton/> 
+        <div className="grid gap-4">
+          <SignInWithGoogleButton text="Sign in with Google" priority={true} />
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
             </div>
-        </form>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Or with email
+              </span>
+            </div>
+          </div>
+          <form className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="m@example.com"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                required
+              />
+            </div>
+            <Button formAction={login} type="submit" variant="outline" className="w-full">
+              Sign in with email
+            </Button>
+          </form>
+        </div>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
           <Link href="/signup" className="underline">
@@ -66,5 +68,5 @@ export function LoginForm() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
