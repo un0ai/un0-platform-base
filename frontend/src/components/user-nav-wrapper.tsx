@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client"
 import { NavUser } from "@/components/nav-user"
@@ -16,20 +16,14 @@ export function UserNavWrapper() {
   const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const supabase = useMemo(() => createClient(), [])
-
-  const resetUser = useCallback(() => {
-    setUser(defaultUser)
-    setIsLoading(false)
-  }, [])
+  const supabase = createClient()
 
   const getUser = useCallback(async () => {
     try {
-      setIsLoading(true)
       const { data: { user: authUser }, error } = await supabase.auth.getUser()
       
       if (error || !authUser) {
-        resetUser()
+        setUser(defaultUser)
         return
       }
 
@@ -45,17 +39,18 @@ export function UserNavWrapper() {
           email: profile.email,
           avatar: profile.avatar_url || getInitialAvatar(profile.full_name),
         })
-        setIsLoading(false)
       } else {
-        resetUser()
+        setUser(defaultUser)
       }
     } catch (error) {
       console.error('Error fetching user:', error)
-      resetUser()
+      setUser(defaultUser)
+    } finally {
+      setIsLoading(false)
     }
-  }, [supabase, resetUser])
+  }, [supabase])
 
-  // Effect for auth state changes and initial load
+  // Effect for auth state changes
   useEffect(() => {
     let mounted = true
 
@@ -63,8 +58,9 @@ export function UserNavWrapper() {
       if (!mounted) return
 
       if (event === 'SIGNED_OUT') {
-        resetUser()
-      } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        setUser(defaultUser)
+        setIsLoading(false)
+      } else {
         await getUser()
       }
     }
@@ -81,23 +77,22 @@ export function UserNavWrapper() {
       mounted = false
       subscription.unsubscribe()
     }
-  }, [supabase, getUser, resetUser])
+  }, [supabase, getUser])
 
-  // Only check session on timestamp param change (for logout) or initial load
+  // Verify session on navigation
   useEffect(() => {
-    const timestamp = searchParams.get('t')
-    if (timestamp) {
-      const verifySession = async () => {
-        const { data: { session } } = await supabase.auth.getSession()
-        if (!session) {
-          resetUser()
-        }
+    const verifySession = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session && user.name !== defaultUser.name) {
+        setUser(defaultUser)
+      } else if (session && user.name === defaultUser.name) {
+        await getUser()
       }
-      verifySession()
     }
-  }, [searchParams, supabase, resetUser])
+    verifySession()
+  }, [pathname, searchParams, supabase, user.name, getUser])
 
-  if (isLoading) {
+  if (isLoading && !user) {
     return null
   }
 

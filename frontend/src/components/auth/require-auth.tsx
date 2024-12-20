@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { createClient } from "@/utils/supabase/client"
 import { LoginForm } from "@/app/(auth)/login/components/LoginForm"
+import { LockKeyhole } from "lucide-react"
 
 interface RequireAuthProps {
   children: React.ReactNode
@@ -41,7 +42,20 @@ export function RequireAuth({ children }: RequireAuthProps) {
   // Show login form for non-authenticated users
   if (!isAuthenticated) {
     return (
-      <div className="container flex items-center justify-center min-h-[80vh]">
+      <div className="container flex flex-col items-center justify-center min-h-[80vh] space-y-8">
+        <div className="text-center space-y-4">
+          <div className="inline-block p-3 bg-blue-50 rounded-full">
+            <LockKeyhole className="w-8 h-8 text-blue-500" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold tracking-tight">Members Only Area</h2>
+            <p className="text-muted-foreground">
+              This section is exclusively available for registered users.
+              <br />
+              Please sign in to access all features.
+            </p>
+          </div>
+        </div>
         <div className="w-full max-w-sm">
           <LoginForm />
         </div>
