@@ -6,8 +6,8 @@ import { createClient } from "@/utils/supabase/client"
 import { NavUser } from "@/components/nav-user"
 
 const defaultUser = {
-  name: "[ guest user ]",
-  email: "→ log in to your dashboard",
+  name: "[ viewing as guest ]",
+  email: "→ log in to continue ←",
   avatar: "/avatars/shadcn.jpg",
 }
 

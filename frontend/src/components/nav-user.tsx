@@ -39,6 +39,21 @@ import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { Badge } from "./ui/badge"
 
+function formatGuestName(name: string) {
+  if (name.includes("guest")) {
+    return (
+      <span>
+        [ viewing as{" "}
+        <span className="text-amber-500 dark:text-amber-400">
+          guest
+        </span>{" "}
+        ]
+      </span>
+    )
+  }
+  return name
+}
+
 export function NavUser({
   user,
 }: {
@@ -51,7 +66,7 @@ export function NavUser({
   const { isMobile } = useSidebar()
   const pathname = usePathname()
   const router = useRouter()
-  const isGuest = user.name === "[ guest user ]"
+  const isGuest = user.name.includes("guest")
 
   return (
     <SidebarMenu>
@@ -67,7 +82,7 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">{user.name.charAt(2)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate font-semibold">{formatGuestName(user.name)}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -86,7 +101,7 @@ export function NavUser({
                   <AvatarFallback className="rounded-lg">{user.name.charAt(2)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate font-semibold">{formatGuestName(user.name)}</span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
