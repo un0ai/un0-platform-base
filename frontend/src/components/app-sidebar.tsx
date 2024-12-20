@@ -13,7 +13,6 @@ import {
   PieChart,
   PlayCircle,
   Settings2,
-  SquareTerminal,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -138,40 +137,40 @@ const navigationData = {
       ],
     },
   ],
-  projects: [
+  navProjects: [
     {
-      name: "Project Alpha",
-      url: "/dashboard/projects/alpha",
+      name: "Design Engineering",
+      url: "/dashboard/projects/design-engineering",
       icon: Frame,
     },
     {
-      name: "Project Beta",
-      url: "/dashboard/projects/beta",
-      icon: Map,
+      name: "Sales & Marketing",
+      url: "/dashboard/projects/sales-marketing",
+      icon: PieChart,
     },
     {
-      name: "Project Gamma",
-      url: "/dashboard/projects/gamma",
-      icon: Bot,
-    }
-  ]
+      name: "Research & Development",
+      url: "/dashboard/projects/research-development",
+      icon: Map,
+    },
+  ],
 }
 
 // Memoize AppSidebar component
 export const AppSidebar = React.memo(function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar {...props}>
-      <SidebarRail />
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={navigationData.teams} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navigationData.navMain} />
-        <NavProjects projects={navigationData.projects} />
+        <NavProjects projects={navigationData.navProjects} />
       </SidebarContent>
       <SidebarFooter>
         <UserNavWrapper />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   )
 })
