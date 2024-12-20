@@ -49,9 +49,6 @@ export function RequireAuth({ children }: RequireAuthProps) {
           </div>
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold tracking-tight">Members Only Area</h2>
-            <p className="text-muted-foreground">
-              Sign in to access
-            </p>
           </div>
         </div>
         <div className="w-full max-w-sm">
