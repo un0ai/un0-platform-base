@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
         if (updateError) {
           console.error('Error updating user metadata:', updateError)
-          return NextResponse.redirect(`${requestUrl.origin}/error`)
+          return NextResponse.redirect(`${requestUrl.origin}/auth/error?error=metadata_update_failed`)
         }
 
         // Force trigger profile creation if it doesn't exist
@@ -43,15 +43,18 @@ export async function GET(request: Request) {
 
         if (profileError) {
           console.error('Error creating profile:', profileError)
-          return NextResponse.redirect(`${requestUrl.origin}/error`)
+          return NextResponse.redirect(`${requestUrl.origin}/auth/error?error=profile_creation_failed`)
         }
+
+        // Successful OAuth login, redirect to dashboard
+        return NextResponse.redirect(`${requestUrl.origin}/dashboard`)
       }
     } else {
       console.error('Error exchanging code for session:', error)
-      return NextResponse.redirect(`${requestUrl.origin}/error`)
+      return NextResponse.redirect(`${requestUrl.origin}/auth/error?error=session_exchange_failed`)
     }
   }
 
-  // Redirect to the home page after successful authentication and metadata update
-  return NextResponse.redirect(requestUrl.origin)
+  // If no code present, redirect to home with error
+  return NextResponse.redirect(`${requestUrl.origin}/auth/error?error=no_code_provided`)
 }

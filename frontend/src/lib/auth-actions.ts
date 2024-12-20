@@ -18,11 +18,12 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect("/error");
+    console.error('Login error:', error);
+    redirect("/auth/error?error=invalid_credentials");
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signup(formData: FormData) {
@@ -44,6 +45,7 @@ export async function signup(formData: FormData) {
         email: email,
         avatar_url: null // Will be generated from initials in the UI
       },
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/confirm`
     },
   };
 
@@ -51,22 +53,23 @@ export async function signup(formData: FormData) {
 
   if (error) {
     console.error('Signup error:', error);
-    redirect("/error");
+    redirect("/auth/error?error=signup_failed");
   }
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  // Redirect to email confirmation page
+  redirect("/auth/verify-email");
 }
 
 export async function signout() {
   const supabase = createClient();
   const { error } = await supabase.auth.signOut();
   if (error) {
-    console.log(error);
-    redirect("/error");
+    console.error('Signout error:', error);
+    redirect("/auth/error?error=signout_failed");
   }
 
-  redirect("/logout");
+  revalidatePath("/", "layout");
+  redirect("/dashboard");
 }
 
 export async function signInWithGoogle() {
@@ -88,8 +91,8 @@ export async function signInWithGoogle() {
   });
 
   if (error) {
-    console.log(error);
-    redirect("/error");
+    console.error('Google sign-in error:', error);
+    redirect("/auth/error?error=google_auth_failed");
   }
 
   redirect(data.url);

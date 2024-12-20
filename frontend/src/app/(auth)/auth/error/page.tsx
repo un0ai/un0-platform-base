@@ -45,7 +45,7 @@ const errorMessages = {
   },
 }
 
-export default function ErrorPage({
+export default function AuthErrorPage({
   searchParams,
 }: {
   searchParams: { error?: string }

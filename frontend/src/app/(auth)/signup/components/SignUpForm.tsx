@@ -22,7 +22,7 @@ export function SignUpForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form action="">
+        <form>
           <div className="grid gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
@@ -32,6 +32,8 @@ export function SignUpForm() {
                   id="first-name"
                   placeholder="Max"
                   required
+                  autoComplete="given-name"
+                  minLength={2}
                 />
               </div>
               <div className="grid gap-2">
@@ -41,6 +43,8 @@ export function SignUpForm() {
                   id="last-name"
                   placeholder="Robinson"
                   required
+                  autoComplete="family-name"
+                  minLength={2}
                 />
               </div>
             </div>
@@ -52,11 +56,19 @@ export function SignUpForm() {
                 type="email"
                 placeholder="m@example.com"
                 required
+                autoComplete="email"
               />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input name="password" id="password" type="password" />
+              <Input 
+                name="password" 
+                id="password" 
+                type="password"
+                required
+                autoComplete="new-password"
+                minLength={6}
+              />
             </div>
             <Button formAction={signup} type="submit" className="w-full">
               Create an account

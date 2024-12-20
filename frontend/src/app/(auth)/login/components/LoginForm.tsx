@@ -23,7 +23,7 @@ export function LoginForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form action="">
+        <form>
             <div className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -33,6 +33,7 @@ export function LoginForm() {
                   type="email"
                   placeholder="m@example.com"
                   required
+                  autoComplete="email"
                 />
               </div>
               <div className="grid gap-2">
@@ -42,7 +43,14 @@ export function LoginForm() {
                     Forgot your password?
                   </Link>
                 </div>
-                <Input id="password" name="password" type="password" required />
+                <Input 
+                  id="password" 
+                  name="password" 
+                  type="password" 
+                  required 
+                  autoComplete="current-password"
+                  minLength={6}
+                />
               </div>
               <Button type="submit" formAction={login} className="w-full">
                 Login
