@@ -1,4 +1,5 @@
 do the following:
+- when using shadcn to install packages, use 'shadcn' instade of 'shadcn-ui', you made this mistake in the past
 - go through the whole codebase and understand it
 - consider the .env file exist but you dont see it (you can validate the .env file structure using .env.example)- check the logs to know what's going on
 - understand the current db schema in supabase. the query used to create the table is under the supabase directory. READ IT!
