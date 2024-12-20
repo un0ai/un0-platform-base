@@ -1,3 +1,5 @@
+-- THIS IS THE QUERY I USED TO CREATE THE DATABASE IN SUPABASE
+
 create table
   public.profiles (
     id uuid not null references auth.users on delete cascade,
