@@ -50,9 +50,7 @@ export function RequireAuth({ children }: RequireAuthProps) {
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold tracking-tight">Members Only Area</h2>
             <p className="text-muted-foreground">
-              This section is exclusively available for registered users.
-              <br />
-              Please sign in to access all features.
+              Sign in to access
             </p>
           </div>
         </div>

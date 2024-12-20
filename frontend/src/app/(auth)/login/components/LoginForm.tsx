@@ -17,7 +17,6 @@ export function LoginForm() {
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-xl">Welcome back</CardTitle>
         <CardDescription>
           Choose your preferred sign in method
         </CardDescription>
