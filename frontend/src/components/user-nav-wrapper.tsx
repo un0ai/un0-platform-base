@@ -8,7 +8,7 @@ import { NavUser } from "@/components/nav-user"
 const defaultUser = {
   name: "[ viewing as guest ]",
   email: "→ sign in to continue ←",
-  avatar: "/avatars/shadcn.jpg",
+  avatar: "/avatars/un0-image4.jpeg",
 }
 
 export function UserNavWrapper() {

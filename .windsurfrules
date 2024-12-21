@@ -1,0 +1,315 @@
+# un0.ai Platform Base v2 - Windsurf Rules
+# Comprehensive configuration for Cascade and Windsurf
+
+# Project Identity
+project:
+  name: "un0.ai Platform Base v2"
+  description: "Modern web platform for AI agent development, monitoring, and deployment"
+  version: "2.0.0"
+  type: "web-application"
+  repository: "un0-platform-base__v2"
+
+# Technical Stack
+stack:
+  framework:
+    name: "Next.js 14"
+    features:
+      - "App Router"
+      - "Server Components"
+      - "Server Actions"
+      - "React Server Components"
+  frontend:
+    core:
+      - "React 18"
+      - "TypeScript 5"
+    styling:
+      primary: "Tailwind CSS 3"
+      components: "shadcn/ui"
+      icons: "lucide-react"
+    state:
+      local: "React Hooks"
+      forms: "react-hook-form"
+      validation: "zod"
+  dependencies:
+    ui:
+      - "@radix-ui/react-accordion"
+      - "@radix-ui/react-alert-dialog"
+      - "@radix-ui/react-avatar"
+      - "@radix-ui/react-dialog"
+      - "@radix-ui/react-dropdown-menu"
+      - "@radix-ui/react-label"
+      - "@radix-ui/react-slot"
+      - "@radix-ui/react-tabs"
+      - "@radix-ui/react-toast"
+    utils:
+      - "clsx"
+      - "tailwind-merge"
+      - "class-variance-authority"
+    data:
+      - "date-fns"
+
+# Authentication System
+authentication:
+  provider: "NextAuth.js"
+  strategies:
+    primary: "Google OAuth"
+    credentials: false  # Disabled email/password auth
+  session:
+    type: "JWT"
+    maxAge: "30 days"
+  protected_routes:
+    pattern: "/dashboard/*"
+    components:
+      - "require-auth.tsx"
+      - "protected-route.tsx"
+    redirects:
+      unauthenticated: "/login"
+      unauthorized: "/error"
+  components:
+    location: "/components/auth/"
+    files:
+      - "LoginForm.tsx"
+      - "SignUpForm.tsx"
+      - "SignInWithGoogleButton.tsx"
+
+# Project Structure
+structure:
+  root: "/frontend"
+  src:
+    app:
+      auth: "(auth) group for authentication routes"
+      dashboard: "Protected dashboard routes"
+    components:
+      ui: "shadcn/ui components"
+      auth: "Authentication components"
+      layout: "Layout components"
+    lib:
+      utils: "Utility functions"
+      auth-actions: "Authentication actions"
+    types: "TypeScript definitions"
+    styles: "Global styles"
+
+# Route Structure
+routing:
+  public:
+    - "/login"
+    - "/signup"
+    - "/error"
+    - "/auth/*"
+  protected:
+    base: "/dashboard"
+    sections:
+      - "monitor"
+      - "deploy"
+      - "integrate"
+      - "build"
+      - "learn"
+      - "platform"
+    patterns:
+      list: "/dashboard/:section"
+      detail: "/dashboard/:section/:subsection"
+
+# Component Architecture
+components:
+  patterns:
+    layout:
+      - "AppHeader"
+      - "AppSidebar"
+      - "PageHeader"
+      - "SectionCard"
+    navigation:
+      - "NavProjects"
+      - "NavUser"
+    ui:
+      - "Button"
+      - "Card"
+      - "Input"
+      - "Label"
+  conventions:
+    naming:
+      components: "PascalCase"
+      files: "kebab-case"
+    structure:
+      - "Props interface at top"
+      - "Component export at bottom"
+      - "Utility functions between"
+    client: "use 'use client' directive when needed"
+
+# UI Design System
+design_system:
+  colors:
+    primary: "Configurable theme color"
+    text:
+      primary: "foreground"
+      muted: "muted-foreground"
+    background:
+      primary: "background"
+      card: "card"
+  spacing:
+    unit: 4
+    scale: "0.25rem increments"
+  typography:
+    fonts:
+      primary: "Inter"
+    sizes:
+      heading: "text-2xl"
+      subheading: "text-lg"
+      body: "text-base"
+      small: "text-sm"
+  components:
+    cards:
+      padding: "p-6"
+      gap: "gap-4"
+      hover: "hover:border-primary/50"
+    buttons:
+      padding: "px-4 py-2"
+      variants:
+        - "default"
+        - "outline"
+        - "ghost"
+    inputs:
+      height: "h-10"
+      padding: "px-3"
+
+# Feature Modules
+features:
+  monitor:
+    sections:
+      - "agent-analytics"
+      - "performance-metrics"
+      - "logs-alerts"
+      - "system-health"
+  platform:
+    sections:
+      - "about"
+      - "use-cases"
+      - "research-development"
+      - "careers"
+      - "contact"
+  learn:
+    sections:
+      - "getting-started"
+      - "developer-guides"
+      - "documentation"
+      - "faq"
+      - "blog"
+      - "changelog"
+
+# State Management
+state_management:
+  patterns:
+    client:
+      local: "useState/useReducer"
+      shared: "React Context"
+    server:
+      data: "Server Components"
+      actions: "Server Actions"
+  loading:
+    indicators: "Skeleton components"
+    suspense: "Suspense boundaries"
+  error:
+    handling: "Error boundaries"
+    fallback: "Error components"
+
+# Performance Guidelines
+performance:
+  optimization:
+    images: "next/image with proper sizing"
+    fonts: "next/font with subset loading"
+    components: "React.memo for expensive renders"
+  loading:
+    strategy: "Route segments"
+    prefetching: "Link component prefetch"
+  caching:
+    static: "Force-cache"
+    dynamic: "Revalidate on demand"
+
+# Accessibility Standards
+accessibility:
+  requirements:
+    - "WCAG 2.1 Level AA"
+    - "Keyboard navigation"
+    - "Screen reader support"
+  implementation:
+    - "Semantic HTML"
+    - "ARIA labels"
+    - "Focus management"
+    - "Color contrast"
+
+# Development Workflow
+workflow:
+  branching:
+    pattern: "feature/*"
+    protection: "main branch"
+  commits:
+    convention: "conventional commits"
+    scope: "optional module name"
+  code_quality:
+    linting: "eslint"
+    formatting: "prettier"
+    types: "strict TypeScript"
+
+# Environment Configuration
+environment:
+  variables:
+    required:
+      - "NEXT_PUBLIC_APP_URL"
+      - "GOOGLE_CLIENT_ID"
+      - "GOOGLE_CLIENT_SECRET"
+    optional:
+      - "NEXT_PUBLIC_SHOW_LOGGER"
+  development:
+    port: 3000
+    https: false
+
+# Testing Strategy
+testing:
+  unit:
+    framework: "Jest"
+    components: "React Testing Library"
+  e2e:
+    framework: "Playwright"
+    coverage: "Critical user paths"
+
+# Documentation Requirements
+documentation:
+  inline:
+    - "JSDoc for utilities"
+    - "Props documentation"
+    - "Complex logic explanation"
+  external:
+    - "README.md"
+    - "Component documentation"
+    - "API documentation"
+
+# Error Handling
+error_handling:
+  client:
+    boundary: "ErrorBoundary component"
+    fallback: "Error.tsx in routes"
+  server:
+    handling: "try/catch in Server Actions"
+    logging: "Console in development"
+
+# Security Measures
+security:
+  headers:
+    - "Content-Security-Policy"
+    - "X-Frame-Options"
+  auth:
+    session: "HTTP-only cookies"
+    tokens: "JWT with rotation"
+  validation:
+    input: "Server-side validation"
+    forms: "Client-side validation"
+
+# Monitoring and Analytics
+monitoring:
+  performance:
+    metrics:
+      - "Core Web Vitals"
+      - "Time to Interactive"
+      - "First Contentful Paint"
+  errors:
+    tracking: "Error boundary catches"
+    reporting: "Console logging"

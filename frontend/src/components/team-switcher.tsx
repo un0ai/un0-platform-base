@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { AudioWaveform } from "lucide-react"
+import Image from "next/image"
 
 import {
   SidebarMenu,
@@ -20,8 +20,14 @@ export function TeamSwitcher() {
       <SidebarMenuItem>
         <SidebarMenuButton size="lg" asChild isActive={isActive}>
           <Link href="/dashboard/about" className="flex w-full items-center">
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-              <AudioWaveform className="size-4" />
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground overflow-hidden">
+              <Image
+                src="/avatars/un0-image6.jpeg"
+                alt="un0.ai Logo"
+                width={32}
+                height={32}
+                className="object-cover"
+              />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">
