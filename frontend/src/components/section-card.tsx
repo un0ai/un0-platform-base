@@ -2,7 +2,6 @@ import Link from "next/link"
 import { LucideIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -20,24 +19,25 @@ interface SectionCardProps {
 
 export function SectionCard({ title, description, icon: Icon, href }: SectionCardProps) {
   return (
-    <Card className="relative overflow-hidden border-none shadow-md transition-all hover:shadow-lg">
-      <Link href={href} className={cn(buttonVariants({ variant: "ghost" }), "absolute inset-0 h-full w-full")}>
-        <span className="sr-only">Go to {title}</span>
-      </Link>
-      <CardHeader>
-        <div className="flex items-center gap-4">
-          <Icon className="h-8 w-8 text-primary" />
-          <div className="space-y-1">
-            <CardTitle>{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
+    <Link href={href} className="block">
+      <Card className="group relative overflow-hidden border bg-card transition-all hover:border-primary/50 hover:shadow-md hover:shadow-primary/5">
+        <CardHeader>
+          <div className="flex items-center gap-4">
+            <div className="rounded-lg bg-primary/5 p-2 transition-colors group-hover:bg-primary/10">
+              <Icon className="h-6 w-6 text-primary" />
+            </div>
+            <div className="space-y-1">
+              <CardTitle className="transition-colors group-hover:text-primary">{title}</CardTitle>
+              <CardDescription>{description}</CardDescription>
+            </div>
           </div>
-        </div>
-      </CardHeader>
-      <CardContent className="mt-2">
-        <div className="text-sm text-muted-foreground">
-          Click to explore
-        </div>
-      </CardContent>
-    </Card>
+        </CardHeader>
+        <CardContent className="mt-2">
+          <div className="text-sm text-muted-foreground/60">
+            Click to explore
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   )
 }
