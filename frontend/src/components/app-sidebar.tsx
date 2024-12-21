@@ -174,7 +174,7 @@ const navigationData = {
         },
       ],
     },
-    {
+    /* {
       title: "Platform",
       url: "/dashboard/platform",
       icon: Blocks,
@@ -200,7 +200,7 @@ const navigationData = {
           url: "/dashboard/platform/careers",
         },
       ],
-    },
+    }, */
   ],
   navProjects: [
     {
