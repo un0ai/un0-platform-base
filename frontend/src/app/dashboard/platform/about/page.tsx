@@ -15,17 +15,19 @@ export default function AboutPlatformPage() {
       </div>
       
       {/* Tech Stack Section */}
-      <Card className="border-none shadow-md dark:shadow-primary/5">
-        <CardContent className="space-y-4 pt-6">
-          <div className="flex items-center space-x-2 mb-4">
-            <Blocks className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-semibold text-foreground">Tech Stack</h2>
+      <div className="p-4">
+        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div className="p-6">
+            <div className="flex items-center space-x-2 mb-4">
+              <Blocks className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl font-semibold text-foreground">Tech Stack</h2>
+            </div>
           </div>
-          <p className="leading-7 text-foreground/90 dark:text-foreground/90 [&_a]:text-primary [&_a]:font-medium [&_a]:underline [&_a]:decoration-primary/30 [&_a]:underline-offset-4 [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-primary/80 [&_a:hover]:decoration-primary/60 dark:[&_a]:text-primary dark:[&_a:hover]:text-primary/90">
+          <p className="px-6 pb-6 leading-7 text-foreground/90 dark:text-foreground/90 [&_a]:relative [&_a]:inline-flex [&_a]:text-primary [&_a]:font-semibold [&_a]:no-underline [&_a]:transition-colors [&_a]:duration-200 [&_a]:after:absolute [&_a]:after:bottom-0 [&_a]:after:left-0 [&_a]:after:h-[2px] [&_a]:after:w-full [&_a]:after:origin-bottom-right [&_a]:after:scale-x-100 [&_a]:after:bg-gradient-to-r [&_a]:after:from-primary/40 [&_a]:after:to-primary/40 [&_a]:after:transition-transform [&_a]:after:duration-200 [&_a]:hover:text-primary [&_a]:hover:after:origin-bottom-left [&_a]:hover:after:scale-x-100 [&_a]:hover:after:bg-gradient-to-r [&_a]:hover:after:from-primary [&_a]:hover:after:to-primary dark:[&_a]:text-primary/90 dark:[&_a]:after:from-primary/50 dark:[&_a]:after:to-primary/50 dark:[&_a]:hover:text-primary">
             Built using <a href="https://python.langchain.com/" target="_blank">LangChain</a> and <a href="https://langchain-ai.github.io/langgraph/" target="_blank">LangGraph</a> for AI workflow orchestration, and with native monitoring support via <a href="https://smith.langchain.com/" target="_blank">LangSmith</a> and <a href="https://langfuse.com/" target="_blank">LangFuse</a>, un0.ai integrates seamlessly with services such as <a href="https://flowiseai.com/" target="_blank">Flowise</a>, <a href="https://vectorshift.com/" target="_blank">VectorShift</a>, <a href="https://www.voiceflow.com/" target="_blank">Voiceflow</a>, <a href="https://n8n.io/" target="_blank">n8n</a>, <a href="https://www.make.com/" target="_blank">Make.com</a>, and <a href="https://zapier.com/" target="_blank">Zapier</a> to streamline the design and deployment of AI models and pipelines. Real-time observability and monitoring ensure continuous optimization, while <a href="https://github.com/logspace-ai/langflow" target="_blank">LangFlow</a>, <a href="https://www.datastax.com/products/datastax-astra" target="_blank">DataStax Astra</a>, and <a href="https://cassandra.apache.org/" target="_blank">Apache Cassandra DB</a> deliver reliable and scalable data management.
           </p>
           
-          <div className="grid gap-6 md:grid-cols-2 mt-6">
+          <div className="grid gap-6 md:grid-cols-2 p-6 pt-0">
             <Card className="rounded-lg border bg-card shadow-sm transition-colors hover:bg-accent/50">
               <CardHeader className="p-4 space-y-1">
                 <div className="flex items-center space-x-2">
@@ -50,8 +52,8 @@ export default function AboutPlatformPage() {
               </CardHeader>
             </Card>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Key Features Section */}
       <div className="space-y-4">
