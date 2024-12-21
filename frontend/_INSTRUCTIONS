@@ -10,8 +10,12 @@ first do the following:
 - the database schema should never change as this is critical for logins, you need to find a solution without modifying supabase config or settings.
 - please understand how protected pages work, and avoid breaking this functionality.
 
-your task:
-- read the current About page of my project, this is important as you'll be using your understanding of the project in order to create content!
+---
+Extra context:
 
+---
+your task:
+1) read the current About page of my project, this is important as you'll be using your understanding of the project in order to create content!
+2) 
 
 
