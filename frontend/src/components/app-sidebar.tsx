@@ -53,104 +53,149 @@ const navigationData = {
       icon: LayoutDashboard,
     },
     {
-      title: "Playground",
-      url: "/dashboard/playground",
+      title: "Build",
+      url: "/dashboard/build",
       icon: PlayCircle,
       items: [
         {
-          title: "Tool1",
-          url: "/dashboard/playground/tool1",
+          title: "Playground",
+          url: "/dashboard/build/playground",
         },
         {
-          title: "Tool2",
-          url: "/dashboard/playground/tool2",
+          title: "Visual Agent Builder",
+          url: "/dashboard/build/visual-agent-builder",
         },
         {
-          title: "Tool3",
-          url: "/dashboard/playground/tool3",
+          title: "Workflow Orchestration",
+          url: "/dashboard/build/workflow-orchestration",
+        },
+        {
+          title: "Model Management",
+          url: "/dashboard/build/model-management",
         },
       ],
     },
     {
-      title: "Models",
-      url: "/dashboard/models",
+      title: "Deploy",
+      url: "/dashboard/deploy",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
-          url: "/dashboard/models/genesis",
+          title: "CI/CD Pipelines",
+          url: "/dashboard/deploy/cicd-pipelines",
         },
         {
-          title: "Explorer",
-          url: "/dashboard/models/explorer",
+          title: "MLOps Tools",
+          url: "/dashboard/deploy/mlops-tools",
         },
         {
-          title: "Quantum",
-          url: "/dashboard/models/quantum",
+          title: "Infrastructure",
+          url: "/dashboard/deploy/infrastructure",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "/dashboard/docs",
+      title: "Integrate",
+      url: "/dashboard/integrate",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
-          url: "/dashboard/docs/introduction",
+          title: "Third-party Connectors",
+          url: "/dashboard/integrate/third-party-connectors",
         },
         {
-          title: "Get Started",
-          url: "/dashboard/docs/get-started",
+          title: "API Hub",
+          url: "/dashboard/integrate/api-hub",
         },
         {
-          title: "Tutorials",
-          url: "/dashboard/docs/tutorials",
+          title: "Data Sources",
+          url: "/dashboard/integrate/data-sources",
         },
         {
-          title: "Changelog",
-          url: "/dashboard/docs/changelog",
+          title: "Plugins",
+          url: "/dashboard/integrate/plugins",
         },
       ],
     },
     {
-      title: "Settings",
-      url: "/dashboard/settings",
+      title: "Monitor",
+      url: "/dashboard/monitor",
       icon: Settings2,
       items: [
         {
-          title: "General",
-          url: "/dashboard/settings/general",
+          title: "Performance Metrics",
+          url: "/dashboard/monitor/performance-metrics",
         },
         {
-          title: "Team",
-          url: "/dashboard/settings/team",
+          title: "System Health",
+          url: "/dashboard/monitor/system-health",
         },
         {
-          title: "Billing",
-          url: "/dashboard/settings/billing",
+          title: "Agent Analytics",
+          url: "/dashboard/monitor/agent-analytics",
         },
         {
-          title: "Limits",
-          url: "/dashboard/settings/limits",
+          title: "Logs & Alerts",
+          url: "/dashboard/monitor/logs-alerts",
+        },
+      ],
+    },
+    {
+      title: "Learn",
+      url: "/dashboard/learn",
+      icon: BookOpen,
+      items: [
+        {
+          title: "Getting Started",
+          url: "/dashboard/learn/getting-started",
+        },
+        {
+          title: "Developer Guides",
+          url: "/dashboard/learn/developer-guides",
+        },
+        {
+          title: "Playbooks",
+          url: "/dashboard/learn/playbooks",
+        },
+        {
+          title: "Changelog",
+          url: "/dashboard/learn/changelog",
+        },
+        {
+          title: "FAQ",
+          url: "/dashboard/learn/faq",
+        },
+        {
+          title: "Blog",
+          url: "/dashboard/learn/blog",
         },
       ],
     },
   ],
   navProjects: [
     {
-      name: "Design Engineering",
-      url: "/dashboard/projects/design-engineering",
+      name: "About",
+      url: "/dashboard/platform/about",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
-      url: "/dashboard/projects/sales-marketing",
+      name: "Use Cases",
+      url: "/dashboard/platform/use-cases",
       icon: PieChart,
     },
     {
-      name: "Research & Development",
-      url: "/dashboard/projects/research-development",
+      name: "R&D",
+      url: "/dashboard/platform/research-development",
+      icon: Map,
+    },
+    {
+      name: "Careers",
+      url: "/dashboard/platform/careers",
+      icon: Map,
+    },
+    {
+      name: "Contact / Support",
+      url: "/dashboard/platform/contact",
       icon: Map,
     },
   ],
