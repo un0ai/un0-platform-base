@@ -1,41 +1,43 @@
-import { createClient } from '@supabase/supabase-js'
-import { cookies } from "next/headers"
-import { NextResponse } from "next/server"
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   try {
-    const requestData = await request.json()
-    const { fullName, email, reason } = requestData
+    const supabase = createRouteHandlerClient({ cookies })
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    // Get the request data
+    const data = await request.json()
+    const { fullName, email, reason } = data
 
-    if (!supabaseUrl || !supabaseKey) {
-      throw new Error('Missing Supabase environment variables')
-    }
-
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      auth: { persistSession: false }
-    })
-
+    // Create the access request
     const { error } = await supabase
-      .from("access_requests")
+      .from('access_requests')
       .insert([
         {
           name: fullName,
           email,
           reason,
-          status: "pending",
-        },
+          status: 'pending'
+        }
       ])
 
-    if (error) throw error
+    if (error) {
+      console.error('Error creating access request:', error)
+      return NextResponse.json(
+        { error: 'Failed to create access request' },
+        { status: 500 }
+      )
+    }
 
-    return NextResponse.json({ message: "Access request submitted successfully" })
-  } catch (error) {
-    console.error("Error submitting access request:", error)
     return NextResponse.json(
-      { error: "Failed to submit access request" },
+      { message: 'Access request created successfully' },
+      { status: 201 }
+    )
+  } catch (error) {
+    console.error('Error in access request route:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
       { status: 500 }
     )
   }

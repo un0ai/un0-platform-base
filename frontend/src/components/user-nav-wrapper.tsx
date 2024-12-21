@@ -2,11 +2,11 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { createClient } from "@/utils/supabase/client"
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { NavUser } from "@/components/nav-user"
 
 const defaultUser = {
-  name: "[ viewing as guest ]",
+  name: "guest",
   email: "→ sign in to continue ←",
   avatar: "/avatars/shadcn.jpg",
 }
@@ -16,31 +16,47 @@ export function UserNavWrapper() {
   const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const supabase = createClient()
+  const supabase = createClientComponentClient()
 
   const getUser = useCallback(async () => {
     try {
-      const { data: { user: authUser }, error } = await supabase.auth.getUser()
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession()
       
-      if (error || !authUser) {
+      if (sessionError || !session?.user) {
         setUser(defaultUser)
+        setIsLoading(false)
         return
       }
 
-      const { data: profile } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', authUser.id)
+        .eq('id', session.user.id)
         .single()
+
+      if (profileError) {
+        console.error('Error fetching profile:', profileError)
+        setUser({
+          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+          email: session.user.email || '',
+          avatar: session.user.user_metadata?.avatar_url || '/avatars/shadcn.jpg',
+        })
+        setIsLoading(false)
+        return
+      }
 
       if (profile) {
         setUser({
-          name: `[ ${profile.full_name} ]`,
-          email: profile.email,
-          avatar: profile.avatar_url || getInitialAvatar(profile.full_name),
+          name: profile.full_name || session.user.email?.split('@')[0] || 'User',
+          email: profile.email || session.user.email || '',
+          avatar: profile.avatar_url || '/avatars/shadcn.jpg',
         })
       } else {
-        setUser(defaultUser)
+        setUser({
+          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+          email: session.user.email || '',
+          avatar: session.user.user_metadata?.avatar_url || '/avatars/shadcn.jpg',
+        })
       }
     } catch (error) {
       console.error('Error fetching user:', error)
@@ -54,24 +70,21 @@ export function UserNavWrapper() {
   useEffect(() => {
     let mounted = true
 
-    const handleAuthChange = async (event: string) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (!mounted) return
 
-      if (event === 'SIGNED_OUT') {
+      if (event === 'SIGNED_OUT' || !session) {
         setUser(defaultUser)
         setIsLoading(false)
-      } else {
+      } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
         await getUser()
       }
-    }
+    })
 
     // Initial fetch
     getUser()
-
-    // Subscribe to auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(handleAuthChange)
 
     return () => {
       mounted = false
@@ -81,21 +94,10 @@ export function UserNavWrapper() {
 
   // Verify session on navigation
   useEffect(() => {
-    const verifySession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session && user.name !== defaultUser.name) {
-        setUser(defaultUser)
-      } else if (session && user.name === defaultUser.name) {
-        await getUser()
-      }
-    }
-    verifySession()
-  }, [pathname, searchParams, supabase, user.name, getUser])
+    getUser()
+  }, [pathname, searchParams, getUser])
 
-  if (isLoading && !user) {
-    return null
-  }
-
+  // Always render the NavUser component, just update its data
   return <NavUser user={user} />
 }
 
