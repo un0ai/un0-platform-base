@@ -2,9 +2,34 @@ import { render, screen } from '@testing-library/react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
-// Mock components for testing
-const DashboardPage = () => <div>Dashboard Content</div>
-const LoginPage = () => <div>Login Page</div>
+// Mock components
+const DashboardPage = () => {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  if (status === 'unauthenticated') {
+    router.replace('/login')
+    return null
+  }
+
+  return <div>Dashboard Content</div>
+}
+
+const LoginPage = () => {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  if (status === 'authenticated') {
+    const returnUrl = pathname?.includes('returnUrl=') 
+      ? pathname.split('returnUrl=')[1]
+      : '/dashboard'
+    router.replace(returnUrl)
+    return null
+  }
+
+  return <div>Login Page</div>
+}
 
 // Mocks
 jest.mock('next/navigation', () => ({
@@ -56,6 +81,7 @@ describe('Protected Routes', () => {
 
         render(<DashboardPage />)
         expect(mockRouter.replace).not.toHaveBeenCalled()
+        expect(screen.getByText('Dashboard Content')).toBeInTheDocument()
       })
     })
   })
@@ -78,6 +104,7 @@ describe('Protected Routes', () => {
 
         render(<LoginPage />)
         expect(mockRouter.replace).not.toHaveBeenCalled()
+        expect(screen.getByText('Login Page')).toBeInTheDocument()
       })
     })
   })
