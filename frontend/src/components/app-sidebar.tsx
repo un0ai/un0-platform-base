@@ -2,8 +2,11 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
+  Book,
+  Blocks,
+  Cpu,
+  Gauge,
+  Network,
   Bot,
   Command,
   Frame,
@@ -37,12 +40,12 @@ const navigationData = {
     },
     {
       name: "Acme Corp.",
-      logo: AudioWaveform,
+      logo: Command,
       plan: "Startup",
     },
     {
       name: "Evil Corp.",
-      logo: Command,
+      logo: Frame,
       plan: "Free",
     },
   ],
@@ -55,7 +58,7 @@ const navigationData = {
     {
       title: "Build",
       url: "/dashboard/build",
-      icon: PlayCircle,
+      icon: Cpu,
       items: [
         {
           title: "Playground",
@@ -97,7 +100,7 @@ const navigationData = {
     {
       title: "Integrate",
       url: "/dashboard/integrate",
-      icon: BookOpen,
+      icon: Network,
       items: [
         {
           title: "Third-party Connectors",
@@ -120,7 +123,7 @@ const navigationData = {
     {
       title: "Monitor",
       url: "/dashboard/monitor",
-      icon: Settings2,
+      icon: Gauge,
       items: [
         {
           title: "Performance Metrics",
@@ -143,7 +146,7 @@ const navigationData = {
     {
       title: "Learn",
       url: "/dashboard/learn",
-      icon: BookOpen,
+      icon: Book,
       items: [
         {
           title: "Getting Started",
@@ -168,6 +171,33 @@ const navigationData = {
         {
           title: "Blog",
           url: "/dashboard/learn/blog",
+        },
+      ],
+    },
+    {
+      title: "Platform",
+      url: "/dashboard/platform",
+      icon: Blocks,
+      items: [
+        {
+          title: "About",
+          url: "/dashboard/platform/about",
+        },
+        {
+          title: "Use Cases",
+          url: "/dashboard/platform/use-cases",
+        },
+        {
+          title: "R&D",
+          url: "/dashboard/platform/research-development",
+        },
+        {
+          title: "Contact / Support",
+          url: "/dashboard/platform/contact",
+        },
+        {
+          title: "Careers",
+          url: "/dashboard/platform/careers",
         },
       ],
     },
@@ -202,9 +232,9 @@ const navigationData = {
 }
 
 // Memoize AppSidebar component
-export const AppSidebar = React.memo(function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <TeamSwitcher teams={navigationData.teams} />
       </SidebarHeader>
@@ -218,4 +248,4 @@ export const AppSidebar = React.memo(function AppSidebar({ ...props }: React.Com
       <SidebarRail />
     </Sidebar>
   )
-})
+}
