@@ -9,13 +9,14 @@ first do the following:
 - when designing web elements or pages, remember that we use nextjs and shadcn. we need to leverage shadcn components and blocks to build a very nice and pleasing web site.
 - the database schema should never change as this is critical for logins, you need to find a solution without modifying supabase config or settings.
 - please understand how protected pages work, and avoid breaking this functionality.
+- I know the following is a long and difficult task, please take as much time as you need, I need good results even if its very expensive or if this consumes many tokens
 
 ---
 Extra context:
 
 ---
 your task:
-1) read the current About page of my project, this is important as you'll be using your understanding of the project in order to create content!
+1) read the current About page of my project, this is important as you'll be using your understanding of the project to perform your task
 2) 
 
 
