@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { AudioWaveform } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { useSidebar } from "@/components/ui/sidebar"
 
 interface TeamSwitcherProps {
   teams: {
@@ -19,6 +20,7 @@ interface TeamSwitcherProps {
 
 export function TeamSwitcher({ teams }: TeamSwitcherProps) {
   const pathname = usePathname()
+  const { state } = useSidebar()
   const isActive = pathname === "/dashboard/about"
 
   return (
@@ -26,14 +28,14 @@ export function TeamSwitcher({ teams }: TeamSwitcherProps) {
       href="/dashboard/about"
       className={cn(
         buttonVariants({ variant: "ghost", size: "lg" }),
-        "w-full justify-start",
-        isActive && "bg-muted"
+        "flex w-full items-center gap-2 p-2",
+        state === "collapsed" && "justify-center"
       )}
     >
       <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
         <AudioWaveform className="size-4" />
       </div>
-      <div className="grid flex-1 text-left text-sm leading-tight">
+      <div className={cn("grid flex-1 text-left text-sm leading-tight", state === "collapsed" && "hidden")}>
         <span className="truncate font-semibold">
           [ un0.ai ]
         </span>
