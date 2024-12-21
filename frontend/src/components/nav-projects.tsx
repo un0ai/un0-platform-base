@@ -86,14 +86,6 @@ export function NavProjects({
             </DropdownMenu>
           </SidebarMenuItem>
         ))}
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild isActive={pathname === "/dashboard/projects/more"} className="text-sidebar-foreground/70">
-            <Link href="/dashboard/projects/more" className="flex w-full items-center gap-2">
-              <MoreHorizontal className="size-4 text-sidebar-foreground/70" />
-              <span>More</span>
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
   )

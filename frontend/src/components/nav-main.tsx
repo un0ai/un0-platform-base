@@ -21,7 +21,6 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { usePersistedState } from "@/hooks/use-persisted-state"
 import { cn } from "@/lib/utils"
 
 export function NavMain({

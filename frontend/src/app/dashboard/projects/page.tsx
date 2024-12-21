@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Frame, Map, MoreHorizontal, PieChart } from "lucide-react"
+import { Frame, Map, PieChart } from "lucide-react"
 import { useEffect } from "react"
 
 const projectCategories = [
@@ -27,13 +27,6 @@ const projectCategories = [
     icon: Frame,
     url: "/dashboard/projects/design-engineering",
     lastUpdated: "1 week ago",
-  },
-  {
-    name: "More Projects",
-    description: "Additional project categories and initiatives",
-    icon: MoreHorizontal,
-    url: "/dashboard/projects/more",
-    lastUpdated: "2 weeks ago",
   },
 ]
 

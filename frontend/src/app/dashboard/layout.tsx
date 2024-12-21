@@ -86,40 +86,93 @@ export default function DashboardLayout({
       const section = pathParts[1]
       const subSection = pathParts[2]
 
-      // Handle about page with empty breadcrumb
-      if (section === "about") {
-        showSeparator = false
-        parentSection = ""
+      // Handle platform section
+      if (section === "platform") {
+        parentSection = "Platform"
+        parentPath = "/dashboard/platform"
+        if (subSection) {
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+        } else {
+          showSeparator = false
+        }
+      }
+      // Handle deploy section
+      else if (section === "deploy") {
+        parentSection = "Deploy"
+        parentPath = "/dashboard/deploy"
+        if (subSection) {
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+        } else {
+          showSeparator = false
+        }
+      }
+      // Handle build section
+      else if (section === "build") {
+        parentSection = "Build"
+        parentPath = "/dashboard/build"
+        if (subSection) {
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+        } else {
+          showSeparator = false
+        }
+      }
+      // Handle integrate section
+      else if (section === "integrate") {
+        parentSection = "Integrate"
+        parentPath = "/dashboard/integrate"
+        if (subSection) {
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+        } else {
+          showSeparator = false
+        }
+      }
+      // Handle monitor section
+      else if (section === "monitor") {
+        parentSection = "Monitor"
+        parentPath = "/dashboard/monitor"
+        if (subSection) {
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+        } else {
+          showSeparator = false
+        }
+      }
+      // Handle learn section
+      else if (section === "learn") {
+        parentSection = "Learn"
+        parentPath = "/dashboard/learn"
+        if (subSection) {
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+        } else {
+          showSeparator = false
+        }
       }
       // Handle projects section
       else if (section === "projects") {
         parentSection = "Projects"
         parentPath = "/dashboard/projects"
-
         if (subSection) {
-          if (subSection === "more") {
-            currentPage = "More"
-          } else {
-            currentPage = subSection
-              .split("-")
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ")
-          }
-          showSeparator = true
-        } else {
-          showSeparator = false
-        }
-      }
-      // Handle sections with predefined items
-      else if (typeof section === 'string' && section in navigationMap) {
-        const navSection = navigationMap[section as keyof typeof navigationMap]
-        parentSection = navSection.parent
-        parentPath = navSection.path
-
-        if ('items' in navSection && subSection && typeof subSection === 'string' && 
-            'items' in navSection && subSection in navSection.items) {
-          currentPage = navSection.items[subSection as keyof typeof navSection.items]
-          showSeparator = true
+          currentPage = subSection
+            .split("-")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
         } else {
           showSeparator = false
         }
