@@ -6,6 +6,16 @@ import { Badge } from "@/components/ui/badge"
 export default function ChangelogPage() {
   const changes = [
     {
+      version: "0.1.4-beta",
+      date: "2025-01-10",
+      type: "major",
+      changes: [
+        "Added new features for data analytics",
+        "Improved performance of the platform",
+        "Enhanced security measures",
+      ],
+    },
+    {
       version: "0.1.3-beta",
       date: "2024-12-19",
       type: "major",

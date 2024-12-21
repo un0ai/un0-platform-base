@@ -2,11 +2,19 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
+  Book,
+  Blocks,
+  Cpu,
+  Gauge,
+  Network,
   Bot,
   Command,
   Frame,
+  Info,
+  Lightbulb,
+  FlaskConical,
+  Briefcase,
+  HelpCircle,
   GalleryVerticalEnd,
   LayoutDashboard,
   Map,
@@ -37,12 +45,12 @@ const navigationData = {
     },
     {
       name: "Acme Corp.",
-      logo: AudioWaveform,
+      logo: Command,
       plan: "Startup",
     },
     {
       name: "Evil Corp.",
-      logo: Command,
+      logo: Frame,
       plan: "Free",
     },
   ],
@@ -53,113 +61,185 @@ const navigationData = {
       icon: LayoutDashboard,
     },
     {
-      title: "Playground",
-      url: "/dashboard/playground",
-      icon: PlayCircle,
+      title: "Build",
+      url: "/dashboard/build",
+      icon: Cpu,
       items: [
         {
-          title: "Tool1",
-          url: "/dashboard/playground/tool1",
+          title: "Playground",
+          url: "/dashboard/build/playground",
         },
         {
-          title: "Tool2",
-          url: "/dashboard/playground/tool2",
+          title: "Visual Agent Builder",
+          url: "/dashboard/build/visual-agent-builder",
         },
         {
-          title: "Tool3",
-          url: "/dashboard/playground/tool3",
+          title: "Workflow Orchestration",
+          url: "/dashboard/build/workflow-orchestration",
+        },
+        {
+          title: "Model Management",
+          url: "/dashboard/build/model-management",
         },
       ],
     },
     {
-      title: "Models",
-      url: "/dashboard/models",
+      title: "Deploy",
+      url: "/dashboard/deploy",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
-          url: "/dashboard/models/genesis",
+          title: "CI/CD Pipelines",
+          url: "/dashboard/deploy/cicd-pipelines",
         },
         {
-          title: "Explorer",
-          url: "/dashboard/models/explorer",
+          title: "MLOps Tools",
+          url: "/dashboard/deploy/mlops-tools",
         },
         {
-          title: "Quantum",
-          url: "/dashboard/models/quantum",
+          title: "Infrastructure",
+          url: "/dashboard/deploy/infrastructure",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "/dashboard/docs",
-      icon: BookOpen,
+      title: "Integrate",
+      url: "/dashboard/integrate",
+      icon: Network,
       items: [
         {
-          title: "Introduction",
-          url: "/dashboard/docs/introduction",
+          title: "Third-party Connectors",
+          url: "/dashboard/integrate/third-party-connectors",
         },
         {
-          title: "Get Started",
-          url: "/dashboard/docs/get-started",
+          title: "API Hub",
+          url: "/dashboard/integrate/api-hub",
         },
         {
-          title: "Tutorials",
-          url: "/dashboard/docs/tutorials",
+          title: "Data Sources",
+          url: "/dashboard/integrate/data-sources",
+        },
+        {
+          title: "Plugins",
+          url: "/dashboard/integrate/plugins",
+        },
+      ],
+    },
+    {
+      title: "Monitor",
+      url: "/dashboard/monitor",
+      icon: Gauge,
+      items: [
+        {
+          title: "Performance Metrics",
+          url: "/dashboard/monitor/performance-metrics",
+        },
+        {
+          title: "System Health",
+          url: "/dashboard/monitor/system-health",
+        },
+        {
+          title: "Agent Analytics",
+          url: "/dashboard/monitor/agent-analytics",
+        },
+        {
+          title: "Logs & Alerts",
+          url: "/dashboard/monitor/logs-alerts",
+        },
+      ],
+    },
+    {
+      title: "Learn",
+      url: "/dashboard/learn",
+      icon: Book,
+      items: [
+        {
+          title: "Getting Started",
+          url: "/dashboard/learn/getting-started",
+        },
+        {
+          title: "Developer Guides",
+          url: "/dashboard/learn/developer-guides",
+        },
+        {
+          title: "Playbooks",
+          url: "/dashboard/learn/playbooks",
         },
         {
           title: "Changelog",
-          url: "/dashboard/docs/changelog",
+          url: "/dashboard/learn/changelog",
+        },
+        {
+          title: "FAQ",
+          url: "/dashboard/learn/faq",
+        },
+        {
+          title: "Blog",
+          url: "/dashboard/learn/blog",
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "/dashboard/settings",
-      icon: Settings2,
+    /* {
+      title: "Platform",
+      url: "/dashboard/platform",
+      icon: Blocks,
       items: [
         {
-          title: "General",
-          url: "/dashboard/settings/general",
+          title: "About",
+          url: "/dashboard/platform/about",
         },
         {
-          title: "Team",
-          url: "/dashboard/settings/team",
+          title: "Use Cases",
+          url: "/dashboard/platform/use-cases",
         },
         {
-          title: "Billing",
-          url: "/dashboard/settings/billing",
+          title: "R&D",
+          url: "/dashboard/platform/research-development",
         },
         {
-          title: "Limits",
-          url: "/dashboard/settings/limits",
+          title: "Contact / Support",
+          url: "/dashboard/platform/contact",
+        },
+        {
+          title: "Careers",
+          url: "/dashboard/platform/careers",
         },
       ],
-    },
+    }, */
   ],
   navProjects: [
     {
-      name: "Design Engineering",
-      url: "/dashboard/projects/design-engineering",
-      icon: Frame,
+      name: "About",
+      url: "/dashboard/platform/about",
+      icon: Info,
     },
     {
-      name: "Sales & Marketing",
-      url: "/dashboard/projects/sales-marketing",
-      icon: PieChart,
+      name: "Use Cases",
+      url: "/dashboard/platform/use-cases",
+      icon: Lightbulb,
     },
     {
-      name: "Research & Development",
-      url: "/dashboard/projects/research-development",
-      icon: Map,
+      name: "R&D",
+      url: "/dashboard/platform/research-development",
+      icon: FlaskConical,
+    },
+    {
+      name: "Careers",
+      url: "/dashboard/platform/careers",
+      icon: Briefcase,
+    },
+    {
+      name: "Contact / Support",
+      url: "/dashboard/platform/contact",
+      icon: HelpCircle,
     },
   ],
 }
 
 // Memoize AppSidebar component
-export const AppSidebar = React.memo(function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <TeamSwitcher teams={navigationData.teams} />
       </SidebarHeader>
@@ -173,4 +253,4 @@ export const AppSidebar = React.memo(function AppSidebar({ ...props }: React.Com
       <SidebarRail />
     </Sidebar>
   )
-})
+}

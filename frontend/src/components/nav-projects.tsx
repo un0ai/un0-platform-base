@@ -86,6 +86,7 @@ export function NavProjects({
             </DropdownMenu>
           </SidebarMenuItem>
         ))}
+        {/* Commented out More button
         <SidebarMenuItem>
           <SidebarMenuButton asChild isActive={pathname === "/dashboard/projects/more"} className="text-sidebar-foreground/70">
             <Link href="/dashboard/projects/more" className="flex w-full items-center gap-2">
@@ -94,6 +95,7 @@ export function NavProjects({
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
+        */}
       </SidebarMenu>
     </SidebarGroup>
   )

@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { Bot } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,62 +8,38 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { login } from "@/lib/auth-actions";
 import SignInWithGoogleButton from "./SignInWithGoogleButton";
 
 export function LoginForm() {
   return (
-    <Card className="mx-auto max-w-sm">
-      <CardHeader>
-        <CardDescription>
-          Choose your preferred sign in method
-        </CardDescription>
+    <Card className="mx-auto max-w-sm border-none bg-card/50 shadow-lg backdrop-blur">
+      <CardHeader className="space-y-4 pb-8">
+        <div className="flex justify-center">
+          <div className="rounded-full bg-primary/10 p-4">
+            <Bot className="h-8 w-8 text-primary" />
+          </div>
+        </div>
+        <div className="space-y-2 text-center">
+          <CardTitle className="text-2xl font-bold tracking-tight">
+            
+          </CardTitle>
+          <CardDescription className="text-muted-foreground/60">
+            Sign in to continue
+          </CardDescription>
+        </div>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
+        <div className="grid gap-6">
           <SignInWithGoogleButton text="Sign in with Google" priority={true} />
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or with email
-              </span>
-            </div>
+          <div className="text-center text-sm">
+            Don&apos;t have an account yet?{" "}
+            <Link 
+              href="/signup" 
+              className="text-primary hover:text-primary/80 transition-colors font-medium"
+            >
+              Create account
+            </Link>
           </div>
-          <form className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                name="password"
-                required
-              />
-            </div>
-            <Button formAction={login} type="submit" variant="outline" className="w-full">
-              Sign in with email
-            </Button>
-          </form>
-        </div>
-        <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="underline">
-            Sign up
-          </Link>
         </div>
       </CardContent>
     </Card>
