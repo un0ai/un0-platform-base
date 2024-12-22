@@ -51,7 +51,7 @@ export function BetaRestrictedAction({ children }: { children: React.ReactNode }
             Beta Access Required
           </DialogTitle>
           <DialogDescription>
-            This action is only available to beta users. Please apply for beta access to use this feature with real data.
+            This action is only available to beta users. Please apply for beta access to use this feature.
           </DialogDescription>
         </DialogHeader>
         <div className="flex justify-end">
