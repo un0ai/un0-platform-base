@@ -91,6 +91,7 @@ const navigationData = {
         {
           title: "CI/CD Pipelines",
           url: "/dashboard/deploy/cicd-pipelines",
+          protected: true,
         },
         {
           title: "MLOps Tools",

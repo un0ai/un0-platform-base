@@ -2,8 +2,9 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight, Lock, type LucideIcon } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
+import { createClient } from "@/utils/supabase/client"
 
 import {
   Collapsible,
@@ -35,6 +36,7 @@ export function NavMain({
     items?: {
       title: string
       url: string
+      protected?: boolean
     }[]
   }[]
 }) {
@@ -42,6 +44,8 @@ export function NavMain({
   const router = useRouter()
   const { state } = useSidebar()
   const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+  const supabase = createClient()
 
   // Memoize the parent item lookup
   const getParentItem = useCallback((pathname: string) => {
@@ -93,6 +97,24 @@ export function NavMain({
     },
     [router, state, toggleItem]
   )
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      setIsAuthenticated(!!session)
+    }
+
+    checkAuth()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session)
+    })
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [supabase.auth])
 
   return (
     <SidebarGroup>
@@ -183,7 +205,12 @@ export function NavMain({
                             isActive={pathname === subItem.url}
                             size="md"
                           >
-                            <Link href={subItem.url}>{subItem.title}</Link>
+                            <Link href={subItem.url} className="flex items-center gap-1.5">
+                              {subItem.title}
+                              {subItem.protected && !isAuthenticated && (
+                                <Lock className="h-3 w-3 opacity-25" />
+                              )}
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
