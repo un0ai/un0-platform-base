@@ -1,18 +1,46 @@
-import '@testing-library/jest-dom'
-import React from 'react'
+import '@testing-library/jest-dom';
+import React from 'react';
+import { TextEncoder, TextDecoder } from 'util';
 
 // Mock React
 global.React = React
 
-// Mock next/navigation
+// Mock Next.js router
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      route: '/',
+      pathname: '',
+      query: {},
+      asPath: '',
+      push: jest.fn(),
+      events: {
+        on: jest.fn(),
+        off: jest.fn(),
+      },
+      beforePopState: jest.fn(() => null),
+      prefetch: jest.fn(() => null),
+    };
+  },
+}));
+
+// Mock Next/Navigation
 jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(() => ({
-    push: jest.fn(),
-    replace: jest.fn(),
-  })),
+  useRouter() {
+    return {
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    };
+  },
+  useSearchParams() {
+    return {
+      get: jest.fn(),
+    };
+  },
   usePathname: jest.fn(() => '/'),
   redirect: jest.fn(),
-}))
+}));
 
 // Mock next-auth
 jest.mock('next-auth/react', () => ({
@@ -24,21 +52,25 @@ jest.mock('next-auth/react', () => ({
   signOut: jest.fn(),
 }))
 
-// Mock TextEncoder/TextDecoder
-class MockTextEncoder {
-  encode(str: string): Uint8Array {
-    return new Uint8Array([]);
+// Suppress specific React warnings during tests
+const originalError = console.error;
+console.error = (...args) => {
+  const suppressedWarnings = [
+    'Warning: Function components cannot be given refs',
+    'Warning: React does not recognize the `asChild` prop',
+    'Warning: ReactDOM.render is no longer supported',
+    'Error: Uncaught [Error: Element type is invalid',
+  ];
+  
+  if (suppressedWarnings.some(warning => args.join(' ').includes(warning))) {
+    return;
   }
-}
+  originalError.call(console, ...args);
+};
 
-class MockTextDecoder {
-  decode(bytes: Uint8Array): string {
-    return "";
-  }
-}
-
-global.TextEncoder = MockTextEncoder as any;
-global.TextDecoder = MockTextDecoder as any;
+// Add missing globals
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
 
 // Mock Request
 global.Request = jest.fn((input: RequestInfo | URL, init?: RequestInit) => ({
@@ -69,16 +101,3 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
-
-// Suppress console.error in tests
-const originalError = console.error;
-console.error = (...args) => {
-  if (
-    typeof args[0] === 'string' &&
-    (args[0].includes('Warning: ReactDOM.render is no longer supported') ||
-     args[0].includes('Error: Uncaught [Error: Element type is invalid'))
-  ) {
-    return;
-  }
-  originalError.call(console, ...args);
-};

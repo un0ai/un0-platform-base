@@ -20,7 +20,7 @@ export function RequireAuth({ children }: RequireAuthProps) {
       setIsAuthenticated(!!session)
       
       if (!session) {
-        router.push('/sign-in')
+        router.push('/login')
       }
     }
 
@@ -32,7 +32,7 @@ export function RequireAuth({ children }: RequireAuthProps) {
       (_event, session) => {
         setIsAuthenticated(!!session)
         if (!session) {
-          router.push('/sign-in')
+          router.push('/login')
         }
       }
     )
@@ -52,6 +52,10 @@ export function RequireAuth({ children }: RequireAuthProps) {
     )
   }
 
-  // Show protected content for authenticated users
-  return isAuthenticated ? <>{children}</> : null
+  // If not authenticated, the useEffect hook will handle the redirect
+  if (!isAuthenticated) {
+    return null
+  }
+
+  return <>{children}</>
 }

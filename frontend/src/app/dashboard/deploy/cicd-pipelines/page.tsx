@@ -2,11 +2,14 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { RequireAuth } from "@/components/auth/require-auth"
+import { ProtectedPage } from "@/components/auth/protected-page"
 
 export default function CICDPipelinesPage() {
   return (
-    <RequireAuth>
+    <ProtectedPage 
+      title="CI/CD Pipelines"
+      description="Automate your AI deployment workflow with continuous integration and delivery"
+    >
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">
@@ -66,6 +69,6 @@ export default function CICDPipelinesPage() {
           </Card>
         </div>
       </div>
-    </RequireAuth>
+    </ProtectedPage>
   )
 }

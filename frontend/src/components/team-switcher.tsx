@@ -20,13 +20,13 @@ export function TeamSwitcher() {
       <SidebarMenuItem>
         <SidebarMenuButton size="lg" asChild isActive={isActive}>
           <Link href="/dashboard/about" className="flex w-full items-center">
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground overflow-hidden">
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground dark:bg-sidebar-primary/90">
               <Image
                 src="/avatars/un0-image6.jpeg"
                 alt="un0.ai Logo"
                 width={32}
                 height={32}
-                className="object-cover"
+                className="rounded-lg object-cover"
               />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">

@@ -87,7 +87,7 @@ describe('Protected Routes Integration', () => {
       )
     })
 
-    it('redirects to sign-in page', async () => {
+    it('redirects to login page', async () => {
       let rendered
       await act(async () => {
         rendered = render(
@@ -100,9 +100,9 @@ describe('Protected Routes Integration', () => {
       // First, we should see the loading spinner
       expect(screen.getByTestId('loading-spinner')).toBeInTheDocument()
 
-      // Then we should be redirected to sign-in
+      // Then we should be redirected to login
       await waitFor(() => {
-        expect(mockPush).toHaveBeenCalledWith('/sign-in')
+        expect(mockPush).toHaveBeenCalledWith('/login')
       })
 
       // Loading spinner should be gone
