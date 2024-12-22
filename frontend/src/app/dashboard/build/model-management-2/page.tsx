@@ -58,6 +58,20 @@ export default function ModelManagementPage() {
             Configure and manage your AI models
           </p>
         </div>
+        <div className="flex items-center space-x-2">
+          <BetaRestrictedAction>
+            <Button variant="outline" size="sm">
+              <Plus className="mr-2 h-4 w-4" />
+              New Model
+            </Button>
+          </BetaRestrictedAction>
+          <BetaRestrictedAction>
+            <Button variant="default" size="sm">
+              <Cpu className="mr-2 h-4 w-4" />
+              Deploy
+            </Button>
+          </BetaRestrictedAction>
+        </div>
       </div>
 
       <BetaPageWrapper>
@@ -65,29 +79,6 @@ export default function ModelManagementPage() {
           <div className="absolute inset-0 bg-yellow-500/5 dark:bg-yellow-400/5 border-2 border-yellow-500/20 dark:border-yellow-400/20 rounded-lg" />
           <div className="relative">
             <div className="flex-1 space-y-6 p-8 pt-6">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <h2 className="text-3xl font-bold tracking-tight">Model Management</h2>
-                  <p className="text-muted-foreground">
-                    Manage and monitor your AI models and deployments
-                  </p>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <BetaRestrictedAction>
-                    <Button variant="outline" size="sm">
-                      <Plus className="mr-2 h-4 w-4" />
-                      New Model
-                    </Button>
-                  </BetaRestrictedAction>
-                  <BetaRestrictedAction>
-                    <Button variant="default" size="sm">
-                      <Cpu className="mr-2 h-4 w-4" />
-                      Deploy
-                    </Button>
-                  </BetaRestrictedAction>
-                </div>
-              </div>
-
               <div className="grid gap-6">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                   <Card className="border-none shadow-md">
