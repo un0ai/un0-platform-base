@@ -2,9 +2,37 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Globe, Headphones, Mail, MessageSquare } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Toaster } from "@/components/ui/toaster"
+import ContactForm from "@/components/contact-form"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import {
+  MessagesSquare,
+  Mail,
+  Bot,
+  GitBranch,
+  Globe,
+  Clock,
+  BrainCircuit,
+  Rocket,
+  MessageCircleQuestion,
+  BookOpen,
+  Code2,
+  Github,
+  Twitter,
+  Linkedin,
+} from "lucide-react"
 
 export default function ContactPage() {
   return (
