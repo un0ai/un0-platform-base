@@ -1,160 +1,84 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Bot, Building2, MessageSquare, Search, ShoppingCart, Users } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Cpu, Database, LayoutDashboard, MessageCircle, MonitorSmartphone, Users } from "lucide-react";
 
 export default function UseCasesPage() {
+  const useCases = [
+    {
+      title: "AI Workflow Orchestration",
+      description: "Design, test, and deploy complex AI workflows seamlessly, integrating multiple AI models and services for comprehensive solutions.",
+      icon: Cpu,
+      badges: ["Workflow Integration", "Model Coordination", "Service Orchestration"],
+    },
+    {
+      title: "Real-Time Data Integration",
+      description: "Incorporate live data streams into AI models, enhancing decision-making and responsiveness in dynamic environments.",
+      icon: MonitorSmartphone,
+      badges: ["Live Data", "Dynamic Modeling", "Real-Time Processing"],
+    },
+    {
+      title: "Custom AI Tool Development",
+      description: "Create bespoke AI tools through a user-friendly interface, allowing for rapid prototyping and deployment without extensive coding.",
+      icon: LayoutDashboard,
+      badges: ["Tool Creation", "Rapid Prototyping", "No-Code Solutions"],
+    },
+    {
+      title: "Multi-Model AI Integration",
+      description: "Combine various AI models, enabling users to leverage diverse capabilities within a single workflow.",
+      icon: Database,
+      badges: ["Model Integration", "Diverse Capabilities", "Unified Workflow"],
+    },
+    {
+      title: "Autonomous Agent Simulation",
+      description: "Develop and test AI agents capable of autonomous decision-making, applicable in scenarios like automated customer interactions or process optimizations.",
+      icon: Users,
+      badges: ["Agent Simulation", "Autonomous Decision-Making", "Process Optimization"],
+    },
+    {
+      title: "Collaborative AI Development",
+      description: "Enable teams to collaboratively build and manage AI projects, sharing resources and insights within a centralized platform.",
+      icon: MessageCircle,
+      badges: ["Team Collaboration", "Resource Sharing", "Centralized Management"],
+    },
+  ];
+
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">
+        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
           Use Cases
         </h1>
-        <p className="text-lg text-foreground/80 dark:text-foreground/80 leading-relaxed">
-          Discover how un0.ai can transform your business
+        <p className="text-lg text-foreground/80 leading-relaxed">
+          Explore the diverse applications of un0.ai in AI development and integration.
         </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="border-none shadow-md">
-          <CardHeader className="flex flex-row items-start justify-between">
-            <div>
-              <CardTitle>Customer Service</CardTitle>
-              <CardDescription>Automate support interactions</CardDescription>
-            </div>
-            <MessageSquare className="h-6 w-6 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Transform customer support with AI-powered chatbots and automated responses.
-                Handle inquiries 24/7 while maintaining high quality service.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Chatbots</Badge>
-                <Badge variant="secondary">Ticket Routing</Badge>
-                <Badge variant="secondary">FAQ Automation</Badge>
+        {useCases.map((useCase, index) => (
+          <Card key={index} className="border-none shadow-md">
+            <CardHeader className="flex flex-row items-start justify-between">
+              <div>
+                <CardTitle>{useCase.title}</CardTitle>
+                <CardDescription>{useCase.description}</CardDescription>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-none shadow-md">
-          <CardHeader className="flex flex-row items-start justify-between">
-            <div>
-              <CardTitle>E-commerce</CardTitle>
-              <CardDescription>Enhance shopping experiences</CardDescription>
-            </div>
-            <ShoppingCart className="h-6 w-6 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Personalize shopping experiences with AI recommendations and intelligent
-                product search capabilities.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Product Recommendations</Badge>
-                <Badge variant="secondary">Search Enhancement</Badge>
-                <Badge variant="secondary">Inventory Management</Badge>
+              <useCase.icon className="h-6 w-6 text-primary" />
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  {useCase.badges.map((badge, idx) => (
+                    <Badge key={idx} variant="secondary">
+                      {badge}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-none shadow-md">
-          <CardHeader className="flex flex-row items-start justify-between">
-            <div>
-              <CardTitle>Enterprise Solutions</CardTitle>
-              <CardDescription>Streamline business operations</CardDescription>
-            </div>
-            <Building2 className="h-6 w-6 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Optimize business processes with AI-powered automation and intelligent
-                workflow management.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Process Automation</Badge>
-                <Badge variant="secondary">Document Analysis</Badge>
-                <Badge variant="secondary">Workflow Optimization</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-none shadow-md">
-          <CardHeader className="flex flex-row items-start justify-between">
-            <div>
-              <CardTitle>HR & Recruitment</CardTitle>
-              <CardDescription>Optimize talent acquisition</CardDescription>
-            </div>
-            <Users className="h-6 w-6 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Streamline recruitment processes with AI-powered candidate screening
-                and automated interview scheduling.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Resume Screening</Badge>
-                <Badge variant="secondary">Interview Automation</Badge>
-                <Badge variant="secondary">Candidate Matching</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-none shadow-md">
-          <CardHeader className="flex flex-row items-start justify-between">
-            <div>
-              <CardTitle>Content Creation</CardTitle>
-              <CardDescription>Generate engaging content</CardDescription>
-            </div>
-            <Bot className="h-6 w-6 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Create high-quality content at scale with AI-powered generation and
-                optimization tools.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Text Generation</Badge>
-                <Badge variant="secondary">Content Optimization</Badge>
-                <Badge variant="secondary">Multi-language Support</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-none shadow-md">
-          <CardHeader className="flex flex-row items-start justify-between">
-            <div>
-              <CardTitle>Research & Analysis</CardTitle>
-              <CardDescription>Data-driven insights</CardDescription>
-            </div>
-            <Search className="h-6 w-6 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Extract valuable insights from large datasets with AI-powered
-                analysis tools.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Data Analysis</Badge>
-                <Badge variant="secondary">Pattern Recognition</Badge>
-                <Badge variant="secondary">Trend Prediction</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
-  )
+  );
 }
