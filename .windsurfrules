@@ -4,3 +4,4 @@
 - consider the .env file exist but you dont see it (you can validate the .env file structure using .env.example)- check the logs to know what's going on
 - understand the current db schema in supabase. the query used to create the table is under the supabase directory. READ IT!
 - the database schema will never change, you need to find a solution without modifying supabase config or settings.
+- when you implement new features, be sure to always install all new dependencies and packages needed
