@@ -229,61 +229,40 @@ export default function VisualAgentBuilderPage() {
                 <CardTitle>Testing & Validation</CardTitle>
                 <CardDescription>Verify agent behavior</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label>Test Cases</Label>
+              <CardContent>
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-lg font-medium mb-3">Test Cases</h2>
                     <BetaRestrictedAction>
-                      <Button variant="ghost" size="sm">
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </BetaRestrictedAction>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="rounded-lg border p-2 flex items-center justify-between">
-                      <span className="text-sm">Basic Conversation</span>
-                      <BetaRestrictedAction>
-                        <Button variant="ghost" size="icon">
-                          <Play className="h-4 w-4" />
-                        </Button>
-                      </BetaRestrictedAction>
-                    </div>
-                    <div className="rounded-lg border p-2 flex items-center justify-between">
-                      <span className="text-sm">Code Generation</span>
-                      <BetaRestrictedAction>
-                        <Button variant="ghost" size="icon">
-                          <Play className="h-4 w-4" />
-                        </Button>
-                      </BetaRestrictedAction>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between space-x-4">
-                  <div className="space-y-1">
-                    <Label>Test Cases</Label>
-                    <div className="space-y-2">
-                      <div className="rounded-lg border p-2 flex items-center justify-between">
-                        <span className="text-sm">Basic Conversation</span>
-                        <BetaRestrictedAction>
-                          <Button variant="ghost" size="icon">
-                            <Play className="h-4 w-4" />
-                          </Button>
-                        </BetaRestrictedAction>
+                      <div className="rounded-2xl border shadow-sm p-4 hover:bg-accent/50 transition-colors cursor-pointer flex items-center justify-between">
+                        <span className="text-base">Basic Conversation</span>
+                        <Play className="h-4 w-4" />
                       </div>
-                    </div>
+                    </BetaRestrictedAction>
                   </div>
-                  <div className="flex items-center space-x-2">
+
+                  <div className="grid grid-cols-2 gap-4">
                     <BetaRestrictedAction>
-                      <Button variant="outline" size="sm" className="flex items-center">
-                        <FileText className="mr-2 h-4 w-4" />
-                        Generate Documentation
-                      </Button>
+                      <div className="rounded-2xl border shadow-sm p-4 hover:bg-accent/50 transition-colors cursor-pointer">
+                        <div className="flex flex-col items-center text-center gap-1.5">
+                          <FileText className="h-4 w-4 mb-1" />
+                          <div className="text-sm">
+                            <div>Generate</div>
+                            <div>Documentation</div>
+                          </div>
+                        </div>
+                      </div>
                     </BetaRestrictedAction>
                     <BetaRestrictedAction>
-                      <Button variant="outline" size="sm" className="flex items-center">
-                        <History className="mr-2 h-4 w-4" />
-                        Version History
-                      </Button>
+                      <div className="rounded-2xl border shadow-sm p-4 hover:bg-accent/50 transition-colors cursor-pointer">
+                        <div className="flex flex-col items-center text-center gap-1.5">
+                          <History className="h-4 w-4 mb-1" />
+                          <div className="text-sm">
+                            <div>Version</div>
+                            <div>History</div>
+                          </div>
+                        </div>
+                      </div>
                     </BetaRestrictedAction>
                   </div>
                 </div>
