@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { createClient } from "@/utils/supabase/client"
-import { LoginForm } from "@/app/(auth)/login/components/LoginForm"
-import { LockKeyhole } from "lucide-react"
+import { Loader2 } from "lucide-react"
 
 interface RequireAuthProps {
   children: React.ReactNode
@@ -12,11 +12,16 @@ interface RequireAuthProps {
 export function RequireAuth({ children }: RequireAuthProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const supabase = createClient()
+  const router = useRouter()
 
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       setIsAuthenticated(!!session)
+      
+      if (!session) {
+        router.push('/sign-in')
+      }
     }
 
     // Initial check
@@ -26,38 +31,27 @@ export function RequireAuth({ children }: RequireAuthProps) {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setIsAuthenticated(!!session)
+        if (!session) {
+          router.push('/sign-in')
+        }
       }
     )
 
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase.auth])
+  }, [supabase.auth, router])
 
-  // Show nothing while checking auth status
+  // Show loading state while checking auth status
   if (isAuthenticated === null) {
-    return null
-  }
-
-  // Show login form for non-authenticated users
-  if (!isAuthenticated) {
     return (
-      <div className="container flex flex-col items-center justify-center min-h-[80vh] space-y-8">
-        <div className="text-center space-y-4">
-          <div className="inline-block p-3 bg-blue-50 rounded-full">
-            <LockKeyhole className="w-8 h-8 text-blue-500" />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-2xl font-semibold tracking-tight">Members Only Area</h2>
-          </div>
-        </div>
-        <div className="w-full max-w-sm">
-          <LoginForm />
-        </div>
+      <div className="flex items-center justify-center min-h-[80vh]" data-testid="loading-spinner">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="sr-only">Loading...</span>
       </div>
     )
   }
 
   // Show protected content for authenticated users
-  return <>{children}</>
+  return isAuthenticated ? <>{children}</> : null
 }

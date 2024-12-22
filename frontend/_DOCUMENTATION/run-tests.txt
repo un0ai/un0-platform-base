@@ -1,0 +1,55 @@
+We have several types of tests organized in different categories. Here's the breakdown:
+
+Authentication Tests
+- auth/auth.test.tsx: Tests for authentication functionality
+- integration/auth-flow.test.tsx: Integration tests for authentication flow
+Component Tests
+- components/navigation.test.tsx: Tests for navigation components
+- components/team-switcher.test.tsx: Tests for team switching functionality
+- components/nav-projects.test.tsx: Tests for project navigation
+- components/ui.test.tsx: Tests for UI components
+Integration Tests
+- integration/protected-routes.test.tsx: Tests for protected routes functionality
+- integration/auth-flow.test.tsx: Tests for authentication flow
+Routing Tests
+- routing/protected-routes.test.tsx: Tests for protected routes routing
+
+Here's how you can run the tests:
+
+Run All Tests
+npm test
+
+Run Tests in Watch Mode (useful during development)
+npm test -- --watch
+
+Run Specific Test File
+npm test -- auth.test.tsx
+
+Run Tests with Coverage
+npm test -- --coverage
+
+Run Tests by Pattern
+# Run all component tests
+npm test -- components/
+# Run all integration tests
+npm test -- integration/
+
+Run Tests in CI Mode (single run, no watch)
+npm test -- --ci
+
+The test suite is using Jest as the test runner and React Testing Library for component testing. Some key features of our test setup:
+
+- Component Tests: Test individual React components in isolation
+- Integration Tests: Test how multiple components work together
+- Authentication Tests: Specifically test authentication flows
+- UI Tests: Test UI components and their interactions
+- Routing Tests: Test navigation and routing behavior
+
+All tests are currently passing (53 tests across 8 test suites), and they cover:
+
+- Component rendering
+- User interactions
+- Authentication flows
+- Protected routes
+- Navigation
+- UI state management
