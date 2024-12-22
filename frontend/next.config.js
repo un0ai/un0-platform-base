@@ -8,10 +8,8 @@ const nextConfig = {
   
   // Experimental features
   experimental: {
-    // Enable server actions
-    serverActions: {
-      allowedOrigins: ['localhost:3000', 'localhost:3001'],
-    },
+    // Enable server actions if you need them
+    serverActions: true, // Remove allowedOrigins to use default security
     // Enable modern builds
     optimizeCss: true,
   },
