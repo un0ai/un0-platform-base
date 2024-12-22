@@ -9,7 +9,9 @@ const nextConfig = {
   // Experimental features
   experimental: {
     // Enable server actions if you need them
-    serverActions: true, // Remove allowedOrigins to use default security
+    serverActions: {
+      enabled: true
+    }, 
     // Enable modern builds
     optimizeCss: true,
   },
