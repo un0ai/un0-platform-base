@@ -1,75 +1,315 @@
 "use client"
 
+import * as React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  Bot,
+  Plus,
+  Save,
+  Download,
+  Upload,
+  Play,
+  Pause,
+  Square,
+  Settings2,
+  Share2,
+  Code2,
+  Database,
+  Workflow,
+  LineChart,
+  BarChart,
+  GitBranch,
+  History,
+  Cpu,
+  Zap,
+  AlertCircle,
+} from "lucide-react"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export default function ModelManagementPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">
-          Model Management
-        </h1>
-        <p className="text-lg text-foreground/80 dark:text-foreground/80 leading-relaxed">
-          Manage and monitor your AI models in one central location
-        </p>
+    <div className="flex-1 space-y-6 p-8 pt-6">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h2 className="text-3xl font-bold tracking-tight">Model Management</h2>
+          <p className="text-muted-foreground">
+            Manage and monitor your AI models and deployments
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button variant="outline" size="sm">
+            <Plus className="mr-2 h-4 w-4" />
+            New Model
+          </Button>
+          <Button variant="default" size="sm">
+            <Cpu className="mr-2 h-4 w-4" />
+            Deploy
+          </Button>
+        </div>
       </div>
 
-      <Card className="border-none shadow-md">
-        <CardHeader>
-          <CardTitle>Model Registry</CardTitle>
-          <CardDescription>Track and manage your AI models</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Model Name</TableHead>
-                <TableHead>Version</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Last Updated</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">Example Model</TableCell>
-                <TableCell>1.0.0</TableCell>
-                <TableCell>
-                  <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-400">
-                    Active
-                  </span>
-                </TableCell>
-                <TableCell>Coming Soon</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <div className="grid gap-6">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card className="border-none shadow-md">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Active Models</CardTitle>
+              <Cpu className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">12</div>
+              <p className="text-xs text-muted-foreground">
+                +2 from last week
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="border-none shadow-md">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Requests</CardTitle>
+              <Zap className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">1,234,567</div>
+              <p className="text-xs text-muted-foreground">
+                +15% from last month
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="border-none shadow-md">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Average Latency</CardTitle>
+              <History className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">245ms</div>
+              <p className="text-xs text-muted-foreground">
+                -12ms from last week
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="border-none shadow-md">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Error Rate</CardTitle>
+              <AlertCircle className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">0.12%</div>
+              <p className="text-xs text-muted-foreground">
+                -0.05% from last week
+              </p>
+            </CardContent>
+          </Card>
+        </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Model Metrics</CardTitle>
-            <CardDescription>Performance and usage statistics</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border-2 border-dashed border-muted-foreground/20 p-6 text-center">
-              <p className="text-sm text-muted-foreground">Coming Soon</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+          <Card className="border-none shadow-md">
+            <CardHeader>
+              <CardTitle>Deployed Models</CardTitle>
+              <CardDescription>
+                Overview of your active model deployments
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Model</TableHead>
+                    <TableHead>Version</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Requests/min</TableHead>
+                    <TableHead>Latency</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">GPT-4</TableCell>
+                    <TableCell>v2.1</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="bg-green-50 text-green-700">
+                        Active
+                      </Badge>
+                    </TableCell>
+                    <TableCell>1,234</TableCell>
+                    <TableCell>245ms</TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <Settings2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Claude 2</TableCell>
+                    <TableCell>v1.3</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="bg-green-50 text-green-700">
+                        Active
+                      </Badge>
+                    </TableCell>
+                    <TableCell>856</TableCell>
+                    <TableCell>189ms</TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <Settings2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Llama 2</TableCell>
+                    <TableCell>v1.0</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="bg-yellow-50 text-yellow-700">
+                        Scaling
+                      </Badge>
+                    </TableCell>
+                    <TableCell>432</TableCell>
+                    <TableCell>312ms</TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <Settings2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
 
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Version Control</CardTitle>
-            <CardDescription>Model versioning and history</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border-2 border-dashed border-muted-foreground/20 p-6 text-center">
-              <p className="text-sm text-muted-foreground">Coming Soon</p>
-            </div>
-          </CardContent>
-        </Card>
+          <div className="space-y-6">
+            <Card className="border-none shadow-md">
+              <CardHeader>
+                <CardTitle>Quick Actions</CardTitle>
+                <CardDescription>Common model operations</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Button variant="outline" className="w-full justify-start">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Deploy New Model
+                </Button>
+                <Button variant="outline" className="w-full justify-start">
+                  <GitBranch className="mr-2 h-4 w-4" />
+                  Create Version
+                </Button>
+                <Button variant="outline" className="w-full justify-start">
+                  <LineChart className="mr-2 h-4 w-4" />
+                  View Analytics
+                </Button>
+                <Button variant="outline" className="w-full justify-start">
+                  <Settings2 className="mr-2 h-4 w-4" />
+                  Manage Settings
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-md">
+              <CardHeader>
+                <CardTitle>Model Health</CardTitle>
+                <CardDescription>System status and alerts</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    <div className="space-y-0.5">
+                      <p className="text-sm font-medium">GPT-4</p>
+                      <p className="text-xs text-muted-foreground">All systems operational</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    <div className="space-y-0.5">
+                      <p className="text-sm font-medium">Claude 2</p>
+                      <p className="text-xs text-muted-foreground">All systems operational</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                    <div className="space-y-0.5">
+                      <p className="text-sm font-medium">Llama 2</p>
+                      <p className="text-xs text-muted-foreground">High latency detected</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card className="border-none shadow-md">
+            <CardHeader>
+              <CardTitle>Performance Metrics</CardTitle>
+              <CardDescription>
+                Model performance over time
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[200px] flex items-center justify-center border-2 border-dashed rounded-lg">
+                <p className="text-sm text-muted-foreground">Performance chart placeholder</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-none shadow-md">
+            <CardHeader>
+              <CardTitle>Resource Usage</CardTitle>
+              <CardDescription>
+                System resource utilization
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span>CPU Usage</span>
+                    <span className="font-medium">78%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-muted">
+                    <div className="h-full w-[78%] rounded-full bg-primary" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span>Memory Usage</span>
+                    <span className="font-medium">64%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-muted">
+                    <div className="h-full w-[64%] rounded-full bg-primary" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span>GPU Usage</span>
+                    <span className="font-medium">92%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-muted">
+                    <div className="h-full w-[92%] rounded-full bg-primary" />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

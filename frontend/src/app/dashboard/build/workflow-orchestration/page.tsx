@@ -1,55 +1,283 @@
 "use client"
 
+import * as React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  Bot,
+  Plus,
+  Save,
+  Download,
+  Upload,
+  Play,
+  Pause,
+  Square,
+  Settings2,
+  Share2,
+  Code2,
+  Database,
+  Workflow,
+  ArrowRight,
+  GitBranch,
+  GitMerge,
+  Box,
+  Cpu,
+  MessageSquare,
+  Zap,
+} from "lucide-react"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function WorkflowOrchestrationPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">
-          Workflow Orchestration
-        </h1>
-        <p className="text-lg text-foreground/80 dark:text-foreground/80 leading-relaxed">
-          Design, manage, and monitor complex AI workflows with ease
-        </p>
+    <div className="flex-1 space-y-6 p-8 pt-6">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h2 className="text-3xl font-bold tracking-tight">Workflow Orchestration</h2>
+          <p className="text-muted-foreground">
+            Design and manage complex AI agent workflows
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button variant="outline" size="sm">
+            <Upload className="mr-2 h-4 w-4" />
+            Import
+          </Button>
+          <Button variant="outline" size="sm">
+            <Download className="mr-2 h-4 w-4" />
+            Export
+          </Button>
+          <Button variant="default" size="sm">
+            <Save className="mr-2 h-4 w-4" />
+            Save Workflow
+          </Button>
+        </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Workflow Designer</CardTitle>
-            <CardDescription>Visual workflow creation tool</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border-2 border-dashed border-muted-foreground/20 p-6 text-center">
-              <p className="text-sm text-muted-foreground">Coming Soon</p>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
+        <div className="space-y-6">
+          <Card className="border-none shadow-md">
+            <CardHeader className="space-y-1">
+              <div className="flex items-center justify-between">
+                <CardTitle>Workflow Canvas</CardTitle>
+                <div className="flex items-center space-x-2">
+                  <Button variant="outline" size="icon">
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" size="icon">
+                    <Play className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <CardDescription>
+                Design your agent workflow using drag and drop
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="rounded-lg border-2 border-dashed bg-muted/50 p-8 text-center space-y-8 min-h-[500px]">
+                {/* Example Workflow */}
+                <div className="flex flex-col items-center space-y-4">
+                  <Card className="w-48 border shadow-sm">
+                    <CardHeader className="p-4 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <MessageSquare className="h-4 w-4 text-primary" />
+                          <span className="font-medium">User Input</span>
+                        </div>
+                        <Badge variant="outline" className="text-xs">Start</Badge>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                  <ArrowRight className="h-6 w-6 text-muted-foreground" />
+                  <div className="grid grid-cols-2 gap-8">
+                    <div className="flex flex-col items-center space-y-4">
+                      <Card className="w-48 border shadow-sm">
+                        <CardHeader className="p-4 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <Bot className="h-4 w-4 text-primary" />
+                            <span className="font-medium">Agent Analysis</span>
+                          </div>
+                        </CardHeader>
+                      </Card>
+                      <ArrowRight className="h-6 w-6 text-muted-foreground" />
+                      <Card className="w-48 border shadow-sm">
+                        <CardHeader className="p-4 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <Database className="h-4 w-4 text-primary" />
+                            <span className="font-medium">Data Storage</span>
+                          </div>
+                        </CardHeader>
+                      </Card>
+                    </div>
+                    <div className="flex flex-col items-center space-y-4">
+                      <Card className="w-48 border shadow-sm">
+                        <CardHeader className="p-4 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <Code2 className="h-4 w-4 text-primary" />
+                            <span className="font-medium">Code Generation</span>
+                          </div>
+                        </CardHeader>
+                      </Card>
+                      <ArrowRight className="h-6 w-6 text-muted-foreground" />
+                      <Card className="w-48 border shadow-sm">
+                        <CardHeader className="p-4 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <Cpu className="h-4 w-4 text-primary" />
+                            <span className="font-medium">Execution</span>
+                          </div>
+                        </CardHeader>
+                      </Card>
+                    </div>
+                  </div>
+                  <GitMerge className="h-6 w-6 text-muted-foreground" />
+                  <Card className="w-48 border shadow-sm">
+                    <CardHeader className="p-4 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <Zap className="h-4 w-4 text-primary" />
+                          <span className="font-medium">Response</span>
+                        </div>
+                        <Badge variant="outline" className="text-xs">End</Badge>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Execution Monitor</CardTitle>
-            <CardDescription>Track workflow execution in real-time</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border-2 border-dashed border-muted-foreground/20 p-6 text-center">
-              <p className="text-sm text-muted-foreground">Coming Soon</p>
-            </div>
-          </CardContent>
-        </Card>
+          <Card className="border-none shadow-md">
+            <CardHeader>
+              <CardTitle>Workflow Components</CardTitle>
+              <CardDescription>
+                Available components for your workflow
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="agents" className="space-y-4">
+                <TabsList>
+                  <TabsTrigger value="agents">Agents</TabsTrigger>
+                  <TabsTrigger value="processing">Processing</TabsTrigger>
+                  <TabsTrigger value="io">I/O</TabsTrigger>
+                  <TabsTrigger value="flow">Flow</TabsTrigger>
+                </TabsList>
+                <TabsContent value="agents" className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button variant="outline" className="h-auto p-4 justify-start">
+                      <div className="flex items-center space-x-2">
+                        <Bot className="h-4 w-4" />
+                        <div className="text-left">
+                          <div className="font-medium">Analysis Agent</div>
+                          <div className="text-xs text-muted-foreground">Process and analyze data</div>
+                        </div>
+                      </div>
+                    </Button>
+                    <Button variant="outline" className="h-auto p-4 justify-start">
+                      <div className="flex items-center space-x-2">
+                        <Code2 className="h-4 w-4" />
+                        <div className="text-left">
+                          <div className="font-medium">Code Agent</div>
+                          <div className="text-xs text-muted-foreground">Generate and review code</div>
+                        </div>
+                      </div>
+                    </Button>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </div>
 
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Templates</CardTitle>
-            <CardDescription>Pre-built workflow templates</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border-2 border-dashed border-muted-foreground/20 p-6 text-center">
-              <p className="text-sm text-muted-foreground">Coming Soon</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="space-y-6">
+          <Card className="border-none shadow-md">
+            <CardHeader>
+              <CardTitle>Workflow Properties</CardTitle>
+              <CardDescription>Configure workflow settings</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label>Workflow Name</Label>
+                <Input placeholder="My Custom Workflow" />
+              </div>
+              <div className="space-y-2">
+                <Label>Execution Mode</Label>
+                <Select defaultValue="sequential">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select mode" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sequential">Sequential</SelectItem>
+                    <SelectItem value="parallel">Parallel</SelectItem>
+                    <SelectItem value="hybrid">Hybrid</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Error Handling</Label>
+                <Select defaultValue="retry">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select strategy" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="retry">Retry</SelectItem>
+                    <SelectItem value="fallback">Fallback Path</SelectItem>
+                    <SelectItem value="ignore">Ignore</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <Separator />
+              <div className="space-y-2">
+                <Label>Integrations</Label>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline">LangSmith</Badge>
+                  <Badge variant="outline">LangFuse</Badge>
+                  <Badge variant="outline">Flowise</Badge>
+                  <Button variant="ghost" size="sm" className="h-6">
+                    <Plus className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-none shadow-md">
+            <CardHeader>
+              <CardTitle>Monitoring</CardTitle>
+              <CardDescription>Real-time workflow metrics</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Status</span>
+                  <Badge variant="outline" className="bg-green-50 text-green-700">Running</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Active Agents</span>
+                  <span className="text-sm font-medium">3/5</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Average Latency</span>
+                  <span className="text-sm font-medium">245ms</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Success Rate</span>
+                  <span className="text-sm font-medium">98.5%</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )
