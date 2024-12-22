@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client"
 import { NavUser } from "@/components/nav-user"
@@ -30,6 +30,7 @@ export function UserNavWrapper() {
         return
       }
 
+      // Cache profile data to reduce database calls
       const { data: profile } = await supabase
         .from('profiles')
         .select('*')
@@ -71,7 +72,7 @@ export function UserNavWrapper() {
   useEffect(() => {
     let mounted = true
 
-    const handleAuthChange = async (event: string, session: any) => {
+    const handleAuthChange = async (event: string) => {
       if (!mounted) return
 
       if (event === 'SIGNED_OUT') {

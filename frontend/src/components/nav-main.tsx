@@ -100,18 +100,25 @@ export function NavMain({
 
   // Check authentication status
   useEffect(() => {
+    let mounted = true
+    
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession()
-      setIsAuthenticated(!!session)
+      if (mounted) {
+        setIsAuthenticated(!!session)
+      }
     }
 
     checkAuth()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session)
+      if (mounted) {
+        setIsAuthenticated(!!session)
+      }
     })
 
     return () => {
+      mounted = false
       subscription.unsubscribe()
     }
   }, [supabase.auth])
