@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -10,30 +11,142 @@ import { BetaPageWrapper, BetaRestrictedAction } from "@/components/beta-notice"
 import {
   Plug,
   Plus,
+  Search,
   Settings,
-  Bot,
   Database,
-  MessageSquare,
-  Workflow,
-  Network,
-  BarChart2,
-  RefreshCw,
-  AlertCircle,
-  CheckCircle2,
+  Cloud,
+  GitBranch,
+  ArrowRight,
+  CheckSquare,
   XCircle,
-  Boxes,
-  Cloud
+  Clock,
+  AlertTriangle,
+  Share2,
+  Download,
+  Upload,
+  RefreshCw,
+  Globe,
+  MessageSquare,
+  Mail,
+  Calendar,
+  FileText,
+  Image,
+  Video,
+  Music,
+  ShoppingCart,
+  CreditCard,
+  Users,
+  Building,
+  Network,
+  CheckCircle
 } from "lucide-react"
 
-const popularConnectors = [
-  { name: "LangChain", category: "AI Framework", status: "Connected", icon: Bot },
-  { name: "LangSmith", category: "Monitoring", status: "Connected", icon: BarChart2 },
-  { name: "LangFuse", category: "Analytics", status: "Available", icon: BarChart2 },
-  { name: "Flowise", category: "Workflow", status: "Available", icon: Workflow },
-  { name: "VectorShift", category: "Vector DB", status: "Connected", icon: Database },
-  { name: "n8n", category: "Automation", status: "Available", icon: Workflow },
-  { name: "Make.com", category: "Integration", status: "Available", icon: Network },
-  { name: "Zapier", category: "Automation", status: "Connected", icon: Workflow }
+const connectors = [
+  {
+    name: "Database Integration",
+    description: "Connect to external databases",
+    icon: Database,
+    status: "connected",
+    lastSync: "2 hours ago"
+  },
+  {
+    name: "Cloud Storage",
+    description: "Link cloud storage providers",
+    icon: Cloud,
+    status: "connected",
+    lastSync: "1 hour ago"
+  },
+  {
+    name: "Version Control",
+    description: "Git repository integration",
+    icon: GitBranch,
+    status: "connected",
+    lastSync: "30 mins ago"
+  },
+  {
+    name: "Web Services",
+    description: "External API connections",
+    icon: Globe,
+    status: "disconnected",
+    lastSync: "Never"
+  },
+  {
+    name: "Communication",
+    description: "Chat and messaging services",
+    icon: MessageSquare,
+    status: "connected",
+    lastSync: "5 mins ago"
+  },
+  {
+    name: "Email Services",
+    description: "Email provider integration",
+    icon: Mail,
+    status: "connected",
+    lastSync: "1 hour ago"
+  },
+  {
+    name: "Calendar",
+    description: "Calendar synchronization",
+    icon: Calendar,
+    status: "connected",
+    lastSync: "3 hours ago"
+  },
+  {
+    name: "Document Storage",
+    description: "Document management systems",
+    icon: FileText,
+    status: "connected",
+    lastSync: "4 hours ago"
+  },
+  {
+    name: "Media Services",
+    description: "Image and video processing",
+    icon: Image,
+    status: "disconnected",
+    lastSync: "Never"
+  },
+  {
+    name: "Video Platform",
+    description: "Video streaming services",
+    icon: Video,
+    status: "connected",
+    lastSync: "2 hours ago"
+  },
+  {
+    name: "Audio Services",
+    description: "Audio processing integration",
+    icon: Music,
+    status: "connected",
+    lastSync: "1 hour ago"
+  },
+  {
+    name: "E-commerce",
+    description: "Online store integration",
+    icon: ShoppingCart,
+    status: "connected",
+    lastSync: "30 mins ago"
+  },
+  {
+    name: "Payment Gateway",
+    description: "Payment processing services",
+    icon: CreditCard,
+    status: "connected",
+    lastSync: "1 hour ago"
+  },
+  {
+    name: "Authentication",
+    description: "Identity providers",
+    icon: Users,
+    status: "connected",
+    lastSync: "2 hours ago"
+  },
+  {
+    name: "Enterprise Systems",
+    description: "ERP and CRM integration",
+    icon: Building,
+    status: "connected",
+    lastSync: "3 hours ago"
+  }
 ]
 
 export default function ThirdPartyConnectorsPage() {
@@ -140,19 +253,19 @@ export default function ThirdPartyConnectorsPage() {
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-4">
-                          {popularConnectors.slice(0, 4).map((connector, i) => (
+                          {connectors.slice(0, 4).map((connector, i) => (
                             <div key={i} className="flex items-center justify-between p-4 rounded-lg border bg-card">
                               <div className="flex items-center space-x-4">
                                 <div className="bg-primary/20 p-2 rounded-full">
-                                  {React.createElement(connector.icon, { className: "h-4 w-4 text-primary" })}
+                                  <connector.icon className="h-4 w-4 text-primary" />
                                 </div>
                                 <div>
                                   <p className="font-medium">{connector.name}</p>
-                                  <p className="text-sm text-muted-foreground">{connector.category}</p>
+                                  <p className="text-sm text-muted-foreground">{connector.description}</p>
                                 </div>
                               </div>
                               <Badge variant="outline" className={
-                                connector.status === "Connected" ? "bg-green-50 text-green-700" : "bg-blue-50 text-blue-700"
+                                connector.status === "connected" ? "bg-green-50 text-green-700" : "bg-blue-50 text-blue-700"
                               }>
                                 {connector.status}
                               </Badge>
@@ -173,7 +286,7 @@ export default function ThirdPartyConnectorsPage() {
                         <div className="space-y-4">
                           <div className="flex items-center space-x-4">
                             <div className="bg-green-500/20 p-2 rounded-full">
-                              <CheckCircle2 className="h-4 w-4 text-green-500" />
+                              <CheckCircle className="h-4 w-4 text-green-500" />
                             </div>
                             <div className="flex-1 space-y-1">
                               <p className="text-sm font-medium">LangChain Connection</p>
@@ -195,7 +308,7 @@ export default function ThirdPartyConnectorsPage() {
 
                           <div className="flex items-center space-x-4">
                             <div className="bg-yellow-500/20 p-2 rounded-full">
-                              <AlertCircle className="h-4 w-4 text-yellow-500" />
+                              <AlertTriangle className="h-4 w-4 text-yellow-500" />
                             </div>
                             <div className="flex-1 space-y-1">
                               <p className="text-sm font-medium">API Rate Limit</p>
@@ -211,25 +324,25 @@ export default function ThirdPartyConnectorsPage() {
 
                 <TabsContent value="connectors" className="space-y-6">
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {popularConnectors.map((connector, i) => (
+                    {connectors.map((connector, i) => (
                       <Card key={i} className="border-none shadow-md">
                         <CardHeader>
                           <div className="flex items-center space-x-2">
-                            {React.createElement(connector.icon, { className: "h-5 w-5 text-primary" })}
+                            <connector.icon className="h-5 w-5 text-primary" />
                             <CardTitle>{connector.name}</CardTitle>
                           </div>
-                          <CardDescription>{connector.category}</CardDescription>
+                          <CardDescription>{connector.description}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                           <div className="flex items-center justify-between">
                             <Badge variant="outline" className={
-                              connector.status === "Connected" ? "bg-green-50 text-green-700" : "bg-blue-50 text-blue-700"
+                              connector.status === "connected" ? "bg-green-50 text-green-700" : "bg-blue-50 text-blue-700"
                             }>
                               {connector.status}
                             </Badge>
                             <BetaRestrictedAction>
                               <Button variant="outline" size="sm">
-                                {connector.status === "Connected" ? "Configure" : "Connect"}
+                                {connector.status === "connected" ? "Configure" : "Connect"}
                               </Button>
                             </BetaRestrictedAction>
                           </div>
@@ -258,10 +371,10 @@ export default function ThirdPartyConnectorsPage() {
                                 i === 2 ? "bg-yellow-500/20" :
                                 "bg-green-500/20"
                               }`}>
-                                {i === 0 ? <CheckCircle2 className="h-4 w-4 text-green-500" /> :
+                                {i === 0 ? <CheckCircle className="h-4 w-4 text-green-500" /> :
                                  i === 1 ? <RefreshCw className="h-4 w-4 text-blue-500" /> :
-                                 i === 2 ? <AlertCircle className="h-4 w-4 text-yellow-500" /> :
-                                 <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                                 i === 2 ? <AlertTriangle className="h-4 w-4 text-yellow-500" /> :
+                                 <CheckCircle className="h-4 w-4 text-green-500" />}
                               </div>
                               <div>
                                 <p className="font-medium">{
@@ -315,7 +428,7 @@ export default function ThirdPartyConnectorsPage() {
                         </BetaRestrictedAction>
                         <BetaRestrictedAction>
                           <Button variant="outline" className="w-full justify-start">
-                            <AlertCircle className="mr-2 h-4 w-4" />
+                            <AlertTriangle className="mr-2 h-4 w-4" />
                             Notifications
                           </Button>
                         </BetaRestrictedAction>
@@ -324,7 +437,7 @@ export default function ThirdPartyConnectorsPage() {
                   </Card>
 
                   <Alert>
-                    <AlertCircle className="h-4 w-4" />
+                    <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>Connection Security</AlertTitle>
                     <AlertDescription>
                       Review and update your connector security settings regularly. Some connectors may require re-authentication.

@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -14,7 +15,7 @@ import {
   HardDrive,
   Network,
   Cpu,
-  Memory,
+  Activity,
   Settings,
   AlertCircle,
   BarChart2,
@@ -80,7 +81,7 @@ export default function InfrastructurePage() {
                     <Card className="border-none shadow-md">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Memory</CardTitle>
-                        <Memory className="h-4 w-4 text-muted-foreground" />
+                        <HardDrive className="h-4 w-4 text-muted-foreground" />
                       </CardHeader>
                       <CardContent>
                         <div className="text-2xl font-bold">82%</div>

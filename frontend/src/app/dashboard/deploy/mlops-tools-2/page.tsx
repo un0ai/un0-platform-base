@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,7 +9,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
 import { BetaPageWrapper, BetaRestrictedAction } from "@/components/beta-notice"
 import {
-  Tool,
   Wrench,
   Settings,
   BarChart2,
@@ -46,7 +46,7 @@ export default function MLOpsToolsPage() {
           </BetaRestrictedAction>
           <BetaRestrictedAction>
             <Button variant="default" size="sm">
-              <Tool className="mr-2 h-4 w-4" />
+              <Wrench className="mr-2 h-4 w-4" />
               Add Tool
             </Button>
           </BetaRestrictedAction>
@@ -71,7 +71,7 @@ export default function MLOpsToolsPage() {
                     <Card className="border-none shadow-md">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Active Tools</CardTitle>
-                        <Tool className="h-4 w-4 text-muted-foreground" />
+                        <Wrench className="h-4 w-4 text-muted-foreground" />
                       </CardHeader>
                       <CardContent>
                         <div className="text-2xl font-bold">24</div>

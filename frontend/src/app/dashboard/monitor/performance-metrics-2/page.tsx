@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,13 +9,14 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
 import { BetaPageWrapper, BetaRestrictedAction } from "@/components/beta-notice"
 import {
+  Activity,
   BarChart2,
   LineChart,
   Settings,
   Bot,
   Clock,
   Cpu,
-  Memory,
+  HardDrive,
   Network,
   RefreshCw,
   AlertCircle,
@@ -22,8 +24,7 @@ import {
   XCircle,
   Zap,
   ArrowUp,
-  ArrowDown,
-  Activity
+  ArrowDown
 } from "lucide-react"
 
 const metrics = [
@@ -153,7 +154,7 @@ export default function PerformanceMetricsPage() {
                           <div className="space-y-2">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center space-x-2">
-                                <Memory className="h-4 w-4 text-primary" />
+                                <HardDrive className="h-4 w-4 text-primary" />
                                 <p className="font-medium">Memory Usage</p>
                               </div>
                               <span className="text-sm">62%</span>
