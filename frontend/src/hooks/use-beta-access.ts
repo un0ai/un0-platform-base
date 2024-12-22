@@ -37,11 +37,6 @@ export function useBetaAccess() {
 
       if (dbError) {
         console.error('Database error:', dbError.message)
-        toast({
-          title: "Error",
-          description: "Failed to check access status.",
-          variant: "destructive",
-        })
         setStatus('not_requested')
       } else if (accessRequest) {
         setStatus(accessRequest.status as BetaStatus || 'pending')
@@ -130,7 +125,29 @@ ${values.useCase}
   }
 
   useEffect(() => {
+    let mounted = true
+
+    const handleAuthChange = async (event: string) => {
+      if (!mounted) return
+      if (event === 'SIGNED_OUT') {
+        setStatus('not_requested')
+      } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        await checkBetaAccess()
+      }
+    }
+
+    // Initial check
     checkBetaAccess()
+
+    // Subscribe to auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(handleAuthChange)
+
+    return () => {
+      mounted = false
+      subscription.unsubscribe()
+    }
   }, [])
 
   return {

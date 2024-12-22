@@ -56,17 +56,26 @@ function formatGuestName(name: string) {
 
 export function NavUser({
   user,
+  onSignOut,
 }: {
   user: {
     name: string
     email: string
     avatar: string
   }
+  onSignOut: () => Promise<void>
 }) {
   const { isMobile } = useSidebar()
   const pathname = usePathname()
   const router = useRouter()
   const isGuest = user.name.includes("guest")
+
+  const handleSignOut = async () => {
+    // First update UI immediately
+    await onSignOut()
+    // Then call server action to clean up
+    await signout()
+  }
 
   return (
     <SidebarMenu>
@@ -163,7 +172,7 @@ export function NavUser({
                   <Button
                     variant="ghost"
                     className="w-full justify-start gap-2 text-destructive hover:bg-destructive/10"
-                    onClick={() => signout()}
+                    onClick={handleSignOut}
                   >
                     <LogOut className="size-4" />
                     Sign out

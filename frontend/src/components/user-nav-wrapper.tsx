@@ -11,26 +11,29 @@ const defaultUser = {
   avatar: "/avatars/un0-image4.jpeg",
 }
 
+function getInitialAvatar(name: string) {
+  return `/avatars/un0-image${Math.floor(Math.random() * 5) + 1}.jpeg`
+}
+
 export function UserNavWrapper() {
   const [user, setUser] = useState(defaultUser)
   const [isLoading, setIsLoading] = useState(true)
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
   const supabase = createClient()
 
   const getUser = useCallback(async () => {
     try {
-      const { data: { user: authUser }, error } = await supabase.auth.getUser()
+      const { data: { session }, error: authError } = await supabase.auth.getSession()
       
-      if (error || !authUser) {
+      if (authError || !session) {
         setUser(defaultUser)
+        setIsLoading(false)
         return
       }
 
       const { data: profile } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', authUser.id)
+        .eq('id', session.user.id)
         .single()
 
       if (profile) {
@@ -40,7 +43,11 @@ export function UserNavWrapper() {
           avatar: profile.avatar_url || getInitialAvatar(profile.full_name),
         })
       } else {
-        setUser(defaultUser)
+        setUser({
+          name: `[ ${session.user.email?.split('@')[0]} ]`,
+          email: session.user.email || '',
+          avatar: getInitialAvatar(session.user.email || ''),
+        })
       }
     } catch (error) {
       console.error('Error fetching user:', error)
@@ -50,17 +57,26 @@ export function UserNavWrapper() {
     }
   }, [supabase])
 
-  // Effect for auth state changes
+  const handleSignOut = useCallback(async () => {
+    // Immediately update UI
+    setUser(defaultUser)
+    
+    // Then clear the session
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error('Error signing out:', error)
+    }
+  }, [supabase])
+
   useEffect(() => {
     let mounted = true
 
-    const handleAuthChange = async (event: string) => {
+    const handleAuthChange = async (event: string, session: any) => {
       if (!mounted) return
 
       if (event === 'SIGNED_OUT') {
         setUser(defaultUser)
-        setIsLoading(false)
-      } else {
+      } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         await getUser()
       }
     }
@@ -77,51 +93,11 @@ export function UserNavWrapper() {
       mounted = false
       subscription.unsubscribe()
     }
-  }, [supabase, getUser])
+  }, [getUser, supabase])
 
-  // Verify session on navigation
-  useEffect(() => {
-    const verifySession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session && user.name !== defaultUser.name) {
-        setUser(defaultUser)
-      } else if (session && user.name === defaultUser.name) {
-        await getUser()
-      }
-    }
-    verifySession()
-  }, [pathname, searchParams, supabase, user.name, getUser])
-
-  if (isLoading && !user) {
+  if (isLoading) {
     return null
   }
 
-  return <NavUser user={user} />
-}
-
-function getInitialAvatar(name: string) {
-  const initials = name
-    .split(' ')
-    .map(part => part.charAt(0))
-    .join('')
-    .toUpperCase()
-    .slice(0, 2)
-
-  const canvas = document.createElement('canvas')
-  canvas.width = 100
-  canvas.height = 100
-
-  const context = canvas.getContext('2d')
-  if (!context) return ''
-
-  context.fillStyle = '#4f46e5'
-  context.fillRect(0, 0, canvas.width, canvas.height)
-
-  context.fillStyle = '#ffffff'
-  context.font = 'bold 40px sans-serif'
-  context.textAlign = 'center'
-  context.textBaseline = 'middle'
-  context.fillText(initials, canvas.width / 2, canvas.height / 2)
-
-  return canvas.toDataURL()
+  return <NavUser user={user} onSignOut={handleSignOut} />
 }
