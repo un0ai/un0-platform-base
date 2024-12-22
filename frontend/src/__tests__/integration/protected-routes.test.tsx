@@ -1,6 +1,7 @@
 import { render, screen, waitFor, act } from '@testing-library/react'
 import { useRouter, usePathname } from 'next/navigation'
-import { RequireAuth } from '@/components/auth/require-auth'
+import { ProtectedPage } from '@/components/auth/protected-page'
+import ProtectedRoute from '@/components/auth/protected-route'
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
@@ -39,77 +40,90 @@ describe('Protected Routes Integration', () => {
     jest.clearAllMocks()
   })
 
-  describe('Authenticated User Flow', () => {
-    beforeEach(() => {
-      mockSupabaseAuth.getSession.mockImplementation(() => 
-        new Promise(resolve => 
-          setTimeout(() => 
-            resolve({ data: { session: { user: { id: '1' } } } }), 100
-          )
+  describe('ProtectedRoute Component (Guest Browsing)', () => {
+    it('allows guest browsing when not authenticated', async () => {
+      mockSupabaseAuth.getSession.mockResolvedValue({ data: { session: null } })
+
+      await act(async () => {
+        render(
+          <ProtectedRoute>
+            <div>Guest Visible Content</div>
+          </ProtectedRoute>
         )
-      )
+      })
+
+      // Should show content even without auth
+      await waitFor(() => {
+        expect(screen.getByText('Guest Visible Content')).toBeInTheDocument()
+      })
+      
+      // Should not redirect
+      expect(mockPush).not.toHaveBeenCalled()
     })
 
-    it('allows access to protected routes', async () => {
-      let rendered
+    it('allows access when authenticated', async () => {
+      mockSupabaseAuth.getSession.mockResolvedValue({ 
+        data: { session: { user: { id: '1' } } }
+      })
+
       await act(async () => {
-        rendered = render(
-          <RequireAuth>
-            <div>Protected Content</div>
-          </RequireAuth>
+        render(
+          <ProtectedRoute>
+            <div>Guest Visible Content</div>
+          </ProtectedRoute>
         )
       })
 
-      // First, we should see the loading spinner
-      expect(screen.getByTestId('loading-spinner')).toBeInTheDocument()
-
-      // Then, after auth check, we should see the protected content
       await waitFor(() => {
-        expect(screen.getByText('Protected Content')).toBeInTheDocument()
+        expect(screen.getByText('Guest Visible Content')).toBeInTheDocument()
       })
-      
-      // Loading spinner should be gone
-      expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument()
-      
-      // And no redirect should have happened
-      expect(mockPush).not.toHaveBeenCalled()
     })
   })
 
-  describe('Unauthenticated User Flow', () => {
-    beforeEach(() => {
-      mockSupabaseAuth.getSession.mockImplementation(() => 
-        new Promise(resolve => 
-          setTimeout(() => 
-            resolve({ data: { session: null } }), 100
-          )
+  describe('ProtectedPage Component (Protected Content)', () => {
+    it('shows login form when not authenticated', async () => {
+      mockSupabaseAuth.getSession.mockResolvedValue({ data: { session: null } })
+
+      await act(async () => {
+        render(
+          <ProtectedPage>
+            <div>Protected Content</div>
+          </ProtectedPage>
         )
-      )
+      })
+
+      // Should show login form
+      await waitFor(() => {
+        expect(screen.getByText('Sign in with Google')).toBeInTheDocument()
+      })
+
+      // Should show restricted message
+      expect(screen.getByText('Restricted Area')).toBeInTheDocument()
+
+      // Should not show protected content
+      expect(screen.queryByText('Protected Content')).not.toBeInTheDocument()
     })
 
-    it('redirects to login page', async () => {
-      let rendered
+    it('shows protected content when authenticated', async () => {
+      mockSupabaseAuth.getSession.mockResolvedValue({ 
+        data: { session: { user: { id: '1' } } }
+      })
+
       await act(async () => {
-        rendered = render(
-          <RequireAuth>
+        render(
+          <ProtectedPage>
             <div>Protected Content</div>
-          </RequireAuth>
+          </ProtectedPage>
         )
       })
 
-      // First, we should see the loading spinner
-      expect(screen.getByTestId('loading-spinner')).toBeInTheDocument()
-
-      // Then we should be redirected to login
+      // Should show protected content
       await waitFor(() => {
-        expect(mockPush).toHaveBeenCalledWith('/login')
+        expect(screen.getByText('Protected Content')).toBeInTheDocument()
       })
 
-      // Loading spinner should be gone
-      expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument()
-
-      // And protected content should not be visible
-      expect(screen.queryByText('Protected Content')).not.toBeInTheDocument()
+      // Should not show login form
+      expect(screen.queryByText('Sign in with Google')).not.toBeInTheDocument()
     })
   })
 })
