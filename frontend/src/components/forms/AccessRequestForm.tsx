@@ -11,65 +11,128 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useState } from "react"
-import { useToast } from "@/hooks/use-toast"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { useBetaAccess } from "@/hooks/use-beta-access"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Loader2, CheckCircle2, Clock } from "lucide-react"
+import { createClient } from "@/utils/supabase/client"
+import { useEffect, useState } from "react"
+
+const projectTypes = [
+  { value: 'ai_agent', label: 'AI Agent Development' },
+  { value: 'integration', label: 'Platform Integration' },
+  { value: 'automation', label: 'Workflow Automation' },
+  { value: 'research', label: 'Research & Development' },
+  { value: 'other', label: 'Other' },
+] as const
 
 const formSchema = z.object({
-  fullName: z.string().min(2, {
-    message: "Full name must be at least 2 characters.",
+  projectType: z.enum(['ai_agent', 'integration', 'automation', 'research', 'other'], {
+    required_error: "Please select a project type.",
   }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
+  projectDescription: z.string().min(25, {
+    message: "Please provide at least 25 characters describing your project.",
   }),
-  reason: z.string().min(10, {
-    message: "Reason must be at least 10 characters.",
+  useCase: z.string().min(25, {
+    message: "Please provide at least 25 characters describing your use case.",
   }),
 })
 
 export function AccessRequestForm() {
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
+  const { status, isLoading, requestAccess } = useBetaAccess()
+  const [userData, setUserData] = useState<{ name: string; email: string } | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const supabase = createClient()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      reason: "",
+      projectType: undefined,
+      projectDescription: "",
+      useCase: "",
     },
   })
 
+  useEffect(() => {
+    async function getUserData() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name, email')
+          .eq('id', user.id)
+          .single()
+
+        if (profile) {
+          setUserData({
+            name: profile.full_name,
+            email: profile.email
+          })
+        }
+      }
+    }
+    getUserData()
+  }, [supabase])
+
+  if (isLoading || !userData) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  if (status === 'pending') {
+    return (
+      <Alert className="bg-muted">
+        <Clock className="h-5 w-5" />
+        <AlertTitle className="text-lg font-semibold">Application Under Review</AlertTitle>
+        <AlertDescription className="mt-2">
+          <p className="mb-2">
+            Thanks for your interest in the private beta! Our team is currently reviewing your application.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            We'll notify you at {userData.email} once your access is granted. This usually takes 24-48 hours.
+          </p>
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
+  if (status === 'approved') {
+    return (
+      <Alert className="bg-primary/10">
+        <CheckCircle2 className="h-5 w-5 text-primary" />
+        <AlertTitle className="text-lg font-semibold">Welcome to the Private Beta!</AlertTitle>
+        <AlertDescription className="mt-2">
+          <p>You have full access to all beta features. Start exploring and building amazing things!</p>
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setIsLoading(true)
-      const response = await fetch("/api/access-request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to submit access request")
-      }
-
-      toast({
-        title: "Success",
-        description: "Your access request has been submitted successfully.",
+      setIsSubmitting(true)
+      await requestAccess({
+        fullName: userData.name,
+        email: userData.email,
+        projectType: values.projectType,
+        projectDescription: values.projectDescription,
+        useCase: values.useCase
       })
       form.reset()
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to submit access request. Please try again.",
-        variant: "destructive",
-      })
     } finally {
-      setIsLoading(false)
+      setIsSubmitting(false)
     }
   }
 
@@ -78,39 +141,41 @@ export function AccessRequestForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="fullName"
+          name="projectType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="John Doe" {...field} />
-              </FormControl>
+              <FormLabel>What type of project do you want to build?</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a project type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {projectTypes.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="email"
+          name="projectDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="john.doe@example.com" type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="reason"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Reason for Access</FormLabel>
+              <FormLabel>Tell us about your project</FormLabel>
+              <FormDescription>
+                What are you planning to build? What problems are you trying to solve?
+              </FormDescription>
               <FormControl>
                 <Textarea
-                  placeholder="Please explain why you need access to this section..."
+                  placeholder="I'm working on a project that..."
+                  className="resize-none min-h-[100px]"
                   {...field}
                 />
               </FormControl>
@@ -118,8 +183,28 @@ export function AccessRequestForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Submitting..." : "Submit Request"}
+        <FormField
+          control={form.control}
+          name="useCase"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>How do you plan to use our platform?</FormLabel>
+              <FormDescription>
+                Describe your specific use case and what features you're most interested in.
+              </FormDescription>
+              <FormControl>
+                <Textarea
+                  placeholder="I plan to use the platform for..."
+                  className="resize-none min-h-[100px]"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : "Submit Application"}
         </Button>
       </form>
     </Form>

@@ -117,6 +117,17 @@ export function NavUser({
                   </Badge>
                 </div>
               </DropdownMenuItem>
+              {!isGuest && (
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/dashboard/playground/private-beta"
+                    className="flex w-full items-center gap-2"
+                  >
+                    <Sparkles className="size-4" />
+                    Private Beta Access
+                  </Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem asChild>
                 <Link href="mailto:support@un0.dev" className="flex w-full items-center gap-2">
                   <CreditCard className="size-4" />
