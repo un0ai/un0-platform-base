@@ -8,132 +8,214 @@ import { Globe, Headphones, Mail, MessageSquare } from "lucide-react"
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">
-          Contact & Support
-        </h1>
-        <p className="text-lg text-foreground/80 dark:text-foreground/80 leading-relaxed">
-          Get in touch with our team
-        </p>
-      </div>
+    <>
+      <div className="mx-auto max-w-7xl space-y-8 px-4 py-8">
+        {/* Header Section */}
+        <div className="space-y-4">
+          <div className="flex items-center space-x-4">
+            <MessagesSquare className="h-10 w-10 text-primary" />
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                Contact & Support
+              </h1>
+              <p className="text-lg text-foreground/80 leading-relaxed">
+                Get help from our AI-powered support system or connect with our team
+              </p>
+            </div>
+          </div>
+          <Separator className="my-4" />
+        </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="border-none shadow-md">
+        {/* AI Support Section */}
+        <Card className="border-none shadow-md relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10 pointer-events-none" />
+          <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
           <CardHeader>
-            <CardTitle>Contact Us</CardTitle>
-            <CardDescription>
-              Send us a message and we'll get back to you
-            </CardDescription>
+            <div className="flex items-center space-x-2">
+              <div className="relative">
+                <Bot className="h-6 w-6 text-primary animate-pulse" />
+                <div className="absolute inset-0 bg-primary/20 blur-sm rounded-full animate-ping" />
+              </div>
+              <CardTitle>AI-Powered Support</CardTitle>
+            </div>
+            <CardDescription>Get instant help from our advanced AI support system</CardDescription>
           </CardHeader>
-          <CardContent>
-            <form className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Name</label>
-                <Input placeholder="Your name" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Email</label>
-                <Input type="email" placeholder="your@email.com" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Subject</label>
-                <Input placeholder="How can we help?" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Message</label>
-                <Textarea
-                  placeholder="Tell us more about your inquiry..."
-                  className="min-h-[100px]"
-                />
-              </div>
-              <Button className="w-full">Send Message</Button>
-            </form>
+          <CardContent className="space-y-6">
+            <div className="grid gap-4 md:grid-cols-2">
+              <Card className="border-primary/10">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <BrainCircuit className="h-5 w-5" />
+                    Platform Assistant
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Our AI assistant can help with platform usage, integration questions, and technical support.
+                  </p>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className="w-full">
+                        <MessageCircleQuestion className="mr-2 h-4 w-4" />
+                        Chat with AI
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Start AI Support Session</AlertDialogTitle>
+                        <AlertDialogDescription asChild>
+                          <div className="space-y-2 text-sm text-muted-foreground">
+                            Contact our AI support at <span className="font-medium">ai-support@un0.dev</span>
+                            <div className="mt-2">Or use our platform's built-in AI assistant through:</div>
+                            <ul className="list-disc list-inside">
+                              <li>CLI tool: un0 support</li>
+                              <li>API endpoint: /api/support</li>
+                              <li>Web interface: Support tab</li>
+                            </ul>
+                          </div>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/10">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <Code2 className="h-5 w-5" />
+                    Developer Support
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Get help with code examples, API usage, and integration patterns.
+                  </p>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className="w-full" variant="outline">
+                        <GitBranch className="mr-2 h-4 w-4" />
+                        Technical Support
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Developer Support Options</AlertDialogTitle>
+                        <AlertDialogDescription asChild>
+                          <div className="space-y-2 text-sm text-muted-foreground">
+                            Contact our developer support at <span className="font-medium">dev-support@un0.dev</span>
+                            <div className="mt-2">Available Resources:</div>
+                            <ul className="list-disc list-inside">
+                              <li>API Documentation</li>
+                              <li>Integration Examples</li>
+                              <li>GitHub Discussions</li>
+                              <li>Community Forums</li>
+                            </ul>
+                          </div>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </CardContent>
+              </Card>
+            </div>
           </CardContent>
         </Card>
 
-        <div className="space-y-6">
-          <Card className="border-none shadow-md">
-            <CardHeader>
-              <CardTitle>Support Channels</CardTitle>
-              <CardDescription>
-                Multiple ways to get help
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <MessageSquare className="h-6 w-6 text-primary" />
-                  <div>
-                    <h4 className="font-medium">Live Chat</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Chat with our support team in real-time
-                    </p>
+        {/* Human Support Section */}
+        <Card className="border-none shadow-md">
+          <CardHeader>
+            <div className="flex items-center space-x-2">
+              <Mail className="h-6 w-6 text-primary" />
+              <CardTitle>Human Support</CardTitle>
+            </div>
+            <CardDescription>Connect with our team for specialized assistance</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Enterprise Solutions</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Get dedicated support and custom solutions for your organization
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">24/7 Priority Support</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Globe className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Global Coverage</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Rocket className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Custom Integration Support</span>
+                    </div>
                   </div>
+                  <Button className="w-full mt-4" variant="outline">
+                    Contact Enterprise Team
+                  </Button>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <Mail className="h-6 w-6 text-primary" />
-                  <div>
-                    <h4 className="font-medium">Email Support</h4>
-                    <p className="text-sm text-muted-foreground">
-                      support@un0.ai
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <Headphones className="h-6 w-6 text-primary" />
-                  <div>
-                    <h4 className="font-medium">Phone Support</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Available for Enterprise customers
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <Globe className="h-6 w-6 text-primary" />
-                  <div>
-                    <h4 className="font-medium">Community Forum</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Connect with other developers
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          <Card className="border-none shadow-md">
-            <CardHeader>
-              <CardTitle>Office Locations</CardTitle>
-              <CardDescription>
-                Find us around the world
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-medium">San Francisco</h4>
-                  <p className="text-sm text-muted-foreground">
-                    123 AI Street, San Francisco, CA 94105
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium">London</h4>
-                  <p className="text-sm text-muted-foreground">
-                    456 Tech Lane, London, UK EC2A 4NE
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium">Singapore</h4>
-                  <p className="text-sm text-muted-foreground">
-                    789 Innovation Way, Singapore 018936
-                  </p>
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Quick Connect</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">Sales</span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">sales@un0.dev</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">Partnerships</span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">partners@un0.dev</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">Press</span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">press@un0.dev</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Send us a Message</h3>
+                <p className="text-sm text-muted-foreground">
+                  Fill out the form below and we'll get back to you as soon as possible
+                </p>
+                <ContactForm />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Contact Information */}
+        <div className="text-center space-y-2 pt-4">
+          <p className="text-sm text-muted-foreground">
+            General Inquiries: <span className="font-medium">contact@un0.dev</span>
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Based in Silicon Valley, California • Available Globally
+          </p>
         </div>
       </div>
-    </div>
+      <Toaster />
+    </>
   )
 }
