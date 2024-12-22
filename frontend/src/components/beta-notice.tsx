@@ -10,8 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useRouter } from "next/navigation"
 
 export function BetaNotice() {
+  const router = useRouter()
   return (
     <div className="rounded-lg border-2 border-yellow-500/20 bg-yellow-500/5 dark:border-yellow-400/20 dark:bg-yellow-400/5 p-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent dark:from-yellow-400/10" />
@@ -24,7 +26,13 @@ export function BetaNotice() {
           </p>
         </div>
         <div className="ml-auto">
-          <Button variant="outline" className="border-yellow-500/20 hover:border-yellow-500/40 dark:border-yellow-400/20 dark:hover:border-yellow-400/40">
+          <Button
+            variant="outline"
+            onClick={() => {
+              router.push("/dashboard/playground/private-beta")
+            }}
+            className="border-yellow-500/20 hover:border-yellow-500/40 dark:border-yellow-400/20 dark:hover:border-yellow-400/40"
+          >
             Apply for Beta
           </Button>
         </div>
@@ -39,6 +47,7 @@ interface BetaPageWrapperProps {
 }
 
 export function BetaRestrictedAction({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -55,7 +64,13 @@ export function BetaRestrictedAction({ children }: { children: React.ReactNode }
           </DialogDescription>
         </DialogHeader>
         <div className="flex justify-end">
-          <Button variant="default" size="sm">
+          <Button
+            variant="default"
+            onClick={() => {
+              router.push("/dashboard/playground/private-beta")
+            }}
+            size="sm"
+          >
             Apply for Beta Access
           </Button>
         </div>

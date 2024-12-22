@@ -59,7 +59,7 @@ export function ProtectedPage({ children, title, description }: ProtectedPagePro
           <CardContent className="space-y-6">
             <div className="bg-destructive/5 text-foreground p-4 rounded-lg">
               <p className="text-sm">
-                This page is only accessible to registered users. Please sign in with your account to access the {title?.toLowerCase() || "protected content"}.
+                This page is only accessible to registered users. Please sign in with your account to request {title?.toLowerCase() || "protected content"}.
               </p>
             </div>
 

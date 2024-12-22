@@ -39,8 +39,10 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BetaPageWrapper, BetaRestrictedAction } from "@/components/beta-notice"
+import { useRouter } from "next/navigation"
 
 export default function WorkflowOrchestrationPage() {
+  const router = useRouter()
   return (
     <div className="flex h-full flex-col space-y-6">
       <div className="flex items-center justify-between space-y-2">
@@ -331,6 +333,7 @@ export default function WorkflowOrchestrationPage() {
             </div>
           </div>
         </div>
+
       </BetaPageWrapper>
     </div>
   )
