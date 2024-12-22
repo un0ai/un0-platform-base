@@ -27,6 +27,8 @@ import {
   MessageSquarePlus,
   FileCode2,
   Sparkles,
+  Send,
+  Eraser,
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
@@ -116,19 +118,21 @@ export default function PlaygroundPage() {
                         ))}
                       </div>
                     </ScrollArea>
-                    <div className="flex space-x-2">
+                    <div className="flex items-center space-x-2">
                       <Textarea
                         placeholder="Type your message or '/help' for commands..."
                         className="flex-1 min-h-[80px]"
                       />
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center space-x-2">
                         <BetaRestrictedAction>
-                          <Button>
+                          <Button className="flex-1">
+                            <Send className="mr-2 h-4 w-4" />
                             Send Message
                           </Button>
                         </BetaRestrictedAction>
                         <BetaRestrictedAction>
                           <Button variant="outline">
+                            <Eraser className="mr-2 h-4 w-4" />
                             Clear Chat
                           </Button>
                         </BetaRestrictedAction>

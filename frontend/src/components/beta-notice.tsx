@@ -13,20 +13,23 @@ import {
 
 export function BetaNotice() {
   return (
-    <Alert variant="default" className="bg-primary-foreground border-primary/20 mb-6 shadow-sm">
-      <AlertCircle className="h-5 w-5 text-primary" />
-      <div className="flex-1 flex justify-between items-center">
+    <div className="rounded-lg border-2 border-yellow-500/20 bg-yellow-500/5 dark:border-yellow-400/20 dark:bg-yellow-400/5 p-4 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent dark:from-yellow-400/10" />
+      <div className="relative flex items-center gap-2">
+        <AlertCircle className="h-5 w-5 text-yellow-500 dark:text-yellow-400" />
         <div>
-          <AlertTitle className="text-primary font-semibold">Private Beta Feature</AlertTitle>
-          <AlertDescription className="text-muted-foreground text-sm">
+          <h3 className="font-semibold text-yellow-500 dark:text-yellow-400">Private Beta Feature</h3>
+          <p className="text-sm text-yellow-600/90 dark:text-yellow-300/90">
             You are viewing simulated data. Apply for beta access to use this feature.
-          </AlertDescription>
+          </p>
         </div>
-        <Button variant="outline" size="sm" className="border-primary/20 hover:border-primary/40 hover:bg-primary/5">
-          Apply for Beta
-        </Button>
+        <div className="ml-auto">
+          <Button variant="outline" className="border-yellow-500/20 hover:border-yellow-500/40 dark:border-yellow-400/20 dark:hover:border-yellow-400/40">
+            Apply for Beta
+          </Button>
+        </div>
       </div>
-    </Alert>
+    </div>
   )
 }
 

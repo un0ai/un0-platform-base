@@ -30,6 +30,8 @@ import {
   Search,
   FileCode,
   Sparkles,
+  FileText,
+  History,
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
@@ -270,14 +272,16 @@ export default function VisualAgentBuilderPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
                     <BetaRestrictedAction>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="flex items-center">
+                        <FileText className="mr-2 h-4 w-4" />
                         Generate Documentation
                       </Button>
                     </BetaRestrictedAction>
                     <BetaRestrictedAction>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="flex items-center">
+                        <History className="mr-2 h-4 w-4" />
                         Version History
                       </Button>
                     </BetaRestrictedAction>
