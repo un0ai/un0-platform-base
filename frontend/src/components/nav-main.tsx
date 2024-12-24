@@ -33,6 +33,7 @@ export function NavMain({
     url: string
     icon?: LucideIcon
     isActive?: boolean
+    protected?: boolean
     items?: {
       title: string
       url: string
@@ -148,8 +149,11 @@ export function NavMain({
                 >
                   {item.icon && <item.icon />}
                   <div className={cn("grid flex-1 text-left leading-tight", state === "collapsed" && "hidden")}>
-                    <span className="truncate font-semibold text-base">
+                    <span className="truncate font-semibold text-base flex items-center gap-1.5">
                       {item.title}
+                      {item.protected && !isAuthenticated && (
+                        <Lock className="h-4 w-4 text-muted-foreground/50" />
+                      )}
                     </span>
                   </div>
                 </SidebarMenuButton>
@@ -215,7 +219,7 @@ export function NavMain({
                             <Link href={subItem.url} className="flex items-center gap-1.5">
                               {subItem.title}
                               {subItem.protected && !isAuthenticated && (
-                                <Lock className="h-3 w-3 opacity-25" />
+                                <Lock className="h-4 w-4 text-muted-foreground/50" />
                               )}
                             </Link>
                           </SidebarMenuSubButton>
