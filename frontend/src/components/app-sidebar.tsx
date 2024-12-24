@@ -59,6 +59,7 @@ const navigationData = {
       title: "Dashboard",
       url: "/dashboard",
       icon: LayoutDashboard,
+      protected: true,
     },
     {
       title: "Build",
