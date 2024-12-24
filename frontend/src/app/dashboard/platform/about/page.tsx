@@ -2,13 +2,22 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Bot, Code2, Cpu, GitBranch, LineChart, Rocket, Zap, Blocks } from "lucide-react"
+import Link from "next/link"
 
 export default function AboutPlatformPage() {
   return (
     <div className="flex-1 space-y-8 p-8 pt-6">
       {/* Hero Section */}
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">About</h1>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">About</h1>
+          <Link
+            href="/dashboard/about"
+            className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 h-10 px-6 py-2 hover:scale-105 transform duration-200 ease-in-out border-2 border-primary/20"
+          >
+            View Platform Overview
+          </Link>
+        </div>
         <p className="text-lg text-foreground/80 dark:text-foreground/80 leading-relaxed">
           un0.ai is an AI agent playground streamlining the entire lifecycle of agent development. It integrates MLOps best practices—version control, CI/CD, infrastructure as code—to enable rapid prototyping, testing, and scalability.
         </p>
