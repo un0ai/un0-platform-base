@@ -1,185 +1,347 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Bot, Code2, Cpu, GitBranch, LineChart, Rocket, Zap, Blocks } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Badge } from "@/components/ui/badge"
+import { 
+  ExternalLink, 
+  Server, 
+  Workflow, 
+  Shield, 
+  Database, 
+  GitBranch, 
+  Cpu, 
+  Network, 
+  Activity, 
+  History, 
+  Brain,
+  Code2,
+  Bot,
+  Cloud,
+  Boxes,
+  LineChart,
+  Zap,
+  Binary,
+  Timer,
+  Lock,
+  Layers
+} from "lucide-react"
 import Link from "next/link"
+import { Separator } from "@/components/ui/separator"
 
-export default function AboutPlatformPage() {
+export default function AboutPage() {
   return (
-    <div className="flex-1 space-y-8 p-8 pt-6">
+    <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
       {/* Hero Section */}
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">AI Playground</h1>
-          <Link
-            href="/dashboard/about"
-            className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 h-10 px-6 py-2 hover:scale-105 transform duration-200 ease-in-out border-2 border-primary/20"
-          >
-            View Platform Overview
-          </Link>
-        </div>
-        <p className="text-lg text-foreground/80 dark:text-foreground/80 leading-relaxed">
-          un0.ai is an AI agent playground streamlining the entire lifecycle of agent development. It integrates MLOps best practices—version control, CI/CD, infrastructure as code—to enable rapid prototyping, testing, and scalability.
-        </p>
-      </div>
-      
-      {/* Tech Stack Section */}
-      <div className="p-4">
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-          <div className="p-6">
-            <div className="flex items-center space-x-2 mb-4">
-              <Blocks className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-semibold text-foreground">Tech Stack</h2>
-            </div>
-          </div>
-          <p className="px-6 pb-6 leading-7 text-foreground/90 dark:text-foreground/90 [&_a]:relative [&_a]:inline-flex [&_a]:text-primary [&_a]:font-semibold [&_a]:no-underline [&_a]:transition-colors [&_a]:duration-200 [&_a]:after:absolute [&_a]:after:bottom-0 [&_a]:after:left-0 [&_a]:after:h-[2px] [&_a]:after:w-full [&_a]:after:origin-bottom-right [&_a]:after:scale-x-100 [&_a]:after:bg-gradient-to-r [&_a]:after:from-primary/40 [&_a]:after:to-primary/40 [&_a]:after:transition-transform [&_a]:after:duration-200 [&_a]:hover:text-primary [&_a]:hover:after:origin-bottom-left [&_a]:hover:after:scale-x-100 [&_a]:hover:after:bg-gradient-to-r [&_a]:hover:after:from-primary [&_a]:hover:after:to-primary dark:[&_a]:text-primary/90 dark:[&_a]:after:from-primary/50 dark:[&_a]:after:to-primary/50 dark:[&_a]:hover:text-primary">
-            Built using <a href="https://python.langchain.com/" target="_blank">LangChain</a> and <a href="https://langchain-ai.github.io/langgraph/" target="_blank">LangGraph</a> for AI workflow orchestration, and with native monitoring support via <a href="https://smith.langchain.com/" target="_blank">LangSmith</a> and <a href="https://langfuse.com/" target="_blank">LangFuse</a>, un0.ai integrates seamlessly with services such as <a href="https://flowiseai.com/" target="_blank">Flowise</a>, <a href="https://vectorshift.ai/" target="_blank">VectorShift</a>, <a href="https://www.voiceflow.com/" target="_blank">Voiceflow</a>, <a href="https://n8n.io/" target="_blank">n8n</a>, <a href="https://www.make.com/" target="_blank">Make.com</a>, and <a href="https://zapier.com/" target="_blank">Zapier</a> to streamline the design and deployment of AI models and pipelines. Real-time observability and monitoring ensure continuous optimization, while <a href="https://github.com/logspace-ai/langflow" target="_blank">LangFlow</a>, <a href="https://www.datastax.com/products/datastax-astra" target="_blank">DataStax Astra</a>, and <a href="https://cassandra.apache.org/" target="_blank">Apache Cassandra DB</a> deliver reliable and scalable data management.
+      <Card className="border-none shadow-md">
+        <CardContent className="flex flex-col items-center justify-center space-y-6 p-8">
+          <h1 className="text-4xl font-bold tracking-tight text-center">un0.ai Platform</h1>
+          <p className="text-lg text-muted-foreground text-center max-w-2xl">
+            Enterprise-grade MLOps and AIOps platform for orchestrating AI agents and tools at scale, 
+            built on cloud-native architecture with advanced observability and automation.
           </p>
-          
-          <div className="grid gap-6 md:grid-cols-2 p-6 pt-0">
-            <Card className="rounded-lg border bg-card shadow-sm transition-colors hover:bg-accent/50">
-              <CardHeader className="p-4 space-y-1">
-                <div className="flex items-center space-x-2">
-                  <Rocket className="h-5 w-5 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Rapid Iteration</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  Validate ideas quickly, iterate faster, and refine agents in a scalable environment.
-                </p>
-              </CardHeader>
-            </Card>
-            
-            <Card className="rounded-lg border bg-card shadow-sm transition-colors hover:bg-accent/50">
-              <CardHeader className="p-4 space-y-1">
-                <div className="flex items-center space-x-2">
-                  <GitBranch className="h-5 w-5 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">MLOps Integration</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  Incorporate best practices and tooling for consistent, efficient workflows.
-                </p>
-              </CardHeader>
-            </Card>
+          <div className="flex gap-4">
+            <a
+              href="https://un0.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+            >
+              Visit Landing Page
+              <ExternalLink className="ml-2 h-4 w-4" />
+            </a>
+            <Link
+              href="/dashboard/about"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            >
+              View Platform Overview
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Separator />
+
+      {/* Origin Story */}
+      <Card className="p-6 space-y-4">
+        <div className="flex items-center gap-3 mb-4">
+          <History className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold">_hello-world</h2>
+        </div>
+        <p className="text-muted-foreground">
+          un0.ai emerged from the real-world challenges of managing complex AI systems at scale. What began as an internal 
+          solution for orchestrating AI agents has evolved into a comprehensive platform that addresses the critical needs 
+          of modern MLOps and AIOps teams.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Initial Challenges</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Complex model deployment pipelines</li>
+              <li>• Inconsistent agent scaling patterns</li>
+              <li>• Limited model observability</li>
+              <li>• Resource optimization issues</li>
+              <li>• Model drift and monitoring gaps</li>
+            </ul>
+          </div>
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Evolution Milestones</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Kubernetes-native architecture</li>
+              <li>• Advanced agent orchestration</li>
+              <li>• Real-time model monitoring</li>
+              <li>• Automated scaling solutions</li>
+              <li>• Enterprise security integration</li>
+            </ul>
           </div>
         </div>
+      </Card>
+
+      {/* The Challenge of Modern Cloud Operations */}
+      <Card className="p-6 space-y-4">
+        <div className="flex items-center gap-3 mb-4">
+          <Activity className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold">The Challenge: Modern Cloud Operations</h2>
+        </div>
+        <p className="text-muted-foreground">
+          In today's cloud-native landscape, the complexity of managing and operating distributed systems has grown exponentially. 
+          Modern architectures involving microservices, serverless functions, and container orchestration have introduced new 
+          layers of complexity that traditional operational approaches struggle to handle effectively.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Operational Complexities</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Microservices interdependencies</li>
+              <li>• Multi-cloud environment management</li>
+              <li>• Container orchestration at scale</li>
+              <li>• Service mesh complexity</li>
+              <li>• Dynamic resource allocation</li>
+              <li>• Distributed system debugging</li>
+            </ul>
+          </div>
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Scale Implications</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Increased operational overhead</li>
+              <li>• Complex failure modes</li>
+              <li>• Resource optimization challenges</li>
+              <li>• Performance bottlenecks</li>
+              <li>• Monitoring complexity</li>
+              <li>• Cost management issues</li>
+            </ul>
+          </div>
+        </div>
+      </Card>
+
+      {/* Why AIOps Matters */}
+      <Card className="p-6 space-y-4">
+        <div className="flex items-center gap-3 mb-4">
+          <Brain className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold">Why AIOps Matters</h2>
+        </div>
+        <p className="text-muted-foreground">
+          The intersection of AI and Operations (AIOps) represents more than just automation - it's about creating intelligent
+          systems that can understand, learn from, and adapt to the dynamic nature of modern cloud infrastructure. AIOps is
+          becoming essential as traditional operational approaches reach their limits.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Key Drivers</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Growing system complexity</li>
+              <li>• Need for real-time decision making</li>
+              <li>• Scale and reliability demands</li>
+              <li>• Dynamic infrastructure changes</li>
+              <li>• Increasing security threats</li>
+              <li>• Cost optimization needs</li>
+            </ul>
+          </div>
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">AIOps Benefits</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Predictive incident management</li>
+              <li>• Automated root cause analysis</li>
+              <li>• Intelligent resource allocation</li>
+              <li>• Pattern recognition in logs</li>
+              <li>• Anomaly detection</li>
+              <li>• Self-healing capabilities</li>
+            </ul>
+          </div>
+        </div>
+      </Card>
+
+      {/* Technical Architecture */}
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold tracking-tight">Technical Architecture</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Cloud className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl font-semibold">Cloud Infrastructure</h2>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Built on modern cloud-native principles:
+            </p>
+            <ul className="space-y-2 text-sm">
+              <li>• Kubernetes orchestration with custom controllers</li>
+              <li>• Service mesh (Istio) for traffic management</li>
+              <li>• Event-driven architecture with Apache Kafka</li>
+              <li>• Multi-cluster federation support</li>
+              <li>• Auto-scaling with KEDA and custom metrics</li>
+              <li>• GitOps deployment with ArgoCD</li>
+            </ul>
+          </Card>
+
+          <Card className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Bot className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl font-semibold">Agent Architecture</h2>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Advanced agent management system:
+            </p>
+            <ul className="space-y-2 text-sm">
+              <li>• Distributed task scheduling with Redis</li>
+              <li>• State management using etcd</li>
+              <li>• Custom CRDs for agent lifecycle</li>
+              <li>• Prometheus metrics integration</li>
+              <li>• Adaptive load balancing</li>
+              <li>• Circuit breaker patterns</li>
+            </ul>
+          </Card>
+
+          <Card className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Brain className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl font-semibold">MLOps Pipeline</h2>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              End-to-end model lifecycle management:
+            </p>
+            <ul className="space-y-2 text-sm">
+              <li>• Model versioning with DVC</li>
+              <li>• Training orchestration using Kubeflow</li>
+              <li>• A/B testing infrastructure</li>
+              <li>• Automated model validation</li>
+              <li>• Feature store integration</li>
+              <li>• Model serving with TensorRT</li>
+            </ul>
+          </Card>
+
+          <Card className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Activity className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl font-semibold">Observability Stack</h2>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Comprehensive monitoring solution:
+            </p>
+            <ul className="space-y-2 text-sm">
+              <li>• Distributed tracing with OpenTelemetry</li>
+              <li>• Custom model telemetry</li>
+              <li>• Real-time model performance metrics</li>
+              <li>• Grafana dashboards</li>
+              <li>• ELK stack for log analytics</li>
+              <li>• Custom alerting with Alertmanager</li>
+            </ul>
+          </Card>
+        </div>
       </div>
 
-      {/* Key Features Section */}
-      <div className="space-y-4">
-        <div className="flex items-center space-x-2">
-          <Zap className="h-6 w-6 text-primary" />
-          <h2 className="text-2xl font-semibold text-foreground">Key Features</h2>
-        </div>
-        <div className="grid gap-3 md:grid-cols-3">
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <Bot className="h-5 w-5 text-primary" />
-                <span>Interactive AI Playground</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Experiment with AI models in a hands-on environment designed for innovation
-              </CardContent>
-            </CardHeader>
+      {/* Advanced Features */}
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold tracking-tight">Platform Capabilities</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Shield className="h-6 w-6 text-primary" />
+              <h3 className="text-xl font-semibold">Security & Compliance</h3>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Zero-trust security model</li>
+              <li>• mTLS encryption</li>
+              <li>• RBAC with OPA integration</li>
+              <li>• Vault for secrets management</li>
+              <li>• SOC 2 compliance tools</li>
+              <li>• Audit logging system</li>
+            </ul>
           </Card>
 
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <Rocket className="h-5 w-5 text-primary" />
-                <span>Rapid Prototyping</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Build and test AI solutions in minutes, not days
-              </CardContent>
-            </CardHeader>
+          <Card className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <GitBranch className="h-6 w-6 text-primary" />
+              <h3 className="text-xl font-semibold">DevOps Integration</h3>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• GitOps workflow with Flux</li>
+              <li>• CI/CD with GitHub Actions</li>
+              <li>• Infrastructure as Code (Terraform)</li>
+              <li>• Automated testing framework</li>
+              <li>• Chaos engineering tools</li>
+              <li>• Custom operator framework</li>
+            </ul>
           </Card>
 
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <Cpu className="h-5 w-5 text-primary" />
-                <span>Advanced Model Management</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Centralized control for your AI models and versions
-              </CardContent>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <Bot className="h-5 w-5 text-primary" />
-                <span>Agentic AI Workflows</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Orchestrate complex AI agents with intuitive workflow tools
-              </CardContent>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <LineChart className="h-5 w-5 text-primary" />
-                <span>Scalable Design</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Deploy agents that grow seamlessly with your needs
-              </CardContent>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <GitBranch className="h-5 w-5 text-primary" />
-                <span>CI/CD Integration</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Automated pipelines for continuous AI deployment
-              </CardContent>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <LineChart className="h-5 w-5 text-primary" />
-                <span>Real-Time Monitoring</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Live insights into your AI systems' performance
-              </CardContent>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <Code2 className="h-5 w-5 text-primary" />
-                <span>Flexible Integration</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Connect with the latest AI tools and services
-              </CardContent>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-none shadow-sm hover:shadow-md transition-all duration-200">
-            <CardHeader className="p-4">
-              <CardTitle className="flex items-center text-base space-x-2">
-                <GitBranch className="h-5 w-5 text-primary" />
-                <span>MLOps Excellence</span>
-              </CardTitle>
-              <CardContent className="p-0 pt-2 text-sm text-muted-foreground">
-                Industry-leading practices for AI lifecycle management
-              </CardContent>
-            </CardHeader>
+          <Card className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Cpu className="h-6 w-6 text-primary" />
+              <h3 className="text-xl font-semibold">AI Capabilities</h3>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Multi-model orchestration</li>
+              <li>• Automated model optimization</li>
+              <li>• Custom model serving</li>
+              <li>• Batch and real-time inference</li>
+              <li>• Model A/B testing</li>
+              <li>• Transfer learning pipeline</li>
+            </ul>
           </Card>
         </div>
       </div>
+
+      {/* Future Vision */}
+      <Card className="p-6 space-y-4">
+        <div className="flex items-center gap-3 mb-4">
+          <Brain className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold">The Future of AIOps</h2>
+        </div>
+        <p className="text-muted-foreground">
+          Our vision extends beyond traditional MLOps and AIOps. We're building towards a future where AI systems are 
+          truly autonomous, self-healing, and continuously evolving.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Autonomous Systems</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Self-healing infrastructure</li>
+              <li>• Automated capacity planning</li>
+              <li>• Predictive scaling</li>
+              <li>• Autonomous optimization</li>
+            </ul>
+          </div>
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Advanced AI</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Federated learning support</li>
+              <li>• Multi-agent collaboration</li>
+              <li>• Automated model architecture</li>
+              <li>• Edge AI deployment</li>
+            </ul>
+          </div>
+          <div className="p-4 border rounded-lg">
+            <h3 className="font-semibold mb-2">Platform Evolution</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Quantum computing readiness</li>
+              <li>• Cross-cloud federation</li>
+              <li>• Advanced security features</li>
+              <li>• Enhanced automation</li>
+            </ul>
+          </div>
+        </div>
+      </Card>
     </div>
   )
 }
