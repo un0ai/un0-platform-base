@@ -68,7 +68,7 @@ export default function AboutPage() {
       <Card className="p-6 space-y-4">
         <div className="flex items-center gap-3 mb-4">
           <History className="h-6 w-6 text-primary" />
-          <h2 className="text-2xl font-semibold">The Birth of un0.ai</h2>
+          <h2 className="text-2xl font-semibold">_hello-world</h2>
         </div>
         <p className="text-muted-foreground">
           un0.ai emerged from the real-world challenges of managing complex AI systems at scale. What began as an internal 
