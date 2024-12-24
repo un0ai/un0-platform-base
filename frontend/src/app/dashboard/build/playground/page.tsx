@@ -34,10 +34,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { BetaPageWrapper, BetaRestrictedAction } from "@/components/beta-notice"
-import { useRouter } from "next/navigation"
 
 export default function PlaygroundPage() {
-  const router = useRouter()
   const [messages, setMessages] = React.useState([
     {
       role: "assistant",
@@ -248,9 +246,7 @@ async def handle_message(message: str):
                   <Card className="border-none shadow-md">
                     <CardHeader>
                       <CardTitle>Model Settings</CardTitle>
-                      <CardDescription>
-                        Fine-tune your model parameters
-                      </CardDescription>
+                      <CardDescription>Fine-tune your model parameters</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="space-y-2">

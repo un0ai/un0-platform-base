@@ -47,10 +47,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { BetaPageWrapper, BetaRestrictedAction } from "@/components/beta-notice"
-import { useRouter } from "next/navigation"
 
 export default function ModelManagementPage() {
-  const router = useRouter()
   return (
     <div className="flex h-full flex-col space-y-6">
       <div className="flex items-center justify-between space-y-2">
@@ -229,12 +227,12 @@ export default function ModelManagementPage() {
                         <CardDescription>Common model operations</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                      <BetaRestrictedAction>
-                      <Button variant="outline" className="w-full justify-start">
-                        <Plus className="mr-2 h-4 w-4" />
-                        Deploy New Model
-                      </Button>
-                    </BetaRestrictedAction>
+                        <BetaRestrictedAction>
+                          <Button variant="outline" className="w-full justify-start">
+                            <Plus className="mr-2 h-4 w-4" />
+                            Deploy New Model
+                          </Button>
+                        </BetaRestrictedAction>
                         <BetaRestrictedAction>
                           <Button variant="outline" className="w-full justify-start">
                             <GitBranch className="mr-2 h-4 w-4" />

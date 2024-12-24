@@ -1,142 +1,328 @@
 "use client"
 
+import React from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { BetaPageWrapper } from "@/components/beta-notice"
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+  HelpCircle,
+  Search,
+  ThumbsUp,
+  MessageCircle,
+  Settings,
+  Database,
+  Shield,
+  Zap,
+  Users,
+  Code,
+  ArrowRight,
+  ExternalLink,
+  Clock
+} from "lucide-react"
+
+const categories = [
+  {
+    name: "Getting Started",
+    icon: <Zap className="h-5 w-5" />,
+    questions: [
+      {
+        question: "How do I create my first AI agent?",
+        answer: "To create your first AI agent, navigate to the Agent Builder page and click 'Create New Agent'. Follow the step-by-step wizard to configure your agent's capabilities and deployment settings.",
+        helpful: 156
+      },
+      {
+        question: "What are the system requirements?",
+        answer: "Our platform runs in modern web browsers (Chrome, Firefox, Safari, Edge). For optimal performance, we recommend at least 8GB RAM and a stable internet connection.",
+        helpful: 98
+      }
+    ]
+  },
+  {
+    name: "Technical",
+    icon: <Code className="h-5 w-5" />,
+    questions: [
+      {
+        question: "How do I integrate with existing APIs?",
+        answer: "Use our API Integration wizard in the Integration Hub. We support REST and GraphQL APIs. You'll need your API credentials and endpoint information ready.",
+        helpful: 234
+      },
+      {
+        question: "What programming languages are supported?",
+        answer: "We currently support Python, JavaScript/TypeScript, and Go for custom integrations. Each language has its own SDK with comprehensive documentation.",
+        helpful: 187
+      }
+    ]
+  },
+  {
+    name: "Security",
+    icon: <Shield className="h-5 w-5" />,
+    questions: [
+      {
+        question: "How is my data protected?",
+        answer: "We use industry-standard encryption (AES-256) for data at rest and TLS 1.3 for data in transit. All data is stored in SOC 2 compliant data centers.",
+        helpful: 312
+      },
+      {
+        question: "What authentication methods are supported?",
+        answer: "We support OAuth 2.0, API keys, and JWT tokens. For enterprise customers, we also offer SAML and custom SSO integration.",
+        helpful: 245
+      }
+    ]
+  }
+]
+
+const popularQuestions = [
+  {
+    question: "How do I monitor agent performance?",
+    answer: "Use the Performance Metrics dashboard to track your agent's performance in real-time. You can monitor metrics like response time, success rate, and resource usage.",
+    category: "Monitoring"
+  },
+  {
+    question: "Can I customize the AI model?",
+    answer: "Yes, you can customize the AI model through our Model Management interface. You can fine-tune parameters, train on custom data, and adjust the model's behavior.",
+    category: "Customization"
+  },
+  {
+    question: "What's the pricing model?",
+    answer: "We offer tiered pricing based on usage and features. Check our pricing page for detailed information about plans and enterprise options.",
+    category: "Billing"
+  }
+]
 
 export default function FAQPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent dark:from-primary dark:to-primary/70">
-          Frequently Asked Questions
-        </h1>
-        <p className="text-lg text-foreground/80 dark:text-foreground/80 leading-relaxed">
-          Find answers to common questions about un0.ai
-        </p>
+    <div className="flex h-full flex-col space-y-6">
+      <div className="flex items-center justify-between space-y-2">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">FAQ</h2>
+          <p className="text-muted-foreground">
+            Find answers to commonly asked questions
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button variant="outline">
+            <Search className="mr-2 h-4 w-4" />
+            Search FAQs
+          </Button>
+          <Button>
+            <MessageCircle className="mr-2 h-4 w-4" />
+            Ask a Question
+          </Button>
+        </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>General Questions</CardTitle>
-            <CardDescription>Basic information about un0.ai</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger>What is un0.ai?</AccordionTrigger>
-                <AccordionContent>
-                  un0.ai is a powerful platform for building, deploying, and managing AI agents. It provides tools and infrastructure for creating intelligent applications that can automate tasks, process data, and interact with users.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>How do I get started?</AccordionTrigger>
-                <AccordionContent>
-                  You can get started by signing up for an account, following our quick start guide, and using our Visual Agent Builder to create your first AI agent. We provide comprehensive documentation and tutorials to help you along the way.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>What are the system requirements?</AccordionTrigger>
-                <AccordionContent>
-                  un0.ai is a cloud-based platform that runs in modern web browsers. You don't need to install any special software. We recommend using the latest versions of Chrome, Firefox, Safari, or Edge.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </CardContent>
-        </Card>
+      <BetaPageWrapper>
+        <div className="relative">
+          <div className="absolute inset-0 bg-yellow-500/5 dark:bg-yellow-400/5 border-2 border-yellow-500/20 dark:border-yellow-400/20 rounded-lg" />
+          <div className="relative">
+            <div className="flex-1 space-y-6 p-8 pt-6">
+              <Tabs defaultValue="all" className="space-y-6">
+                <TabsList>
+                  <TabsTrigger value="all">All Questions</TabsTrigger>
+                  <TabsTrigger value="popular">Popular</TabsTrigger>
+                  <TabsTrigger value="technical">Technical</TabsTrigger>
+                  <TabsTrigger value="security">Security</TabsTrigger>
+                </TabsList>
 
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Technical Questions</CardTitle>
-            <CardDescription>Technical details and specifications</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger>What programming languages are supported?</AccordionTrigger>
-                <AccordionContent>
-                  un0.ai supports multiple programming languages including Python, JavaScript, and TypeScript. Our SDKs are available in these languages, and you can use any language that can make HTTP requests to interact with our API.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>How does the Visual Agent Builder work?</AccordionTrigger>
-                <AccordionContent>
-                  The Visual Agent Builder is a no-code tool that allows you to create AI agents through a graphical interface. You can define agent behaviors, connect to data sources, and set up workflows without writing code.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>What deployment options are available?</AccordionTrigger>
-                <AccordionContent>
-                  We offer cloud deployment on our infrastructure, as well as options for private cloud and on-premises deployment for enterprise customers. You can also deploy to major cloud providers like AWS, GCP, and Azure.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </CardContent>
-        </Card>
+                <TabsContent value="all" className="space-y-6">
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {categories.map((category, i) => (
+                      <Card key={i} className="border-none shadow-md">
+                        <CardHeader>
+                          <div className="flex items-center space-x-2">
+                            {category.icon}
+                            <CardTitle>{category.name}</CardTitle>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            {category.questions.map((qa, j) => (
+                              <div key={j} className="space-y-2">
+                                <div className="flex items-center space-x-2">
+                                  <HelpCircle className="h-4 w-4 text-primary" />
+                                  <h4 className="font-medium">{qa.question}</h4>
+                                </div>
+                                <p className="text-sm text-muted-foreground pl-6">
+                                  {qa.answer}
+                                </p>
+                                <div className="flex items-center space-x-2 pl-6">
+                                  <Button variant="ghost" size="sm">
+                                    <ThumbsUp className="mr-2 h-4 w-4" />
+                                    Helpful ({qa.helpful})
+                                  </Button>
+                                  <Button variant="ghost" size="sm">
+                                    Share
+                                  </Button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
 
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Billing & Pricing</CardTitle>
-            <CardDescription>Information about pricing and billing</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger>What pricing plans are available?</AccordionTrigger>
-                <AccordionContent>
-                  We offer flexible pricing plans including Free, Pro, and Enterprise tiers. Each plan includes different features and usage limits. You can view detailed pricing information on our pricing page.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>How is usage calculated?</AccordionTrigger>
-                <AccordionContent>
-                  Usage is calculated based on API calls, compute resources, and storage. We provide detailed analytics and monitoring tools to help you track your usage and costs.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>Can I change plans anytime?</AccordionTrigger>
-                <AccordionContent>
-                  Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately, and billing is prorated based on your usage.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </CardContent>
-        </Card>
+                <TabsContent value="popular" className="space-y-6">
+                  <Card className="border-none shadow-md">
+                    <CardHeader>
+                      <div className="flex items-center space-x-2">
+                        <ThumbsUp className="h-5 w-5 text-primary" />
+                        <CardTitle>Most Popular Questions</CardTitle>
+                      </div>
+                      <CardDescription>Frequently asked questions by our users</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-6">
+                        {popularQuestions.map((qa, i) => (
+                          <div key={i} className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <HelpCircle className="h-4 w-4 text-primary" />
+                                <h4 className="font-medium">{qa.question}</h4>
+                              </div>
+                              <Badge variant="outline">{qa.category}</Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground pl-6">
+                              {qa.answer}
+                            </p>
+                            <div className="flex items-center space-x-2 pl-6">
+                              <Button variant="ghost" size="sm">
+                                <ThumbsUp className="mr-2 h-4 w-4" />
+                                Helpful
+                              </Button>
+                              <Button variant="ghost" size="sm">
+                                Share
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-        <Card className="border-none shadow-md">
-          <CardHeader>
-            <CardTitle>Support & Resources</CardTitle>
-            <CardDescription>Help and documentation resources</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger>How can I get help?</AccordionTrigger>
-                <AccordionContent>
-                  We provide multiple support channels including documentation, community forums, email support, and priority support for enterprise customers. You can also join our Discord community for real-time help.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>Where can I find documentation?</AccordionTrigger>
-                <AccordionContent>
-                  Our documentation is available in the Learn section of the platform. It includes guides, tutorials, API reference, and example projects to help you get started and solve common problems.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>Do you offer training?</AccordionTrigger>
-                <AccordionContent>
-                  Yes, we offer training sessions and workshops for teams. Enterprise customers also get access to personalized onboarding and training programs.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </CardContent>
-        </Card>
-      </div>
+                <TabsContent value="technical" className="space-y-6">
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <Card className="border-none shadow-md">
+                      <CardHeader>
+                        <div className="flex items-center space-x-2">
+                          <Code className="h-5 w-5 text-primary" />
+                          <CardTitle>API & Integration</CardTitle>
+                        </div>
+                        <CardDescription>Technical integration questions</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          {[
+                            {
+                              question: "What API authentication methods are supported?",
+                              answer: "We support API keys, OAuth 2.0, and JWT tokens for API authentication."
+                            },
+                            {
+                              question: "How do I handle API rate limits?",
+                              answer: "Our API implements standard rate limiting headers. Use exponential backoff for retries."
+                            }
+                          ].map((qa, i) => (
+                            <div key={i} className="space-y-2">
+                              <h4 className="font-medium">{qa.question}</h4>
+                              <p className="text-sm text-muted-foreground">
+                                {qa.answer}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-none shadow-md">
+                      <CardHeader>
+                        <div className="flex items-center space-x-2">
+                          <Database className="h-5 w-5 text-primary" />
+                          <CardTitle>Data & Storage</CardTitle>
+                        </div>
+                        <CardDescription>Data management questions</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          {[
+                            {
+                              question: "What databases are supported?",
+                              answer: "We support PostgreSQL, MySQL, MongoDB, and Redis out of the box."
+                            },
+                            {
+                              question: "How is data backup handled?",
+                              answer: "Automated daily backups with 30-day retention. Custom backup schedules available."
+                            }
+                          ].map((qa, i) => (
+                            <div key={i} className="space-y-2">
+                              <h4 className="font-medium">{qa.question}</h4>
+                              <p className="text-sm text-muted-foreground">
+                                {qa.answer}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="security" className="space-y-6">
+                  <Alert>
+                    <Shield className="h-4 w-4" />
+                    <AlertTitle>Security Information</AlertTitle>
+                    <AlertDescription>
+                      We take security seriously. All data is encrypted and stored in SOC 2 compliant facilities.
+                    </AlertDescription>
+                  </Alert>
+
+                  <Card className="border-none shadow-md">
+                    <CardHeader>
+                      <div className="flex items-center space-x-2">
+                        <Shield className="h-5 w-5 text-primary" />
+                        <CardTitle>Security FAQs</CardTitle>
+                      </div>
+                      <CardDescription>Common security-related questions</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-6">
+                        {[
+                          {
+                            question: "How is my data encrypted?",
+                            answer: "We use AES-256 encryption for data at rest and TLS 1.3 for data in transit."
+                          },
+                          {
+                            question: "What security certifications do you have?",
+                            answer: "We are SOC 2 Type II certified and GDPR compliant."
+                          },
+                          {
+                            question: "How often are security audits performed?",
+                            answer: "We perform quarterly security audits and annual penetration testing."
+                          }
+                        ].map((qa, i) => (
+                          <div key={i} className="space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Shield className="h-4 w-4 text-primary" />
+                              <h4 className="font-medium">{qa.question}</h4>
+                            </div>
+                            <p className="text-sm text-muted-foreground pl-6">
+                              {qa.answer}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+        </div>
+      </BetaPageWrapper>
     </div>
   )
 }
